@@ -1,0 +1,1050 @@
+[
+  {
+    "id": 1,
+    "question": "Your company has decided to make a major revision of their API in order to create better experiences for their developers. They need to keep the old version of the API available and deployable, while allowing new customers and testers to try out the new API. They want to keep the same SSL and DNS records in place to serve both APIs. What should they do?",
+    "choices": [
+      "A. Configure a new load balancer for the new version of the API",
+      "B. Reconfigure old clients to use a new endpoint for the new API",
+      "C. Have the old API forward traffic to the new API based on the path",
+      "D. Use separate backend pools for each API path behind the load balancer"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 2,
+    "question": "Your company plans to migrate a multi-petabyte data set to the cloud. The data set must be available 24hrs a day. Your business analysts have experience only with using a SQL interface. How should you store the data to optimize it for ease of analysis?",
+    "choices": [
+      "A. Load data into Google BigQuery",
+      "B. Insert data into Google Cloud SQL",
+      "C. Put flat files into Google Cloud Storage",
+      "D. Stream data into Google Cloud Datastore"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "題目重點：\n• 背景：公司要遷移多 PB 級資料至雲端，需 24 小時可用。\n• 需求：分析人員只熟悉 SQL 介面，需方便查詢與分析。\n\n選項分析：\nA. BigQuery 是無伺服器資料倉庫，支援 SQL 查詢，適合大型資料分析 ✅\nB. Cloud SQL 適合交易型資料庫，不適合多 PB 規模 ❌\nC. Cloud Storage 適合儲存原始檔案，但不支援 SQL 查詢 ❌\nD. Datastore 是 NoSQL 資料庫，無法使用標準 SQL 介面 ❌\n\n結論：\n• 正確答案：A ✅\n• 理由：BigQuery 支援標準 SQL 查詢、可即時存取多 PB 資料，最適合分析導向的應用。"
+  },
+  {
+    "id": 3,
+    "question": "The operations manager asks you for a list of recommended practices that she should consider when migrating a J2EE application to the cloud. Which three practices should you recommend? (Choose three.)",
+    "choices": [
+      "A. Port the application code to run on Google App Engine",
+      "B. Integrate Cloud Dataflow into the application to capture real-time metrics",
+      "C. Instrument the application with a monitoring tool like Stackdriver Debugger",
+      "D. Select an automation framework to reliably provision the cloud infrastructure",
+      "E. Deploy a continuous integration tool with automated testing in a staging environment",
+      "F. Migrate from MySQL to a managed NoSQL database like Google Cloud Datastore or Bigtable"
+    ],
+    "answer": ["C", "D", "E"],
+    "image": null,
+    "description": "題目關鍵：\n1. J2EE 應用遷移到雲端的最佳實務\n2. 挑選三個合理建議\n\n選項分析：\n\nA. Port the application code to run on Google App Engine\n• ❌ 不一定合適\n• J2EE 傳統應用通常比較複雜、包含多層架構與相依性，直接移植到 App Engine 並非標準建議，可能增加重構成本。\n\nB. Integrate Cloud Dataflow into the application to capture real-time metrics\n• ❌ 不合題意\n• Dataflow 用於資料處理 / ETL / 串流分析，不是應用監控工具，用它來收集 metrics 不合理。\n\nC. Instrument the application with a monitoring tool like Stackdriver Debugger\n• ✅ 正確\n• 遷移應用到雲端時，必須加入監控與除錯工具，例如 Stackdriver (Cloud Operations Suite)，確保效能與可靠性。\n\nD. Select an automation framework to reliably provision the cloud infrastructure\n• ✅ 正確\n• 基礎建設即程式 (IaC) 是雲端最佳實踐，應使用 Terraform、Deployment Manager 等自動化工具，確保穩定性與一致性。\n\nE. Deploy a continuous integration tool with automated testing in a staging environment\n• ✅ 正確\n• CI/CD 與自動化測試可降低人為錯誤，提升遷移與部署的效率與可靠性，是標準做法。\n\nF. Migrate from MySQL to a managed NoSQL database like Google Cloud Datastore or Bigtable\n• ❌ 不一定正確\n• 遷移應保持資料庫兼容性，例如 Cloud SQL for MySQL，不應強制改成 NoSQL，除非架構需要，否則風險過高。"
+  },
+  {
+    "id": 4,
+    "question": "A news feed web service has the following code running on Google App Engine. During peak load, users report that they can see news articles they already viewed. What is the most likely cause of this problem?",
+    "choices": [
+      "A. The session variable is local to just a single instance",
+      "B. The session variable is being overwritten in Cloud Datastore",
+      "C. The URL of the API needs to be modified to prevent caching",
+      "D. The HTTP Expires header needs to be set to -1 stop caching"
+    ],
+    "answer": "A",
+    "image": "../images/4.png"
+  },
+  {
+    "id": 5,
+    "question": "An application development team believes their current logging tool will not meet their needs for their new cloud-based product. They want a better tool to capture errors and help them analyze their historical log data. You want to help them find a solution that meets their needs. What should you do?",
+    "choices": [
+      "A. Direct them to download and install the Google StackDriver logging agent(Google Cloud Logging in the Cloud Operations suite)",
+      "B. Send them a list of online resources about logging best practices",
+      "C. Help them define their requirements and assess viable logging tools",
+      "D. Help them upgrade their current tool to take advantage of any new features"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 6,
+    "question": "You need to reduce the number of unplanned rollbacks of erroneous production deployments in your company's web hosting platform. Improvement to the QA/Test processes accomplished an 80% reduction. Which additional two approaches can you take to further reduce the rollbacks? (Choose two.)",
+    "choices": [
+      "A. Introduce a green-blue deployment model",
+      "B. Replace the QA environment with canary releases",
+      "C. Fragment the monolithic platform into microservices",
+      "D. Reduce the platform's dependency on relational database systems",
+      "E. Replace the platform's relational database systems with a NoSQL database"
+    ],
+    "answer": ["A", "C"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 7,
+    "question": "To reduce costs, the Director of Engineering has required all developers to move their development infrastructure resources from on-premises virtual machines (VMs) to Google Cloud Platform. These resources go through multiple start/stop events during the day and require state to persist. You have been asked to design the process of running a development environment in Google Cloud while providing cost visibility to the finance department. Which two steps should you take? (Choose three.)",
+    "choices": [
+      "A. Use the --no-auto-delete flag on all persistent disks and stop the VM",
+      "B. Use the --auto-delete flag on all persistent disks and terminate the VM",
+      "C. Apply VM CPU utilization label and include it in the BigQuery billing export",
+      "D. Use Google BigQuery billing export and labels to associate cost to groups",
+      "E. Store all state into local SSD, snapshot the persistent disks, and terminate the VM",
+      "F. Store all state in Google Cloud Storage, snapshot the persistent disks, and terminate the VM",
+      "G. Use persistent disks to store the state. Start and stop the VM as needed."
+    ],
+    "answer": ["A", "D", "G"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 8,
+    "question": "Your company wants to track whether someone is present in a meeting room reserved for a scheduled meeting. There are 1000 meeting rooms across 5 offices on 3 continents. Each room is equipped with a motion sensor that reports its status every second. The data from the motion detector includes only a sensor ID and several different discrete items of information. Analysts will use this data, together with information about account owners and office locations. Which database type should you use?",
+    "choices": ["A. Flat file", "B. NoSQL", "C. Relational", "D. Blobstore"],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 9,
+    "question": "You set up an autoscaling instance group to serve web traffic for an upcoming launch. After configuring the instance group as a backend service to an HTTP(S) load balancer, you notice that virtual machine (VM) instances are being terminated and re-launched every minute. The instances do not have a public IP address. You have verified the appropriate web response is coming from each instance using the curl command. You want to ensure the backend is configured correctly. What should you do?",
+    "choices": [
+      "A. Ensure that a firewall rules exists to allow source traffic on HTTP/HTTPS to reach the load balancer.",
+      "B. Assign a public IP to each instance and configure a firewall rule to allow the load balancer to reach the instance public IP.",
+      "C. Ensure that a firewall rule exists to allow load balancer health checks to reach the instances in the instance group.",
+      "D. Create a tag on each instance with the name of the load balancer. Configure a firewall rule with the name of the load balancer as the source and the instance tag as the destination."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 10,
+    "question": "You write a Python script to connect to Google BigQuery from a Google Compute Engine virtual machine. The script is printing errors that it cannot connect to BigQuery. What should you do to fix the script?",
+    "choices": [
+      "A. Install the latest BigQuery API client library for Python",
+      "B. Run your script on a new virtual machine with the BigQuery access scope enabled",
+      "C. Create a new service account with BigQuery access and execute your script with that user",
+      "D. Install the bq component for gcloud with the command gcloud components install bq."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 11,
+    "question": "Your customer is moving an existing corporate application to Google Cloud Platform from an on-premises data center. The business owners require minimal user disruption. There are strict security team requirements for storing passwords. What authentication strategy should they use?",
+    "choices": [
+      "A. Use G Suite Password Sync to replicate passwords into Google",
+      "B. Federate authentication via SAML 2.0 to the existing Identity Provider",
+      "C. Provision users in Google using the Google Cloud Directory Sync tool",
+      "D. Ask users to set their Google password to match their corporate password"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 12,
+    "question": "Your company has successfully migrated to the cloud and wants to analyze their data stream to optimize operations. They do not have any existing code for this analysis, so they are exploring all their options. These options include a mix of batch and stream processing, as they are running some hourly jobs and live-processing some data as it comes in. Which technology should they use for this?",
+    "choices": [
+      "A. Google Cloud Dataproc",
+      "B. Google Cloud Dataflow",
+      "C. Google Container Engine with Bigtable",
+      "D. Google Compute Engine with Google BigQuery"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "題目重點：\n• 背景：公司已經成功上雲，要分析資料流 (data stream) 來最佳化營運\n• 需求：\n  1. 同時支援批次 (batch) 與串流 (streaming)\n  2. 沒有既有程式碼 → 希望使用托管服務，不用自己維護叢集\n\n選項分析：\n\nA. Google Cloud Dataproc\n• ❌ 問題：\n  • 基於 Hadoop/Spark，需要自己寫程式與維護 workflow\n  • 題目強調「沒有既有程式碼」→ 不合適\n\nB. Google Cloud Dataflow\n• ✅ 優點：\n  • 完全託管服務\n  • 同時支援批次與串流處理\n  • 適合即時分析 + 批次處理的混合需求\n\nC. Google Kubernetes Engine (GKE) with Bigtable\n• ❌ 問題：\n  • 需要自行維護容器與資料處理邏輯\n  • 偏基礎建設層，沒有「無程式碼」優勢\n\nD. Google Compute Engine with BigQuery\n• ❌ 問題：\n  • BigQuery 適合批次分析，但不適合即時串流處理\n  • 還需要額外開發來處理 streaming 資料\n\n關鍵概念：\n• 同時支援 batch + streaming，又不需要自己維護程式碼與叢集 → 最佳解法是 Cloud Dataflow"
+  },
+  {
+    "id": 13,
+    "question": "Your customer is receiving reports that their recently updated Google App Engine application is taking approximately 30 seconds to load for some of their users. This behavior was not reported before the update. What strategy should you take?",
+    "choices": [
+      "A. Work with your ISP to diagnose the problem",
+      "B. Open a support ticket to ask for network capture and flow data to diagnose the problem, then roll back your application",
+      "C. Roll back to an earlier known good release initially, then use Stackdriver Trace and Logging(Cloud Trace and Cloud Logging (part of the Cloud Operations suite)) to diagnose the problem in a development/test/staging environment",
+      "D. Roll back to an earlier known good release, then push the release again at a quieter period to investigate. Then use Stackdriver Trace and Logging(Cloud Trace and Cloud Logging) to diagnose the problem"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 14,
+    "question": "A production database virtual machine on Google Compute Engine has an ext4-formatted persistent disk for data files. The database is about to run out of storage space. How can you remediate the problem with the least amount of downtime?",
+    "choices": [
+      "A. In the Cloud Platform Console, increase the size of the persistent disk and use the resize2fs command in Linux.",
+      "B. Shut down the virtual machine, use the Cloud Platform Console to increase the persistent disk size, then restart the virtual machine",
+      "C. In the Cloud Platform Console, increase the size of the persistent disk and verify the new space is ready to use with the fdisk command in Linux",
+      "D. In the Cloud Platform Console, create a new persistent disk attached to the virtual machine, format and mount it, and configure the database service to move the files to the new disk",
+      "E. In the Cloud Platform Console, create a snapshot of the persistent disk restore the snapshot to a new larger disk, unmount the old disk, mount the new disk and restart the database service"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 15,
+    "question": "Your application needs to process credit card transactions. You want the smallest scope of Payment Card Industry (PCI) compliance without compromising the ability to analyze transactional data and trends relating to which payment methods are used. How should you design your architecture?",
+    "choices": [
+      "A. Create a tokenizer service and store only tokenized data",
+      "B. Create separate projects that only process credit card data",
+      "C. Create separate subnetworks and isolate the components that process credit card data",
+      "D. Streamline the audit discovery phase by labeling all of the virtual machines (VMs) that process PCI data",
+      "E. Enable Logging export to Google BigQuery and use ACLs and views to scope the data shared with the auditor"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 16,
+    "question": "You have been asked to select the storage system for the click-data of your company's large portfolio of websites. This data is streamed in from a custom website analytics package at a typical rate of 6,000 clicks per minute, with bursts of up to 8,500 clicks per second. It must be stored for future analysis by your data science and user experience teams. Which storage infrastructure should you choose?",
+    "choices": [
+      "A. Google Cloud SQL",
+      "B. Google Cloud Bigtable",
+      "C. Google Cloud Storage",
+      "D. Google Cloud Datastore"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 17,
+    "question": "You are creating a solution to remove backup files older than 90 days from your backup Cloud Storage bucket. You want to optimize ongoing Cloud Storage spend. What should you do?",
+    "choices": [
+      "A. Write a lifecycle management rule in XML and push it to the bucket with gsutil",
+      "B. Write a lifecycle management rule in JSON and push it to the bucket with gsutil",
+      "C. Schedule a cron script using gsutil ls -lr 'gs://backups/** to find and remove items older than 90 days",
+      "D. Schedule a cron script using gsutil ls -l gs://backups/** to find and remove items older than 90 days and schedule it with cron"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 18,
+    "question": "Your company is forecasting a sharp increase in the number and size of Apache Spark and Hadoop jobs being run on your local datacenter. You want to utilize the cloud to help you scale this upcoming demand with the least amount of operations work and code change. Which product should you use?",
+    "choices": [
+      "A. Google Cloud Dataflow",
+      "B. Google Cloud Dataproc",
+      "C. Google Compute Engine",
+      "D. Google Kubernetes Engine"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 19,
+    "question": "The database administration team has asked you to help them improve the performance of their new database server running on Google Compute Engine. The database is for importing and normalizing their performance statistics and is built with MySQL running on Debian Linux. They have an n1-standard-8 virtual machine with 80 GB of SSD persistent disk. What should they change to get better performance from this system?",
+    "choices": [
+      "A. Increase the virtual machine's memory to 64 GB",
+      "B. Create a new virtual machine running PostgreSQL",
+      "C. Dynamically resize the SSD persistent disk to 500 GB",
+      "D. Migrate their performance metrics warehouse to BigQuery",
+      "E. Modify all of their batch jobs to use bulk inserts into the database"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 20,
+    "question": "You want to optimize the performance of an accurate, real-time, weather-charting application. The data comes from 50,000 sensors sending 10 readings a second, in the format of a timestamp and sensor reading. Where should you store the data?",
+    "choices": [
+      "A. Google BigQuery",
+      "B. Google Cloud SQL",
+      "C. Google Cloud Bigtable",
+      "D. Google Cloud Storage"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 21,
+    "question": "Your company's user-feedback portal comprises a standard LAMP stack replicated across two zones in us-central1, using autoscaled managed instance groups on all layers except the database. Currently only a small group of select customers have access, and the portal meets a 99.99% availability SLA. Next quarter, the portal will be available to all users, including unauthenticated users. You need to develop a resiliency testing strategy to ensure the system maintains the SLA once additional user load is introduced. What should you do?",
+    "choices": [
+      "A. Capture existing users' input, replay captured user load until autoscale is triggered on all layers, and at the same time terminate all resources in one of the zones",
+      "B. Create synthetic random user input, replay synthetic load until autoscale logic is triggered on at least one layer, and introduce 'chaos' by terminating random resources on both zones",
+      "C. Expose the new system to a larger group of users, increasing group size daily until autoscale logic is triggered on all layers, and at the same time terminate random resources on both zones",
+      "D. Capture existing users' input, replay captured user load until resource utilization crosses 80%, derive estimated number of users based on existing usage, and deploy enough resources to handle 200% of expected load"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 22,
+    "question": "One of the developers on your team deployed their application in Google Container Engine with the provided Dockerfile. They report that their application deployments are taking too long. You want to optimize this Dockerfile for faster deployment times without adversely affecting the app's functionality. Which two actions should you take? (Choose two.)",
+    "choices": [
+      "A. Remove Python after running pip",
+      "B. Remove dependencies from requirements.txt",
+      "C. Use a slimmed-down base image like Alpine Linux",
+      "D. Use larger machine types for your Google Container Engine node pools",
+      "E. Copy the source after the package dependencies (Python and pip) are installed"
+    ],
+    "answer": ["C", "E"],
+    "image": "../images/22.png"
+  },
+  {
+    "id": 23,
+    "question": "Your solution is producing performance bugs in production that you did not see in staging and test environments. You want to adjust your test and deployment procedures to avoid this problem in the future. What should you do?",
+    "choices": [
+      "A. Deploy fewer changes to production",
+      "B. Deploy smaller changes to production",
+      "C. Increase the load on your test and staging environments",
+      "D. Deploy changes to a small subset of users before rolling out to production"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 24,
+    "question": "A small number of API requests to your microservices-based application take a very long time. You know that each request to the API can traverse many services. You want to know which service takes the longest in those cases. What should you do?",
+    "choices": [
+      "A. Set timeouts on your application so that you can fail requests faster",
+      "B. Send custom metrics for each of your requests to Stackdriver Monitoring(Cloud Monitoring)",
+      "C. Use Stackdriver Monitoring(Cloud Monitoring) to look for insights that show when your API latencies are high",
+      "D. Instrument your application with Stackdriver Trace(Cloud Trace) in order to break down the request latencies at each microservice"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "問題重點：\n• 少數 API 請求延遲很高\n• 每個請求會經過多個微服務\n• 你想知道哪個服務最慢\n\n選項分析：\n• A. Set timeouts on your application ❌\n• 只能避免長時間等待，無法找出是哪個服務造成延遲。\n• B. Send custom metrics for each request to Stackdriver Monitoring ❌\n• 指標可以告訴你總延遲或某些量化資料，但無法追蹤請求經過的每個微服務。\n• C. Use Stackdriver Monitoring to look for latency insights ❌\n• 只能看到整體延遲統計或趨勢，無法拆解到每個微服務。\n• D. Instrument your application with Stackdriver Trace ✅\n• Stackdriver Trace (現在叫 Cloud Trace) 可以自動追蹤請求，顯示請求經過每個微服務的時間。\n• 你可以清楚看到哪個服務耗時最多，針對瓶頸優化。"
+  },
+  {
+    "id": 25,
+    "question": "During a high traffic portion of the day, one of your relational databases crashes, but the replica is never promoted to a master. You want to avoid this in the future. What should you do?",
+    "choices": [
+      "A. Use a different database",
+      "B. Choose larger instances for your database",
+      "C. Create snapshots of your database more regularly",
+      "D. Implement routinely scheduled failovers of your databases"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 26,
+    "question": "Your organization requires that metrics from all applications be retained for 5 years for future analysis in possible legal proceedings. Which approach should you use?",
+    "choices": [
+      "A. Grant the security team access to the logs in each Project",
+      "B. Configure Stackdriver Monitoring(Cloud Monitoring) for all Projects, and export to BigQuery",
+      "C. Configure Stackdriver Monitoring(Cloud Monitoring) for all Projects with the default retention policies",
+      "D. Configure Stackdriver Monitoring(Cloud Monitoring) for all Projects, and export to Google Cloud Storage"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 27,
+    "question": "Your company has decided to build a backup replica of their on-premises user authentication PostgreSQL database on Google Cloud Platform. The database is 4 TB, and large updates are frequent. Replication requires private address space communication. Which networking approach should you use?",
+    "choices": [
+      "A. Google Cloud Dedicated Interconnect",
+      "B. Google Cloud VPN connected to the data center network",
+      "C. A NAT and TLS translation gateway installed on-premises",
+      "D. A Google Compute Engine instance with a VPN server installed connected to the data center network"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "問題重點：\n• 要在 GCP 上建立 PostgreSQL 備份副本\n• 資料庫 4 TB，更新頻繁 → 大量資料流量\n• 需要私有地址空間通訊 → 不能走公網\n\n選項分析：\n• A. Dedicated Interconnect ✅\n• 提供專線連接，帶寬高（10 Gbps 以上可選），延遲低且穩定。\n• 適合大量資料同步（4 TB + 高頻更新）。\n• 支援私有 RFC 1918 IP 空間 → 符合「私有地址空間通訊」需求。\n• B. VPN connected to the data center network ❌\n• 雖然可以提供私有通訊，但公網 VPN 帶寬有限（通常 1–3 Gbps），不適合頻繁同步 4 TB 資料。\n• C. NAT and TLS translation gateway installed on-premises ❌\n• 只是把流量 NAT/TLS 化，無法保證高帶寬、低延遲，且增加複雜度。\n• D. GCE instance with VPN server ❌\n• 也是公網 VPN 的解法，帶寬受限，不適合大規模、頻繁更新的資料庫同步。"
+  },
+  {
+    "id": 28,
+    "question": "Auditors visit your teams every 12 months and ask to review all the Google Cloud Identity and Access Management (Cloud IAM) policy changes in the previous 12 months. You want to streamline and expedite the analysis and audit process. What should you do?",
+    "choices": [
+      "A. Create custom Google Stackdriver alerts(Cloud Monitoring alerts) and send them to the auditor",
+      "B. Enable Logging(Cloud Logging) export to Google BigQuery and use ACLs and views to scope the data shared with the auditor",
+      "C. Use cloud functions to transfer log entries to Google Cloud SQL and use ACLs and views to limit an auditor's view",
+      "D. Enable Google Cloud Storage (GCS) log export to audit logs into a GCS bucket and delegate access to the bucket"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "題目重點：\n• 需求：審計 Cloud IAM policy 變更\n• 頻率：每 12 個月\n• 目標：快速、方便審查過去 12 個月的 IAM 政策變更\n• 考量：資料安全性、易分析、可授權審計人員存取\n\n選項分析：\n\nA. Create custom Stackdriver alerts and send them to the auditor\n• ❌ 問題：Stackdriver alert 是即時通知，不適合回溯查詢過去 12 個月的資料\n\nB. Enable Logging export to BigQuery and use ACLs and views to scope the data shared with the auditor\n• ✅ 正確做法\n• 將 audit logs（包括 IAM policy 變更）導出到 BigQuery\n• 可以建立視圖（views）限制審計人員能看到的資料\n• 支援快速查詢、彈性分析，非常適合審計需求\n\nC. Use Cloud Functions to transfer log entries to Cloud SQL and use ACLs and views to limit an auditor’s view\n• ⚠️ 可行，但不必要複雜\n• 需要額外寫程式處理 log 移動與更新\n• BigQuery 已經提供更簡單且高效能的查詢和分析能力\n\nD. Enable GCS log export to a bucket and delegate access\n• ⚠️ 可以保存 log，但 GCS 不適合快速查詢或彙整分析\n• 每次審計都需要下載、解析大量 JSON/文本檔案\n\n結論：\n• B 是最適合的方案，兼顧安全、分析效率及審計授權管理"
+  },
+  {
+    "id": 29,
+    "question": "You are designing a large distributed application with 30 microservices. Each of your distributed microservices needs to connect to a database back-end. You want to store the credentials securely. Where should you store the credentials?",
+    "choices": [
+      "A. In the source code",
+      "B. In an environment variable",
+      "C. In a secret management system",
+      "D. In a config file that has restricted access through ACLs"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 30,
+    "question": "A lead engineer wrote a custom tool that deploys virtual machines in the legacy data center. He wants to migrate the custom tool to the new cloud environment. You want to advocate for the adoption of Google Cloud Deployment Manager. What are two business risks of migrating to Cloud Deployment Manager? (Choose two.)",
+    "choices": [
+      "A. Cloud Deployment Manager uses Python",
+      "B. Cloud Deployment Manager APIs could be deprecated in the future",
+      "C. Cloud Deployment Manager is unfamiliar to the company's engineers",
+      "D. Cloud Deployment Manager requires a Google APIs service account to run",
+      "E. Cloud Deployment Manager can be used to permanently delete cloud resources",
+      "F. Cloud Deployment Manager only supports automation of Google Cloud resources"
+    ],
+    "answer": ["C", "F"],
+    "image": null,
+    "description": "題目重點：\n• 背景：主導工程師有自製工具部署 VM\n• 希望改用 Google Cloud Deployment Manager\n• 問題：採用 Deployment Manager 的商業風險\n\n選項分析：\nA. 不正確 ❌ - 使用 Python 只是技術細節，不是商業風險\nB. 不正確 ❌ - API 棄用屬於所有雲服務的共通風險，不是特有的商業風險\nC. 正確 ✅ - 工程師不熟悉 Deployment Manager → 學習成本高，短期降低生產力\nD. 不正確 ❌ - 使用 Service Account 是正常操作，不是風險\nE. 不正確 ❌ - 資源刪除風險屬於所有 IaC 工具，不是 Deployment Manager 特有\nF. 正確 ✅ - Deployment Manager 僅支援 Google Cloud，未來多雲/混合雲策略會受限\n\n結論：\n• 答案：C, F ✅\n• 理由：學習曲線影響短期生產力，以及工具僅支援 Google Cloud，可能限制未來多雲發展。"
+  },
+  {
+    "id": 31,
+    "question": "A development manager is building a new application. He asks you to review his requirements and identify what cloud technologies he can use to meet them. The application must: 1) Be based on open-source technology for cloud portability, 2) Dynamically scale compute capacity based on demand, 3) Support continuous software delivery, 4) Run multiple segregated copies of the same application stack, 5) Deploy application bundles using dynamic templates, 6) Route network traffic to specific services based on URL. Which combination of technologies will meet all of his requirements?",
+    "choices": [
+      "A. Google Kubernetes Engine, Jenkins, and Helm",
+      "B. Google Kubernetes Engine and Cloud Load Balancing",
+      "C. Google Kubernetes Engine and Cloud Deployment Manager",
+      "D. Google Kubernetes Engine, Jenkins, and Cloud Load Balancing"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "題目重點：\n• 應用程式需求：\n  1. Open-source 技術 → 可跨雲移植\n  2. 動態擴縮 Compute → 自動擴縮能力\n  3. 支援 CI/CD → 持續交付\n  4. 多份隔離副本 → 支援多個環境或租戶\n  5. 用動態模板部署應用 → 用模板管理部署，方便升級\n  6. 依 URL 導流到不同服務 → 支援 Layer 7 負載平衡\n\n選項分析：\n\nA. Google Kubernetes Engine, Jenkins, and Helm\n• ✅ 完全符合題目所有需求\n• GKE → 支援 container orchestration、自動擴縮、多副本部署\n• Jenkins → CI/CD，自動化 build/deploy\n• Helm → 模板化部署應用包（dynamic templates）\n• URL routing 可透過 GKE Ingress 支援 Layer 7 流量導向\n\nB. Google Kubernetes Engine and Cloud Load Balancing\n• ❌ 缺少 CI/CD 和模板化部署（Helm）\n• GKE + Cloud LB → 可以自動擴縮、URL routing\n\nC. Google Kubernetes Engine and Cloud Deployment Manager\n• ❌ 缺少 CI/CD 與動態應用部署\n• GKE + Deployment Manager → 可模板化部署，但 Deployment Manager 是 infra as code，不是針對應用程式包的模板\n\nD. Google Kubernetes Engine, Jenkins, and Cloud Load Balancing\n• ❌ 缺少 Helm，無法動態模板化部署應用\n• 有 CI/CD、自動擴縮和 URL routing"
+  },
+  {
+    "id": 32,
+    "question": "You have created several pre-emptible Linux virtual machine instances using Google Compute Engine. You want to properly shut down your application before the virtual machines are preempted. What should you do?",
+    "choices": [
+      "A. Create a shutdown script named k99.shutdown in the /etc/rc.6.d/ directory",
+      "B. Create a shutdown script registered as a xinetd service in Linux and configure a Stackdriver(Cloud Monitoring) endpoint check to call the service",
+      "C. Create a shutdown script and use it as the value for a new metadata entry with the key shutdown-script in the Cloud Platform Console when you create the new virtual machine instance",
+      "D. Create a shutdown script, registered as a xinetd service in Linux, and use the gcloud compute instances add-metadata command to specify the service URL as the value for a new metadata entry with the key shutdown-script-url"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "問題重點\n• 你使用的是 preemptible VM\n• Preemptible VM 可能在沒有通知的情況下被 GCE 終止\n• 你希望在 VM 被預先終止前，正常關閉應用程序\n\n方案解析\n1. Metadata shutdown-script\n• GCE 支援在 VM metadata 中指定 shutdown-script\n• 當 VM 接收到停止或終止信號（preemption）時，GCE 會自動執行這個腳本\n• 這是官方建議的做法，適用於 preemptible VM、停止、重啟事件\n\n為什麼其他選項不適合\n• A. /etc/rc.6.d/k99.shutdown ❌\n• rc.d 載入順序適用於正常關機，但對 preemptible VM 被 GCE 直接終止無效\n• B. xinetd + Stackdriver endpoint ❌\n• 過於複雜，Stackdriver 無法保證在 preemption 時立即觸發\n• 官方並不建議這種方式\n• D. xinetd + shutdown-script-url ❌\n• Metadata 支援 shutdown-script 和 shutdown-script-url，但 xinetd 不需要\n• 過於複雜，且官方範例都直接使用 shutdown-script"
+  },
+  {
+    "id": 33,
+    "question": "Your organization has a 3-tier web application deployed in the same network on Google Cloud Platform. Each tier (web, API, and database) scales independently of the others. Network traffic should flow through the web to the API tier and then on to the database tier. Traffic should not flow between the web and the database tier. How should you configure the network?",
+    "choices": [
+      "A. Add each tier to a different subnetwork",
+      "B. Set up software based firewalls on individual VMs",
+      "C. Add tags to each tier and set up routes to allow the desired traffic flow",
+      "D. Add tags to each tier and set up firewall rules to allow the desired traffic flow"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "問題重點\n• 三層架構：Web → API → Database\n• 每層獨立擴展\n• 流量限制：\n  • Web 只能與 API 通訊\n  • API 可以與 Database 通訊\n  • Web 不能直接訪問 Database\n\n為什麼是 D\n1. VM 標籤 (tags)\n• 可以給每個 tier 的 VM 打上標籤，例如：\n  • web-tier\n  • api-tier\n  • db-tier\n2. 防火牆規則 (firewall rules)\n• GCP 防火牆可以基於標籤設定入站/出站規則\n• 例如：\n  • 允許 web-tier → api-tier\n  • 允許 api-tier → db-tier\n  • 拒絕 web-tier → db-tier\n3. 彈性與可擴展性\n• 每層 VM 自動擴縮也可套用相同標籤，防火牆規則仍然有效\n• 不需要為每台 VM 單獨配置\n\n為什麼其他選項不適合\n• A. 不同子網路 ❌\n• 子網路本身只是 IP 範圍，無法直接控制流量細節\n• 還需要防火牆來限制流量\n• B. 軟體防火牆 (VM 上設定) ❌\n• 管理複雜，隨著 VM 擴縮會很難維護\n• C. 設定路由 ❌\n• 路由決定流向，但無法阻止特定來源到特定目的的流量\n• 防火牆才是控制流量權限的正確方式"
+  },
+  {
+    "id": 34,
+    "question": "Your development team has installed a new Linux kernel module on the batch servers in Google Compute Engine (GCE) virtual machines (VMs) to speed up the nightly batch process. Two days after the installation, 50% of the batch servers failed the nightly batch run. You want to collect details on the failure to pass back to the development team. Which three actions should you take? (Choose three.)",
+    "choices": [
+      "A. Use Stackdriver Logging(Cloud Logging) to search for the module log entries",
+      "B. Read the debug GCE Activity log using the API or Cloud Console",
+      "C. Use gcloud or Cloud Console to connect to the serial console and observe the logs",
+      "D. Identify whether a live migration event of the failed server occurred, using in the activity log",
+      "E. Adjust the Google Stackdriver(Cloud Monitoring metrics) timeline to match the failure time, and observe the batch server metrics",
+      "F. Export a debug VM into an image, and run the image on a local server where kernel log messages will be displayed on the native screen"
+    ],
+    "answer": ["A", "C", "E"],
+    "image": null,
+    "description": "問題重點\n• Linux kernel module 導致 batch server 在夜間批次失敗\n• 目標：收集失敗細節給開發團隊\n• Kernel module 問題通常會產生 kernel log / serial console log，而不是 GCE 活動記錄\n\n選項分析\n1. A. Use Stackdriver Logging to search for the module log entries ✅\n• 如果 kernel module 或 batch process 有寫 log 到 syslog 或自訂 log，Stackdriver Logging 可以收集\n• 可以快速搜尋錯誤訊息\n2. C. Use gcloud or Cloud Console to connect to the serial console and observe the logs ✅\n• kernel crash 或 module load error 常出現在 serial console logs\n• 連接 serial console 可直接看到內核訊息，是 debug kernel module 問題的標準方式\n3. E. Adjust the Stackdriver timeline to match the failure time, and observe batch server metrics ✅\n• 透過 metrics 可以確認失敗時 CPU、memory、IO 等狀態\n• 可以幫助開發團隊重現問題環境\n\n為什麼其他選項不適合\n• B. Read the debug GCE Activity log ❌\n• GCE activity log 主要紀錄操作事件（VM 建立、刪除、重啟）\n• 無法提供 kernel module 或 batch process 錯誤訊息\n• D. Identify whether a live migration event occurred ❌\n• Live migration 可能造成暫時中斷，但題目沒有指出 VM 被移動\n• 這不是主要 debug 方向\n• F. Export a debug VM into an image, and run locally ❌\n• 過於麻煩且無法重現 kernel module 的低階環境\n• 核心訊息還是在 serial console 或 log"
+  },
+  {
+    "id": 35,
+    "question": "Your company wants to try out the cloud with low risk. They want to archive approximately 100 TB of their log data to the cloud and test the analytics features available to them there, while also retaining that data as a long-term disaster recovery backup. Which two steps should you take? (Choose two.)",
+    "choices": [
+      "A. Load logs into Google BigQuery",
+      "B. Load logs into Google Cloud SQL",
+      "C. Import logs into Google Stackdriver(Cloud Logging)",
+      "D. Insert logs into Google Cloud Bigtable",
+      "E. Upload log files into Google Cloud Storage"
+    ],
+    "answer": ["A", "E"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 36,
+    "question": "You created a pipeline that can deploy your source code changes to your infrastructure in instance groups for self-healing. One of the changes negatively affects your key performance indicator. You are not sure how to fix it, and investigation could take up to a week. What should you do?",
+    "choices": [
+      "A. Log in to a server, and iterate on the fix locally",
+      "B. Revert the source code change, and rerun the deployment pipeline",
+      "C. Log into the servers with the bad code change, and swap in the previous code",
+      "D. Change the instance group template to the previous one, and delete all instances"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "問題重點\n• 你有自動化部署 pipeline 並且 VM 在 instance group 中自我修復 (self-healing)\n• 某個變更導致 KPI 下滑\n• 調查可能需要一週\n\n選項分析\n1. A. Log in to a server, and iterate locally ❌\n• 不符合自動化與可重現部署原則\n• 手動修改會破壞 self-healing 機制，instance group 可能自動覆蓋你的更改\n2. B. Revert source code and rerun pipeline ✅\n• 遵循 pipeline + source control 原則\n• 將有問題的變更回滾，並用 pipeline 部署到所有 VM\n• 可快速恢復正常狀態，安全且可重現\n3. C. Log into servers and swap code manually ❌\n• 手動操作不可靠，self-healing instance group 會覆蓋你手動修改\n• 不建議做 production hotfix\n4. D. Change instance group template to previous one, and delete all instances ❌\n• 過於繁瑣，重建所有 VM\n• pipeline 回滾 source code 就能自動更新 template 和實例，這步驟不是必須的"
+  },
+  {
+    "id": 37,
+    "question": "Your organization wants to control IAM policies for different departments independently, but centrally. Which approach should you take?",
+    "choices": [
+      "A. Multiple Organizations with multiple Folders",
+      "B. Multiple Organizations, one for each department",
+      "C. A single Organization with Folders for each department",
+      "D. A single Organization with multiple projects, each with a central owner"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "問題重點\n• 想中央管理 IAM policy（統一管理）\n• 同時希望各部門獨立管理自己的資源\n\n選項分析\n1. A. Multiple Organizations with multiple Folders ❌\n• GCP 一家公司只能有一個 Organization\n• 多個 Organization 會導致中央管理困難\n2. B. Multiple Organizations, one for each department ❌\n• 同上，不符合 GCP 架構，中央管理更難\n3. C. Single Organization with Folders for each department ✅\n• Organization → 全公司範圍，統一管理 IAM policy\n• Folder per department → 各部門可以管理自己 folder 下的專案和資源\n• 支援 inheritance of IAM policies → 中央可設定公司級 policy，部門可覆寫或設定自己的 policy\n4. D. Single Organization with multiple projects, each with central owner ❌\n• 沒有 Folder 層級，每個專案必須單獨設定 IAM\n• 部門管理較分散，不如使用 Folder 彈性"
+  },
+  {
+    "id": 38,
+    "question": "You deploy your custom Java application to Google App Engine. It fails to deploy and gives you the following stack trace. What should you do?",
+    "choices": [
+      "A. Upload missing JAR files and redeploy your application.",
+      "B. Digitally sign all of your JAR files and redeploy your application",
+      "C. Recompile the CLoakedServlet class using and MD5 hash instead of SHA1"
+    ],
+    "answer": "A",
+    "image": "../images/38.png",
+    "description": "問題重點\n• 自訂 Java 應用程式在 App Engine 部署失敗\n• 提示：stack trace 顯示缺少類別或 JAR 檔案\n\n選項分析\n1. A. Upload missing JAR files ✅\n• Java 應用程式缺少依賴 JAR 很常見\n• App Engine 需要將所有第三方 JAR 或自製 JAR 一起打包\n• 解決部署錯誤最直接的方法\n2. B. Digitally sign all JAR files ❌\n• App Engine 不要求 JAR 必須簽名\n• 與部署失敗無關\n3. C. Recompile CLoakedServlet using MD5 instead of SHA1 ❌\n• MD5 / SHA1 與部署錯誤無關\n• 通常是加密或簽名相關問題，不影響 App Engine 部署"
+  },
+  {
+    "id": 39,
+    "question": "You are designing a mobile chat application. You want to ensure people cannot spoof chat messages, by providing a message was sent by a specific user. What should you do?",
+    "choices": [
+      "A. Tag messages client side with the originating user identifier and the destination user.",
+      "B. Encrypt the message client side using block-based encryption with a shared key.",
+      "C. Use public key infrastructure (PKI) to encrypt the message client side using the originating user's private key.",
+      "D. Use a trusted certificate authority to enable SSL connectivity between the client application and the server."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "問題重點\n• 防止訊息偽造 (message spoofing)\n• 要確保訊息真的來自特定使用者\n\n選項分析\n1. A. Tag messages client side with the originating user identifier ❌\n• 用戶端標籤可以被偽造 → 無法保證訊息真實性\n2. B. Encrypt message client side using a shared key ❌\n• 對稱加密只能保護內容不被竊取\n• 不能證明訊息來源 → 仍可能偽造\n3. C. Use PKI to encrypt with user’s private key ✅\n• 數位簽章 (Digital Signature)\n• 流程：\n  1. 發送者用自己的私鑰對訊息簽章\n  2. 接收者用發送者的公鑰驗證簽章\n• 可確保：\n• 訊息未被篡改\n• 訊息確實由發送者產生 → 防止偽造\n4. D. Use SSL (TLS) connectivity ❌\n• SSL 保護傳輸安全\n• 但不能保證訊息來源\n• 無法防止用戶偽造訊息"
+  },
+  {
+    "id": 40,
+    "question": "As part of implementing their disaster recovery plan, your company is trying to replicate their production MySQL database from their private data center to their GCP project using a Google Cloud VPN connection. They are experiencing latency issues and a small amount of packet loss that is disrupting the replication. What should they do?",
+    "choices": [
+      "A. Configure their replication to use UDP.",
+      "B. Configure a Google Cloud Dedicated Interconnect.",
+      "C. Restore their database daily using Google Cloud SQL.",
+      "D. Add additional VPN connections and load balance them.",
+      "E. Send the replicated transaction to Google Cloud Pub/Sub."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "題目關鍵：\n1. MySQL 需要可靠複製\n2. 使用 VPN → 出現延遲與少量封包丟失\n3. 目標：穩定、低延遲的連線\n\n選項分析：\n\nA. Configure their replication to use UDP\n• ❌ MySQL 複製是 TCP-based，UDP 無法保證順序與可靠性\n• 改成 UDP 會更容易丟資料，不適合\n\nB. Configure a Google Cloud Dedicated Interconnect\n• ✅ 正確做法\n• Dedicated Interconnect 提供專線連線 → 低延遲、高可靠性、低丟包率\n• 適合資料庫複製或災難復原場景\n• 官方推薦：資料庫複製跨資料中心 → 用 Interconnect 而不是 VPN\n\nC. Restore their database daily using Google Cloud SQL\n• ❌ 雖然可以做備份恢復，但不是實時複製\n• 無法滿足災難復原的 RTO/RPO 要求\n\nD. Add additional VPN connections and load balance them\n• ❌ 多 VPN 不能解決延遲問題\n• 雖然可以提升冗餘，但不保證可靠性與低丟包\n\nE. Send the replicated transaction to Google Cloud Pub/Sub\n• ❌ Pub/Sub 是訊息系統，無法直接取代 MySQL 複製\n• 不符合題目需求"
+  },
+  {
+    "id": 41,
+    "question": "Your customer support tool logs all email and chat conversations to Cloud Bigtable for retention and analysis. What is the recommended approach for sanitizing this data of personally identifiable information or payment card information before initial storage?",
+    "choices": [
+      "A. Hash all data using SHA256",
+      "B. Encrypt all data using elliptic curve cryptography",
+      "C. De-identify the data with the Cloud Data Loss Prevention API",
+      "D. Use regular expressions to find and redact phone numbers, email addresses, and credit card numbers"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 42,
+    "question": "You are using Cloud Shell and need to install a custom utility for use in a few weeks. Where can you store the file so it is in the default execution path and persists across sessions?",
+    "choices": [
+      "A. ~/bin",
+      "B. Cloud Storage",
+      "C. /google/scripts",
+      "D. /usr/local/bin"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 43,
+    "question": "You want to create a private connection between your instances on Compute Engine and your on-premises data center. You require a connection of at least 20 Gbps. You want to follow Google-recommended practices. How should you set up the connection?",
+    "choices": [
+      "A. Create a VPC and connect it to your on-premises data center using Dedicated Interconnect.",
+      "B. Create a VPC and connect it to your on-premises data center using a single Cloud VPN.",
+      "C. Create a Cloud Content Delivery Network (Cloud CDN) and connect it to your on-premises data center using Dedicated Interconnect.",
+      "D. Create a Cloud Content Delivery Network (Cloud CDN) and connect it to your on-premises datacenter using a single Cloud VPN."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 44,
+    "question": "You are analyzing and defining business processes to support your startup's trial usage of GCP, and you don't yet know what consumer demand for your product will be. Your manager requires you to minimize GCP service costs and adhere to Google best practices. What should you do?",
+    "choices": [
+      "A. Utilize free tier and sustained use discounts. Provision a staff position for service cost management.",
+      "B. Utilize free tier and sustained use discounts. Provide training to the team about service cost management.",
+      "C. Utilize free tier and committed use discounts. Provision a staff position for service cost management.",
+      "D. Utilize free tier and committed use discounts. Provide training to the team about service cost management."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "題目重點：\n• 背景：新創公司試用 GCP\n• 狀況：尚未知消費者需求 → 不確定資源使用量\n• 需求：最小化 GCP 成本，並遵循 Google 最佳實踐\n\n選項分析：\nA. 不正確 ❌ - Free tier + sustained use discount 是正確方向，但配置專職人力管理成本過高\nB. 正確 ✅ - Free tier + sustained use discount 適合不確定需求；成本管理訓練符合最佳實踐，避免額外人事支出\nC. 不正確 ❌ - Committed use discounts 僅適用於長期穩定需求；專職人力屬過度投資\nD. 不正確 ❌ - Committed use discounts 在試用階段不靈活，可能浪費\n\n結論：\n• 答案：B ✅\n• 理由：同時滿足低成本與彈性需求，並依循 Google 成本管理最佳實踐。"
+  },
+  {
+    "id": 45,
+    "question": "You are building a continuous deployment pipeline for a project stored in a Git source repository and want to ensure that code changes can be verified before deploying to production. What should you do?",
+    "choices": [
+      "A. Use Spinnaker to deploy builds to production using the red/black deployment strategy so that changes can easily be rolled back.",
+      "B. Use Spinnaker to deploy builds to production and run tests on production deployments.",
+      "C. Use Jenkins to build the staging branches and the master branch. Build and deploy changes to production for 10% of users before doing a complete rollout.",
+      "D. Use Jenkins to monitor tags in the repository. Deploy staging tags to a staging environment for testing. After testing, tag the repository for production and deploy that to the production environment."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "題目重點：\n• 背景：專案儲存在 Git repository\n• 需求：建立 Continuous Deployment pipeline\n• 重點：程式碼變更需要先驗證，再部署到 production\n\n選項分析：\nA. 不正確 ❌ - Red/black（blue/green）部署可回滾，但缺少 staging 驗證階段\nB. 不正確 ❌ - 在 production 上測試違反最佳實踐，應該先在 staging 測試\nC. 不正確 ❌ - 10% 流量金絲雀仍缺 staging 測試，可能將錯誤程式直接導入 production\nD. 正確 ✅ - Jenkins 監控 repo tags：先部署 staging tags 到 staging 驗證，再用 production tag 部署到 production，符合最佳實踐\n\n結論：\n• 答案：D ✅\n• 理由：唯一包含 staging 測試 → 符合 CI/CD pipeline 最佳實踐"
+  },
+  {
+    "id": 46,
+    "question": "You have an outage in your Compute Engine managed instance group: all instances keep restarting after 5 seconds. You have a health check configured, but autoscaling is disabled. Your colleague, who is a Linux expert, offered to look into the issue. You need to make sure that he can access the VMs. What should you do?",
+    "choices": [
+      "A. Grant your colleague the IAM role of project Viewer",
+      "B. Perform a rolling restart on the instance group",
+      "C. Disable the health check for the instance group. Add his SSH key to the project-wide SSH Keys",
+      "D. Disable autoscaling for the instance group. Add his SSH key to the project-wide SSH Keys"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 47,
+    "question": "Your company is migrating its on-premises data center into the cloud. As part of the migration, you want to integrate Google Kubernetes Engine (GKE) for workload orchestration. Parts of your architecture must also be PCI DSS-compliant. Which of the following is most accurate?",
+    "choices": [
+      "A. App Engine is the only compute platform on GCP that is certified for PCI DSS hosting.",
+      "B. GKE cannot be used under PCI DSS because it is considered shared hosting.",
+      "C. GKE and GCP provide the tools you need to build a PCI DSS-compliant environment.",
+      "D. All Google Cloud services are usable because Google Cloud Platform is certified PCI-compliant."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "題目重點：\n• 公司要上雲並用 GKE\n• 架構部分需要 PCI DSS 合規\n• 問：哪個敘述最準確？\n\n選項分析：\n\nA. App Engine is the only compute platform on GCP that is certified for PCI DSS hosting.\n• ❌ 錯誤。App Engine 不是唯一，Compute Engine、GKE 等服務也都可以在 PCI DSS 合規架構內使用。\n\nB. GKE cannot be used under PCI DSS because it is considered shared hosting.\n• ❌ 錯誤。雖然 PCI DSS 對 shared hosting 有要求，但 GKE 已在 GCP PCI DSS 認證範圍內，可以符合規範。\n\nC. GKE and GCP provide the tools you need to build a PCI DSS-compliant environment.\n• ✅ 正確。\n• GCP 本身獲得 PCI DSS 認證。\n• GKE 屬於合規範圍，你仍需要正確配置網路、存取控制、logging 等才能達到合規。\n\nD. All Google Cloud services are usable because Google Cloud Platform is certified PCI-compliant.\n• ❌ 錯誤。並不是所有 GCP 服務都在 PCI DSS scope 內（必須查官方 PCI DSS 範圍清單）。"
+  },
+  {
+    "id": 48,
+    "question": "Your company has multiple on-premises systems that serve as sources for reporting. The data has not been maintained well and has become degraded over time. You want to use Google-recommended practices to detect anomalies in your company data. What should you do?",
+    "choices": [
+      "A. Upload your files into Cloud Storage. Use Cloud Datalab to explore and clean your data.",
+      "B. Upload your files into Cloud Storage. Use Cloud Dataprep to explore and clean your data.",
+      "C. Connect Cloud Datalab to your on-premises systems. Use Cloud Datalab to explore and clean your data.",
+      "D. Connect Cloud Dataprep to your on-premises systems. Use Cloud Dataprep to explore and clean your data."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "A. Upload your files into Cloud Storage. Use Cloud Datalab to explore and clean your data.\n• Cloud Datalab 是 Jupyter Notebook 類似工具，用於分析與探索，但 Google 官方建議對資料清理與探索，尤其對非結構化或雜亂資料，Cloud Dataprep 更合適。\n• 因此不是最推薦做法。 ✅\n\nB. Upload your files into Cloud Storage. Use Cloud Dataprep to explore and clean your data.\n• Cloud Dataprep 是 Google 官方推薦的資料探索、清理與轉換工具，可自動偵測資料型態、找出異常值。\n• 即便資料是 on-premises，只要上傳到 Cloud Storage 就可以用 Dataprep 分析。\n• ✅ 這是 Google 推薦做法。\n\nC. Connect Cloud Datalab to your on-premises systems. Use Cloud Datalab to explore and clean your data.\n• Datalab 可以連 on-premises，但需要自己寫程式進行探索與清理，並沒有 Dataprep 自動化與視覺化優勢。\n• 不符合「Google 推薦做法」。 ❌\n\nD. Connect Cloud Dataprep to your on-premises systems. Use Cloud Dataprep to explore and clean your data.\n• Cloud Dataprep 支援直接連 on-premises DB 需要額外連線設定（如 VPN 或 Private Service Connect），但 Google 文件通常建議先將資料上傳到 Cloud Storage 再用 Dataprep 處理。\n• 雖可行，但不是推薦作法。 ❌"
+  },
+  {
+    "id": 49,
+    "question": "Google Cloud Platform resources are managed hierarchically using organization, folders, and projects. When Cloud Identity and Access Management (IAM) policies exist at these different levels, what is the effective policy at a particular node of the hierarchy?",
+    "choices": [
+      "A. The effective policy is determined only by the policy set at the node",
+      "B. The effective policy is the policy set at the node and restricted by the policies of its ancestors",
+      "C. The effective policy is the union of the policy set at the node and policies inherited from its ancestors",
+      "D. The effective policy is the intersection of the policy set at the node and policies inherited from its ancestors"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "題目關鍵：\n1. GCP 資源層級：Organization → Folders → Projects → Resources\n2. IAM 可以在不同層級設定\n3. 問題：某節點的實際生效政策 (effective policy) 是什麼？\n\n選項分析：\n\nA. 只看節點的政策\n• ❌ 錯誤\n• GCP IAM 會繼承上層政策，不只看本節點\n\nB. 節點政策受限於上層政策\n• ❌ 錯誤\n• IAM 不是受限於上層政策，而是累加上層的授權\n\nC. 節點政策與上層政策的聯集\n• ✅ 正確\n• IAM 的 effective policy = node policy + 繼承自 ancestors 的 policy\n• 上層政策自動繼承到下層，下層可以額外授權\n\nD. 節點政策與上層政策的交集\n• ❌ 錯誤\n• IAM 不會只取交集\n• 交集會導致下層某些授權無法生效，不符合 GCP 行為"
+  },
+  {
+    "id": 50,
+    "question": "You are migrating your on-premises solution to Google Cloud in several phases. You will use Cloud VPN to maintain a connection between your on-premises systems and Google Cloud until the migration is completed. You want to make sure all your on-premise systems remain reachable during this period. How should you organize your networking in Google Cloud?",
+    "choices": [
+      "A. Use the same IP range on Google Cloud as you use on-premises",
+      "B. Use the same IP range on Google Cloud as you use on-premises for your primary IP range and use a secondary range that does not overlap with the range you use on-premises",
+      "C. Use an IP range on Google Cloud that does not overlap with the range you use on-premises",
+      "D. Use an IP range on Google Cloud that does not overlap with the range you use on-premises for your primary IP range and use a secondary range with the same IP range as you use on-premises"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 51,
+    "question": "You have found an error in your App Engine application caused by missing Cloud Datastore indexes. You have created a YAML file with the required indexes and want to deploy these new indexes to Cloud Datastore. What should you do?",
+    "choices": [
+      "A. Point gcloud datastore create-indexes to your configuration file",
+      "B. Upload the configuration file to App Engine's default Cloud Storage bucket, and have App Engine detect the new indexes",
+      "C. In the GCP Console, use Datastore Admin to delete the current indexes and upload the new configuration file",
+      "D. Create an HTTP request to the built-in python module to send the index configuration file to your application"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "題目關鍵：\n1. App Engine 應用因缺少索引發生錯誤\n2. 已經建立 YAML 檔案定義新索引\n3. 目標：將索引部署到 Cloud Datastore\n\n選項分析：\n\nA. Point gcloud datastore create-indexes to your configuration file\n• ✅ 正確做法\n• 使用 gcloud datastore indexes create index.yaml 可以直接部署 YAML 中的索引到 Datastore\n• CLI 會自動處理索引建立，並顯示進度\n\nB. Upload YAML 到 App Engine 的 Cloud Storage bucket\n• ❌ App Engine 不會自動偵測 YAML 並建立索引\n• 需要透過 gcloud CLI 部署\n\nC. 用 Datastore Admin 刪除索引再上傳 YAML\n• ❌ 不需要刪除現有索引\n• Datastore 可以累加新索引，刪除索引僅用於移除不需要的索引\n\nD. 透過 HTTP request 送 YAML 到應用程式\n• ❌ App Engine / Datastore 不支援這種方式\n• 索引必須透過 gcloud 或 appcfg 部署"
+  },
+  {
+    "id": 52,
+    "question": "You have an application that will run on Compute Engine. You need to design an architecture that takes into account a disaster recovery plan that requires your application to fail over to another region in case of a regional outage. What should you do?",
+    "choices": [
+      "A. Deploy the application on two Compute Engine instances in the same project but in a different region. Use the first instance to serve traffic, and use the HTTP load balancing service to fail over to the standby instance in case of a disaster.",
+      "B. Deploy the application on a Compute Engine instance. Use the instance to serve traffic, and use the HTTP load balancing service to fail over to an instance on your premises in case of a disaster.",
+      "C. Deploy the application on two Compute Engine instance groups, each in the same project but in a different region. Use the first instance group to serve traffic, and use the HTTP load balancing service to fail over to the standby instance group in case of a disaster.",
+      "D. Deploy the application on two Compute Engine instance groups, each in a separate project and a different region. Use the first instance group to serve traffic, and use the HTTP load balancing service to fail over to the standby instance group in case of a disaster."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "題目重點：\n• 應用跑在 Compute Engine\n• 災難復原需求：跨 region failover\n• 要用 GCP 內建功能來設計\n\n選項分析：\n\nA. 兩個 VM 分別在不同 region，用 HTTP LB failover\n• ❌ 只是一台 VM → 沒有自動擴縮，也不是 GCP 建議架構\n• 不容易維護\n\nB. VM + on-prem failover\n• ❌ 回切到 on-prem，增加複雜度\n• 題目沒有提要混合架構\n\nC. 兩個 MIG (Managed Instance Group)，跨 region，HTTP LB failover\n• ✅ 標準做法\n• 用 全球 HTTP(S) Load Balancer → 可以跨 region 偵測健康狀態\n• 主要區域掛掉時，自動導流到備援 MIG\n\nD. 兩個 MIG 在不同 project + 不同 region\n• ⚠️ 雖然可行，但額外增加治理成本\n• 考題期待的是「單一 project」解法"
+  },
+  {
+    "id": 53,
+    "question": "You are deploying an application on App Engine that needs to integrate with an on-premises database. For security purposes, your on-premises database must not be accessible through the public internet. What should you do?",
+    "choices": [
+      "A. Deploy your application on App Engine standard environment and use App Engine firewall rules to limit access to the open on-premises database.",
+      "B. Deploy your application on App Engine standard environment and use Cloud VPN to limit access to the on-premises database.",
+      "C. Deploy your application on App Engine flexible environment and use App Engine firewall rules to limit access to the on-premises database.",
+      "D. Deploy your application on App Engine flexible environment and use Cloud VPN to limit access to the on-premises database."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "題目重點\n1. 應用部署在 App Engine。\n2. 需要連接 on-premises 資料庫。\n3. 安全需求：資料庫不能被公開網路存取。\n\n選項分析\n\nA. App Engine standard + firewall\n• App Engine firewall rules 是用來限制進入 App Engine 應用的流量，不是用來保護 on-premises DB。\n• ❌ 不符合安全需求\n\nB. App Engine standard + Cloud VPN\n• Cloud VPN 可以建立安全的私有通道連接 GCP 與 on-premises 網路。\n• App Engine standard 環境有一些網路限制，無法直接透過 VPN 連接 on-premises（需要使用 Serverless VPC Access）。\n• ✅ 可行，但需要額外配置 VPC Connector\n\nC. App Engine flexible + firewall\n• 同樣，firewall 無法保護 on-premises DB，仍會暴露在公網上。\n• ❌ 不符合要求\n\nD. App Engine flexible + Cloud VPN\n• App Engine flexible 可以直接連到 VPC，並透過 Cloud VPN 安全連接 on-premises。\n• ✅ 這是最簡單、推薦做法"
+  },
+  {
+    "id": 54,
+    "question": "You are working in a highly secured environment where public Internet access from the Compute Engine VMs is not allowed. You do not yet have a VPN connection to access an on-premises file server. You need to install specific software on a Compute Engine instance. How should you install the software?",
+    "choices": [
+      "A. Upload the required installation files to Cloud Storage. Configure the VM on a subnet with a Private Google Access subnet. Assign only an internal IP address to the VM. Download the installation files to the VM using gsutil.",
+      "B. Upload the required installation files to Cloud Storage and use firewall rules to block all traffic except the IP address range for Cloud Storage. Download the files to the VM using gsutil.",
+      "C. Upload the required installation files to Cloud Source Repositories. Configure the VM on a subnet with a Private Google Access subnet. Assign only an internal IP address to the VM. Download the installation files to the VM using gcloud.",
+      "D. Upload the required installation files to Cloud Source Repositories and use firewall rules to block all traffic except the IP address range for Cloud Source Repositories. Download the files to the VM using gsutil."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "題目重點：\n• 高安全性環境：VM 不能存取 Public Internet\n• 沒有 VPN 到 on-premises\n• 需求：在 VM 上安裝軟體\n• 可行做法：利用 Private Google Access 讓 VM 在只有 internal IP 的情況下仍能存取 Google API（含 Cloud Storage）\n\n選項分析：\nA. 正確 ✅ - 把安裝檔放到 Cloud Storage，VM 使用 Private Google Access 只配置 Internal IP，透過 gsutil 抓檔案 → 符合安全要求\nB. 不正確 ❌ - 防火牆設定 Cloud Storage IP range 難維護，仍需 Public Internet → 不符合條件\nC. 不正確 ❌ - Cloud Source Repositories 是程式碼 repo，不適合放安裝檔，下載方式錯誤\nD. 不正確 ❌ - 問題同 C，仍需 Public Internet\n\n結論：\n• 答案：A ✅\n• 理由：唯一能透過 Private Google Access 在無 Public Internet 環境下載安裝檔的方案"
+  },
+  {
+    "id": 55,
+    "question": "Your company is moving 75 TB of data into Google Cloud. You want to use Cloud Storage and follow Google-recommended practices. What should you do?",
+    "choices": [
+      "A. Move your data onto a Transfer Appliance. Use a Transfer Appliance Rehydrator to decrypt the data into Cloud Storage.",
+      "B. Move your data onto a Transfer Appliance. Use Cloud Dataprep to decrypt the data into Cloud Storage.",
+      "C. Install gsutil on each server that contains data. Use resumable transfers to upload the data into Cloud Storage.",
+      "D. Install gsutil on each server containing data. Use streaming transfers to upload the data into Cloud Storage."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "題目重點\n1. 資料量大：75 TB → 非常龐大，網路上傳可能耗時過長\n2. 使用 Cloud Storage\n3. 想依照 Google 官方推薦做法\n\n選項分析\n\nA. Transfer Appliance + Transfer Appliance Rehydrator\n• Transfer Appliance 是 Google 官方提供的線下大資料遷移方案，適合 TB 級以上資料。\n• 客戶把資料複製到 Appliance → 寄到 Google → Google 將資料導入 Cloud Storage。\n• Transfer Appliance Rehydrator 是 Appliance 附帶的工具，用來解密加密資料並上傳 Cloud Storage。\n• ✅ 官方建議：大量資料 (>10 TB) 用 Transfer Appliance，比網路上傳快且可靠。\n\nB. Transfer Appliance + Cloud Dataprep\n• Dataprep 是資料清理/轉換工具，不是用來解密上傳。\n• ❌ 不正確\n\nC. gsutil + resumable transfers\n• gsutil 的 resumable uploads 適合少量或中量資料。\n• 75 TB 的資料量太大，網路傳輸耗時且容易失敗。\n• ❌ 不推薦\n\nD. gsutil + streaming transfers\n• streaming 也需要網路傳輸，量大同樣不適合。\n• ❌ 不推薦"
+  },
+  {
+    "id": 56,
+    "question": "You have an application deployed on Google Kubernetes Engine using a Deployment named echo-deployment. The deployment is exposed using a Service called echo-service. You need to perform an update to the application with minimal downtime to the application. What should you do?",
+    "choices": [
+      "A. Use kubectl set image deployment/echo-deployment <new-image>",
+      "B. Use the rolling update functionality of the Instance Group behind the Kubernetes cluster",
+      "C. Update the deployment yaml file with the new container image. Use kubectl delete deployment/echo-deployment and kubectl create -f <yaml-file>",
+      "D. Update the service yaml file which the new container image. Use kubectl delete service/echo-service and kubectl create -f <yaml-file>"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 57,
+    "question": "Your company is using BigQuery as its enterprise data warehouse. Data is distributed over several Google Cloud projects. All queries on BigQuery need to be billed on a single project. You want to make sure that no query costs are incurred on the projects that contain the data. Users should be able to query the datasets, but not edit them. How should you configure users' access roles?",
+    "choices": [
+      "A. Add all users to a group. Grant the group the role of BigQuery user on the billing project and BigQuery dataViewer on the projects that contain the data.",
+      "B. Add all users to a group. Grant the group the roles of BigQuery dataViewer on the billing project and BigQuery user on the projects that contain the data.",
+      "C. Add all users to a group. Grant the group the roles of BigQuery jobUser on the billing project and BigQuery dataViewer on the projects that contain the data.",
+      "D. Add all users to a group. Grant the group the roles of BigQuery dataViewer on the billing project and BigQuery jobUser on the projects that contain the data."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "題目重點\n1. BigQuery 資料分散在多個專案\n2. 所有查詢費用要統一計入單一專案（billing project）\n3. 使用者可以查詢資料，但不能修改資料\n\n選項分析\n\nA. BigQuery user on billing project + dataViewer on data projects\n• bigquery.user 可以建立查詢作業並計費到該專案 ✅\n• dataViewer 可讀取資料，但不能修改 ✅\n• ✅ 符合題目需求\n\nB. dataViewer on billing project + user on data projects\n• 在 billing project 沒有 job 建立權限 ❌\n• 在 data projects 可以修改資料 ❌\n• ❌ 不符合要求\n\nC. jobUser on billing project + dataViewer on data projects\n• jobUser 可在 billing project 建立查詢作業 ✅\n• dataViewer 可在 data projects 讀取資料 ✅\n• ✅ 也可行，這是 Google 官方推薦做法\n• 與 A 唯一差別是 billing project 用 jobUser 而非 user，更嚴格安全\n\nD. dataViewer on billing + jobUser on data projects\n• jobUser 在 data projects 會造成費用計算在 data project ❌\n• ❌ 不符合要求"
+  },
+  {
+    "id": 58,
+    "question": "You have developed an application using Cloud ML Engine that recognizes famous paintings from uploaded images. You want to test the application and allow specific people to upload images for the next 24 hours. Not all users have a Google Account. How should you have users upload images?",
+    "choices": [
+      "A. Have users upload the images to Cloud Storage. Protect the bucket with a password that expires after 24 hours.",
+      "B. Have users upload the images to Cloud Storage using a signed URL that expires after 24 hours.",
+      "C. Create an App Engine web application where users can upload images. Configure App Engine to disable the application after 24 hours. Authenticate users via Cloud Identity.",
+      "D. Create an App Engine web application where users can upload images for the next 24 hours. Authenticate users via Cloud Identity."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "題目重點\n1. 應用使用 Cloud ML Engine\n2. 允許特定使用者上傳圖片測試\n3. 時間限制：24 小時\n4. 不是所有使用者都有 Google 帳號\n\n選項分析\n\nA. Cloud Storage + password 保護\n• GCS 本身沒有內建「密碼保護」功能\n• ❌ 不可行\n\nB. Cloud Storage + signed URL\n• Signed URL 可給任何人（不需要 Google 帳號）上傳檔案\n• 可設定有效期限（例如 24 小時）\n• ✅ 完全符合需求\n\nC. App Engine + Cloud Identity + disable app\n• Cloud Identity 需要使用者有 Google 帳號\n• 題目指出「不是所有使用者都有 Google 帳號」\n• ❌ 不符合需求\n\nD. App Engine + Cloud Identity\n• 同上，Cloud Identity 限制 Google 帳號使用者\n• ❌ 不符合需求"
+  },
+  {
+    "id": 59,
+    "question": "Your web application must comply with the requirements of the European Union's General Data Protection Regulation (GDPR). You are responsible for the technical architecture of your web application. What should you do?",
+    "choices": [
+      "A. Ensure that your web application only uses native features and services of Google Cloud Platform, because Google already has various certifications and provides pass-on compliance when you use native features.",
+      "B. Enable the relevant GDPR compliance setting within the GCPConsole for each of the services in use within your application.",
+      "C. Ensure that Cloud Security Scanner is part of your test planning strategy in order to pick up any compliance gaps.",
+      "D. Define a design for the security of data in your web application that meets GDPR requirements."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "題目重點\n1. Web 應用需符合 GDPR（歐盟一般資料保護規範）\n2. 你負責技術架構\n3. 選擇最合適的技術行動\n\n選項分析\n\nA. 只用 GCP 原生服務 → pass-on compliance\n• 雖然 GCP 有各種認證（ISO, SOC, GDPR 等），\n• 但是單用原生服務並不能保證你的應用符合 GDPR，因為應用邏輯、資料存取、設計決策仍由你負責\n• ❌ 不正確\n\nB. 啟用 GCP Console 中的「GDPR compliance setting」\n• 不存在這種設定\n• ❌ 不正確\n\nC. Cloud Security Scanner 幫助找合規性問題\n• Cloud Security Scanner 只掃描安全漏洞，例如 XSS、SQL Injection\n• 無法驗證 GDPR 符合性\n• ❌ 不正確\n\nD. 設計資料安全架構，符合 GDPR 要求\n• GDPR 要求包含：資料最小化、加密、刪除權、匿名化、資料傳輸限制等\n• 作為技術架構師，你必須設計系統來符合這些要求\n• ✅ 正確答案"
+  },
+  {
+    "id": 60,
+    "question": "You need to set up Microsoft SQL Server on GCP. Management requires that there's no downtime in case of a data center outage in any of the zones within a GCP region. What should you do?",
+    "choices": [
+      "A. Configure a Cloud SQL instance with high availability enabled.",
+      "B. Configure a Cloud Spanner instance with a regional instance configuration.",
+      "C. Set up SQL Server on Compute Engine, using Always On Availability Groups using Windows Failover Clustering. Place nodes in different subnets.",
+      "D. Set up SQL Server Always On Availability Groups using Windows Failover Clustering. Place nodes in different zones."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "題目重點\n1. Microsoft SQL Server\n2. 零停機需求 → 任何單一資料中心或區域內的 zone 故障不應影響可用性\n3. 部署在 GCP\n\n選項分析\n\nA. Cloud SQL + 高可用性 (HA)\n• Cloud SQL 支援 MySQL、PostgreSQL、SQL Server\n• HA 選項使用 主從架構（regional) + 自動故障轉移\n• ✅ 符合「單區故障不影響可用性」\n• 限制：自動管理，不需自己建 cluster\n\nB. Cloud Spanner + regional instance\n• Cloud Spanner 是 Google 自家分散式資料庫\n• ✅ 高可用性、全球一致性\n• ❌ 不支援 SQL Server，與題目要求不符\n\nC. SQL Server on Compute Engine + Always On AG + nodes in different subnets\n• 只放在不同 subnet，但可能在同一 zone → 單區故障仍會 downtime\n• ❌ 不符合「跨 zone HA」\n\nD. SQL Server + Always On AG + nodes in不同 zones\n• Always On Availability Groups + Windows Failover Cluster 支援跨 zone\n• ✅ 可以保證 zone 故障時應用零停機\n• 但需要自行管理 VM、Cluster、存儲 → 比 Cloud SQL HA 更複雜"
+  },
+  {
+    "id": 61,
+    "question": "The development team has provided you with a Kubernetes Deployment file. You have no infrastructure yet and need to deploy the application. What should you do?",
+    "choices": [
+      "A. Use gcloud to create a Kubernetes cluster. Use Deployment Manager to create the deployment.",
+      "B. Use gcloud to create a Kubernetes cluster. Use kubectl to create the deployment.",
+      "C. Use kubectl to create a Kubernetes cluster. Use Deployment Manager to create the deployment.",
+      "D. Use kubectl to create a Kubernetes cluster. Use kubectl to create the deployment."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "題目重點：\n• 已有：Kubernetes Deployment file (YAML)\n• 尚未有 infra → 需要先建 Kubernetes cluster，再 deploy\n• 工具選擇：\n  • gcloud：建立 GKE cluster\n  • kubectl：管理 Kubernetes 資源（包含 Deployment）\n  • Deployment Manager：基礎架構 as code，但不是直接用來 apply Deployment YAML\n\n選項分析：\n\nA. gcloud 建 cluster + Deployment Manager 部署\n• ❌ 問題：\n  • 建 cluster 用 gcloud 是對的\n  • 但 Deployment Manager 不是直接用來部署 K8s Deployment YAML\n\nB. gcloud 建 cluster + kubectl apply YAML\n• ✅ 優點：\n  • gcloud 建立 GKE cluster\n  • kubectl 部署 Deployment YAML\n  • 最符合需求\n\nC. kubectl 建立 cluster + 部署\n• ❌ 問題：\n  • kubectl 不能用來建立 cluster，只能管理既有 cluster\n\nD. kubectl 建立 cluster + 部署\n• ❌ 問題：\n  • 同上，kubectl 無法建立 cluster\n\n關鍵概念：\n• 建 cluster：gcloud\n• 部署 Deployment YAML：kubectl"
+  },
+  {
+    "id": 62,
+    "question": "You need to evaluate your team readiness for a new GCP project. You must perform the evaluation and create a skills gap plan which incorporates the business goal of cost optimization. Your team has deployed two GCP projects successfully to date. What should you do?",
+    "choices": [
+      "A. Allocate budget for team training. Set a deadline for the new GCP project.",
+      "B. Allocate budget for team training. Create a roadmap for your team to achieve Google Cloud certification based on job role.",
+      "C. Allocate budget to hire skilled external consultants. Set a deadline for the new GCP project.",
+      "D. Allocate budget to hire skilled external consultants. Create a roadmap for your team to achieve Google Cloud certification based on job role."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 63,
+    "question": "You are designing an application for use only during business hours. For the minimum viable product release, you'd like to use a managed product that automatically `scales to zero` so you don't incur costs when there is no activity. Which primary compute resource should you choose?",
+    "choices": [
+      "A. Cloud Functions",
+      "B. Compute Engine",
+      "C. Google Kubernetes Engine",
+      "D. AppEngine flexible environment"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 64,
+    "question": "You are creating an App Engine application that uses Cloud Datastore as its persistence layer. You need to retrieve several root entities for which you have the identifiers. You want to minimize the overhead in operations performed by Cloud Datastore. What should you do?",
+    "choices": [
+      "A. Create the Key object for each Entity and run a batch get operation",
+      "B. Create the Key object for each Entity and run multiple get operations, one operation for each entity",
+      "C. Use the identifiers to create a query filter and run a batch query operation",
+      "D. Use the identifiers to create a query filter and run multiple query operations, one operation for each entity"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "題目重點：\n• 環境：App Engine + Cloud Datastore\n• 已知：有多個 root entities 的 identifiers\n• 需求：取回這些 entities，並且要最小化 Datastore operations overhead\n\n選項分析：\nA. 正確 ✅ - 直接用 identifiers 建立 Key objects，並使用 batch get(keys) → 單次 RPC call 取回多筆資料，避免 query 開銷\nB. 不正確 ❌ - 雖然用 keys，但每個 entity 都要個別 get → 多次 RPC call → overhead 大\nC. 不正確 ❌ - 用 query filter 會觸發 index lookup，效率比直接 key lookup 差\nD. 不正確 ❌ - 每個 entity 都跑一次 query，操作 overhead 最大\n\n結論：\n• 答案：A ✅\n• 理由：Datastore 最有效率的存取方式是直接使用 Key batch get"
+  },
+  {
+    "id": 65,
+    "question": "You need to upload files from your on-premises environment to Cloud Storage. You want the files to be encrypted on Cloud Storage using customer-supplied encryption keys. What should you do?",
+    "choices": [
+      "A. Supply the encryption key in a .boto configuration file. Use gsutil to upload the files.",
+      "B. Supply the encryption key using gcloud config. Use gsutil to upload the files to that bucket.",
+      "C. Use gsutil to upload the files, and use the flag --encryption-key to supply the encryption key.",
+      "D. Use gsutil to create a bucket, and use the flag --encryption-key to supply the encryption key. Use gsutil to upload the files to that bucket."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "題目關鍵：\n1. 要上傳檔案到 Cloud Storage\n2. 使用客戶自帶加密金鑰 (CSEK, Customer-Supplied Encryption Key)\n3. 檔案在上傳時就加密\n\n選項分析：\n\nA. Supply the encryption key in a .boto configuration file. Use gsutil to upload the files.\n• ✅ 正確答案\n• gsutil 支援 CSEK，可以在 .boto 設定檔中加入 encryption_key。\n• 上傳檔案時會自動使用該金鑰進行物件加密，完全符合需求。\n\nB. Supply the encryption key using gcloud config. Use gsutil to upload the files to that bucket.\n• ❌ 錯誤原因：gcloud config 不支援直接設定 CSEK。\n\nC. Use gsutil to upload the files, and use the flag --encryption-key to supply the encryption key.\n• ❌ 錯誤原因：gsutil 沒有 --encryption-key 這種 flag（那是用在 KMS 的 CMEK，不是 CSEK）。\n\nD. Use gsutil to create a bucket, and use the flag --encryption-key to supply the encryption key. Use gsutil to upload the files to that bucket.\n• ❌ 錯誤原因：CSEK 是物件層級的，不是 bucket 層級，不能在建 bucket 時設定。"
+  },
+  {
+    "id": 66,
+    "question": "Your customer wants to capture multiple GBs of aggregate real-time key performance indicators (KPIs) from their game servers running on Google Cloud Platform and monitor the KPIs with low latency. How should they capture the KPIs?",
+    "choices": [
+      "A. Store time-series data from the game servers in Google Bigtable, and view it using Google Data Studio(Looker Studio).",
+      "B. Output custom metrics to Stackdriver(Cloud Monitoring) from the game servers, and create a Dashboard in Stackdriver Monitoring(Cloud Monitoring) Console to view them.",
+      "C. Schedule BigQuery load jobs to ingest analytics files uploaded to Cloud Storage every ten minutes, and visualize the results in Google Data Studio.",
+      "D. Insert the KPIs into Cloud Datastore(Firestore) entities, and run ad hoc analysis and visualizations of them in Cloud Datalab."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "題目重點：\n1. 遊戲伺服器在 GCP 上\n2. 需要收集多 GB 級別的即時 KPI\n3. 監控要求低延遲 (near real-time)\n4. 需要視覺化 / 監控 KPI\n\n選項分析：\n\nA. Bigtable + Data Studio\n• Bigtable 適合大規模時間序列資料，延遲低\n• Data Studio 可視化，但對即時監控不是最佳方案（通常是 batch / report 視覺化）\n• ✅ 儲存規模大，但可視化延遲可能不夠低\n\nB. 自訂 metrics → Stackdriver (Monitoring) dashboard\n• Stackdriver Monitoring 支援即時自訂 metrics，低延遲可更新 dashboard\n• 適合 KPI 監控 (如遊戲伺服器指標)\n• 可快速擴展到多 GB 的 metric volume\n• ✅ 非常符合「即時 KPI + 監控」需求\n\nC. BigQuery batch load + Data Studio\n• 每 10 分鐘批次上傳 → 延遲較高\n• ❌ 不符合「低延遲監控」需求\n\nD. Cloud Datastore + Datalab\n• Datastore 適合結構化資料，但查詢量大、分析延遲高\n• Datalab 是 notebook 分析工具，不適合即時監控\n• ❌ 不符合需求"
+  },
+  {
+    "id": 67,
+    "question": "You have a Python web application with many dependencies that requires 0.1 CPU cores and 128 MB of memory to operate in production. You want to monitor and maximize machine utilization. You also want to reliably deploy new versions of the application. Which set of steps should you take?",
+    "choices": [
+      "A. Perform the following: 1. Create a managed instance group with f1-micro type machines. 2. Use a startup script to clone the repository, check out the production branch, install the dependencies, and start the Python app. 3. Restart the instances to automatically deploy new production releases.",
+      "B. Perform the following: 1. Create a managed instance group with n1-standard-1 type machines. 2. Build a Compute Engine image from the production branch that contains all of the dependencies and automatically starts the Python app. 3. Rebuild the Compute Engine image, and update the instance template to deploy new production releases.",
+      "C. Perform the following: 1. Create a Google Kubernetes Engine (GKE) cluster with n1-standard-1 type machines. 2. Build a Docker image from the production branch with all of the dependencies, and tag it with the version number. 3. Create a Kubernetes Deployment with the imagePullPolicy set to 'IfNotPresent' in the staging namespace, and then promote it to the production namespace after testing.",
+      "D. Perform the following: 1. Create a GKE cluster with n1-standard-4 type machines. 2. Build a Docker image from the master branch with all of the dependencies, and tag it with 'latest'. 3. Create a Kubernetes Deployment in the default namespace with the imagePullPolicy set to 'Always'. Restart the pods to automatically deploy new production releases."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "題目關鍵：\n1. Python 應用依賴多、需要 0.1 CPU / 128 MB memory → 資源需求非常低\n2. 目標：監控並最大化機器使用率\n3. 目標：可靠部署新版本\n\n選項分析：\n\nA. Managed instance group + f1-micro + startup script\n• ❌ f1-micro 非常低資源，適合小測試，但管理大量依賴會變慢\n• Startup script 每次部署都要重新 clone、安裝依賴 → 部署不可靠\n• CPU/memory 利用率可能低，無法最大化機器使用率\n\nB. Managed instance group + n1-standard-1 + pre-built image\n• ❌ 部署新版本需要重建 Compute Engine image → 低彈性\n• 雖然可以控制啟動應用，但不是最有效率的方式\n• 無法快速擴縮，CPU 利用率仍可能不高\n\nC. GKE cluster + Docker image + Deployment + staging → production promotion\n• ✅ 適合多依賴、輕量 Python 應用\n• Docker image 包含所有依賴 → 部署可靠\n• GKE 可以自動調度多個容器 → 最大化資源利用率\n• 可以先在 staging namespace 測試，再推到 production → 安全可靠\n• imagePullPolicy ‘IfNotPresent’ → 避免每次拉取 image，提升效率\n\nD. GKE cluster + Docker image + Deployment + imagePullPolicy Always\n• ❌ 使用 n1-standard-4 過大 → 低資源應用浪費資源\n• imagePullPolicy Always → 每次重新啟動都拉最新 image，增加延遲\n• 沒有 staging namespace → 部署風險高"
+  },
+  {
+    "id": 68,
+    "question": "Your company wants to start using Google Cloud resources but wants to retain their on-premises Active Directory domain controller for identity management. What should you do?",
+    "choices": [
+      "A. Use the Admin Directory API to authenticate against the Active Directory domain controller.",
+      "B. Use Google Cloud Directory Sync to synchronize Active Directory usernames with cloud identities and configure SAML SSO.",
+      "C. Use Cloud Identity-Aware Proxy configured to use the on-premises Active Directory domain controller as an identity provider.",
+      "D. Use Compute Engine to create an Active Directory (AD) domain controller that is a replica of the on-premises AD domain controller using Google Cloud Directory Sync."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "題目重點\n1. 公司要保留本地 AD 做身份管理\n2. Google Cloud 需要能認證用戶\n3. 選擇官方推薦做法\n\n選項分析\n\nA. 使用 Admin Directory API 直接驗證 AD ❌\n• Admin Directory API 只能操作 Google Workspace / Cloud Identity\n• 無法直接用它驗證本地 AD 帳號\n\nB. 使用 Google Cloud Directory Sync (GCDS) 同步 AD 用戶 + SAML SSO ✅\n• GCDS 可以將本地 AD 用戶同步到 Cloud Identity / Google Workspace\n• 配合 SAML SSO，用戶可以用原本 AD 帳號登入 Google Cloud 資源\n• ✅ 官方建議做法，也是標準流程\n\nC. Cloud Identity-Aware Proxy 配置 AD 作為 IdP ❌\n• Cloud IAP 用於控制應用層存取（Web App、VM 服務）\n• 不能直接用作整個 GCP 的身份管理\n\nD. 在 Compute Engine 建 AD replica + GCDS ❌\n• 過於複雜，且不必要\n• 官方推薦直接用 GCDS + SAML SSO，而不是在雲端建新的 AD"
+  },
+  {
+    "id": 69,
+    "question": "You are running a cluster on Kubernetes Engine (GKE) to serve a web application. Users are reporting that a specific part of the application is not responding anymore. You notice that all pods of your deployment keep restarting after 2 seconds. The application writes logs to standard output. You want to inspect the logs to find the cause of the issue. Which approach can you take?",
+    "choices": [
+      "A. Review the Stackdriver logs(Cloud Logging entries) for each Compute Engine instance that is serving as a node in the cluster.",
+      "B. Review the Stackdriver logs for(Cloud Logging entries) the specific GKE container that is serving the unresponsive part of the application.",
+      "C. Connect to the cluster using gcloud credentials and connect to a container in one of the pods to read the logs.",
+      "D. Review the Serial Port logs for each Compute Engine instance that is serving as a node in the cluster."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 70,
+    "question": "You are using a single Cloud SQL instance to serve your application from a specific zone. You want to introduce high availability. What should you do?",
+    "choices": [
+      "A. Create a read replica instance in a different region",
+      "B. Create a failover replica instance in a different region",
+      "C. Create a read replica instance in the same region, but in a different zone",
+      "D. Create a failover replica instance in the same region, but in a different zone"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "題目關鍵：\n1. 目前只有單一 Cloud SQL 實例\n2. 想要高可用性 → 容錯、避免單點故障\n3. 目標：系統在 zone 發生故障時仍能運作\n\n選項分析：\n\nA. Create a read replica instance in a different region\n• ❌ 讀取副本 (read replica) 只支援讀取\n• 無法自動接管主實例 → 不能提供 HA\n\nB. Create a failover replica instance in a different region\n• ❌ Cloud SQL HA replica 必須在同一 region，不支援跨 region\n• 跨區只是讀副本可以做到，Failover 只在同區不同 zone\n\nC. Create a read replica instance in the same region, but in a different zone\n• ❌ 仍然是讀副本 → 無法自動接管寫入\n• 不能滿足高可用需求\n\nD. Create a failover replica instance in the same region, but in a different zone\n• ✅ 正確做法\n• Cloud SQL HA（高可用性）使用主實例 + failover replica\n• Failover replica 在不同 zone → zone 故障時自動接管\n• 適合業務關鍵資料、零停機需求"
+  },
+  {
+    "id": 71,
+    "question": "Your company is running a stateless application on a Compute Engine instance. The application is used heavily during regular business hours and lightly outside of business hours. Users are reporting that the application is slow during peak hours. You need to optimize the application's performance. What should you do?",
+    "choices": [
+      "A. Create a snapshot of the existing disk. Create an instance template from the snapshot. Create an autoscaled managed instance group from the instance template.",
+      "B. Create a snapshot of the existing disk. Create a custom image from the snapshot. Create an autoscaled managed instance group from the custom image.",
+      "C. Create a custom image from the existing disk. Create an instance template from the custom image. Create an autoscaled managed instance group from the instance template.",
+      "D. Create an instance template from the existing disk. Create a custom image from the instance template. Create an autoscaled managed instance group from the custom image."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "題目關鍵：\n1. 應用是 stateless → 可以水平擴展\n2. 高峰時段用戶反應慢 → 需要 autoscaling\n3. 需要可靠複製現有 VM → 需要 Instance Template 或 Custom Image\n\n選項分析：\n\nA. Snapshot → Instance Template → MIG\n• ❌ 錯誤順序\n• Instance Template 不能直接從 snapshot 建立，需要 Custom Image\n\nB. Snapshot → Custom Image → MIG\n• ❌ snapshot → Custom Image 是正確，但沒有 Instance Template\n• Managed Instance Group (MIG) 需要 Instance Template 來建立實例\n\nC. Custom Image → Instance Template → MIG\n• ✅ 正確做法\n• 先從現有磁碟建立 Custom Image → 封裝完整系統和應用\n• 從 Custom Image 建立 Instance Template → 定義 MIG 使用的配置\n• 建立 Autoscaled Managed Instance Group → 根據負載自動調整實例數量\n• 完全符合水平擴展 stateless 應用的最佳實踐\n\nD. Instance Template → Custom Image → MIG\n• ❌ Instance Template 不能反過來生成 Custom Image\n• 流程錯誤"
+  },
+  {
+    "id": 72,
+    "question": "Your web application has several VM instances running within a VPC. You want to restrict communications between instances to only the paths and ports you authorize, but you don't want to rely on static IP addresses or subnets because the app can autoscale. How should you restrict communications?",
+    "choices": [
+      "A. Use separate VPCs to restrict traffic",
+      "B. Use firewall rules based on network tags attached to the compute instances",
+      "C. Use Cloud DNS and only allow connections from authorized hostnames",
+      "D. Use service accounts and configure the web application to authorize particular service accounts to have access"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 73,
+    "question": "You are using Cloud SQL as the database backend for a large CRM deployment. You want to scale as usage increases and ensure that you don't run out of storage, maintain 75% CPU usage cores, and keep replication lag below 60 seconds. What are the correct steps to meet your requirements?",
+    "choices": [
+      "A. 1. Enable automatic storage increase for the instance. 2. Create a Stackdriver(Cloud Monitoring) alert when CPU usage exceeds 75%, and change the instance type to reduce CPU usage. 3. Create a Stackdriver alert for replication lag, and shard the database to reduce replication time.",
+      "B. 1. Enable automatic storage increase for the instance. 2. Change the instance type to a 32-core machine type to keep CPU usage below 75%. 3. Create a Stackdriver alert for replication lag, and deploy memcache to reduce load on the master.",
+      "C. 1. Create a Stackdriver alert(Cloud Monitoring alert) when storage exceeds 75%, and increase the available storage on the instance to create more space. 2. Deploy memcached to reduce CPU load. 3. Change the instance type to a 32-core machine type to reduce replication lag.",
+      "D. 1. Create a Stackdriver alert(Cloud Monitoring alert) when storage exceeds 75%, and increase the available storage on the instance to create more space. 2. Deploy memcached to reduce CPU load. 3. Create a Stackdriver alert for replication lag, and change the instance type to a 32-core machine type to reduce replication lag."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "題目重點：\n1. 使用單一 Cloud SQL MySQL 作為 CRM 資料庫\n2. 需求：\n• 自動擴展儲存 → 避免用完磁碟\n• 維持 CPU 使用率 75% → 避免過載\n• 複寫延遲 < 60 秒 → 確保資料一致性\n3. 目標：在流量增加時，資料庫能自動擴展並維持穩定性能\n\n選項分析：\n\nA. Enable automatic storage increase + CPU alert + replication lag alert + sharding\n• ✅ 自動儲存增長 → 避免磁碟耗盡\n• ✅ CPU 監控 + 調整 instance type → 控制 CPU 使用率在目標內\n• ✅ Replication lag 監控 + 分片 → 減少延遲，保護複寫可靠性\n• ✅ 整體：使用 Cloud SQL 原生功能 + 監控 + 擴展手段，符合題目需求\n• 正確答案\n\nB. Automatic storage increase + 固定升級到 32-core + Memcache\n• ❌ 過度固定升級 instance type，未動態依 CPU 負載調整\n• ❌ Memcache 雖能減輕負載，但題目重點是監控和自動擴展\n\nC. 手動監控儲存 + Memcached + 升級 instance\n• ❌ 沒有啟用自動儲存增長 → 需手動操作，風險高\n• ❌ 部署 Memcached 和固定升級 instance type 無法完全解決高峰負載\n\nD. 手動監控儲存 + Memcached + replication alert + 升級 instance\n• ❌ 與 C 類似，沒有自動儲存增長 → 不是最佳做法"
+  },
+  {
+    "id": 74,
+    "question": "You are tasked with building an online analytical processing (OLAP) marketing analytics and reporting tool. This requires a relational database that can operate on hundreds of terabytes of data. What is the Google-recommended tool for such applications?",
+    "choices": [
+      "A. Cloud Spanner, because it is globally distributed",
+      "B. Cloud SQL, because it is a fully managed relational database",
+      "C. Cloud Firestore, because it offers real-time synchronization across devices",
+      "D. BigQuery, because it is designed for large-scale processing of tabular data"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 75,
+    "question": "You have deployed an application to Google Kubernetes Engine (GKE), and are using the Cloud SQL proxy container to make the Cloud SQL database available to the services running on Kubernetes. You are notified that the application is reporting database connection issues. Your company policies require a post-mortem. What should you do?",
+    "choices": [
+      "A. Use gcloud sql instances restart.",
+      "B. Validate that the Service Account used by the Cloud SQL proxy container still has the Cloud Build Editor role.",
+      "C. In the GCP Console, navigate to Stackdriver Logging(Cloud Logging). Consult logs for (GKE) and Cloud SQL.",
+      "D. In the GCP Console, navigate to Cloud SQL. Restore the latest backup. Use kubectl to restart all pods."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 76,
+    "question": "Your company pushes batches of sensitive transaction data from its application server VMs to Cloud Pub/Sub for processing and storage. What is the Google-recommended way for your application to authenticate to the required Google Cloud services?",
+    "choices": [
+      "A. Ensure that VM service accounts are granted the appropriate Cloud Pub/Sub IAM roles.",
+      "B. Ensure that VM service accounts do not have access to Cloud Pub/Sub, and use VM access scopes to grant the appropriate Cloud Pub/Sub IAM roles.",
+      "C. Generate an OAuth2 access token for accessing Cloud Pub/Sub, encrypt it, and store it in Cloud Storage for access from each VM.",
+      "D. Create a gateway to Cloud Pub/Sub using a Cloud Function, and grant the Cloud Function service account the appropriate Cloud Pub/Sub IAM roles."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "選項分析\n\nA. VM service accounts + 適當 IAM 角色 ✅\n• 官方推薦做法：\n• 每台 VM 都有 service account（建議不要用預設帳號）\n• 直接給該 service account 對應的 Cloud Pub/Sub IAM 角色（例如 roles/pubsub.publisher）\n• 好處：\n• 無需管理憑證\n• IAM 與 audit logging 原生支援\n• 安全又方便\n\nB. VM 不給 IAM 角色，只用 access scopes ❌\n• Access Scopes 早期是 GCP VM 的身份驗證方式\n• 已不建議使用，會限制 IAM 的粒度與安全性\n• ❌ 不正確\n\nC. 自行生成 OAuth2 token + 加密存 Cloud Storage ❌\n• 不建議手動管理憑證，容易出錯\n• 官方推薦用 VM service account + IAM\n• ❌ 不正確\n\nD. 用 Cloud Function 作 gateway ❌\n• 太複雜，不必要\n• VM 可以直接用 service account 存取 Pub/Sub\n• ❌ 不正確"
+  },
+  {
+    "id": 77,
+    "question": "You want to establish a Compute Engine application in a single VPC across two regions. The application must communicate over VPN to an on-premises network. How should you deploy the VPN?",
+    "choices": [
+      "A. Use VPC Network Peering between the VPC and the on-premises network.",
+      "B. Expose the VPC to the on-premises network using IAM and VPC Sharing.",
+      "C. Create a global Cloud VPN Gateway with VPN tunnels from each region to the on-premises peer gateway.",
+      "D. Deploy Cloud VPN Gateway in each region. Ensure that each region has at least one VPN tunnel to the on-premises peer gateway."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "題目重點：\n1. Compute Engine 應用部署在單一 VPC，跨兩個 region\n2. 需要與 on-premises 網路 VPN 連線\n3. 目標：可靠、可用性高\n\n選項分析：\n\nA. VPC Network Peering\n• ❌ VPC Peering 只能連接兩個 VPC，不能用來連線到 on-premises 網路\n• 不符合題目需求\n\nB. IAM + VPC Sharing\n• ❌ IAM/VPC Sharing 用於多專案共享 VPC，不是 VPN 或跨資料中心連線工具\n• 不符合需求\n\nC. 全域 Cloud VPN Gateway + VPN tunnels\n• ❌ Cloud VPN 不是全域性的\n• VPN Gateway 需要部署在每個 region，不能只用一個 global gateway\n\nD. 在每個 region 部署 Cloud VPN Gateway，每個 region 至 on-premises 至少一條 tunnel\n• ✅ 正確做法\n• 每個 region 的實例都能透過各自的 VPN tunnel 連線到 on-premises\n• 提高可用性與容錯\n• 支援跨 region VPC 與 on-premises VPN"
+  },
+  {
+    "id": 78,
+    "question": "Your applications will be writing their logs to BigQuery for analysis. Each application should have its own table. Any logs older than 45 days should be removed. You want to optimize storage and follow Google-recommended practices. What should you do?",
+    "choices": [
+      "A. Configure the expiration time for your tables at 45 days",
+      "B. Make the tables time-partitioned, and configure the partition expiration at 45 days",
+      "C. Rely on BigQuery's default behavior to prune application logs older than 45 days",
+      "D. Create a script that uses the BigQuery command line tool (bq) to remove records older than 45 days"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 79,
+    "question": "You want your Google Kubernetes Engine cluster to automatically add or remove nodes based on CPU load. What should you do?",
+    "choices": [
+      "A. Configure a HorizontalPodAutoscaler with a target CPU usage. Enable the Cluster Autoscaler from the GCP Console.",
+      "B. Configure a HorizontalPodAutoscaler with a target CPU usage. Enable autoscaling on the managed instance group for the cluster using the gcloud command.",
+      "C. Create a deployment and set the maxUnavailable and maxSurge properties. Enable the Cluster Autoscaler using the gcloud command.",
+      "D. Create a deployment and set the maxUnavailable and maxSurge properties. Enable autoscaling on the cluster managed instance group from the GCP Console."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "題目重點：\n• 要讓 GKE cluster 自動加減節點 (nodes)，根據 CPU load。\n• 關鍵：\n  - Pod 層級自動調整 → HorizontalPodAutoscaler (HPA)\n  - 節點層級自動調整 → Cluster Autoscaler (CA)\n• 題目要求的是自動增減節點，不是單純 Pod 數量。\n\n選項分析：\n\nA. HPA + Cluster Autoscaler (Console)\n• ✅ 正確答案\n• HPA 負責根據 CPU 使用率調整 Pod 數量。\n• Cluster Autoscaler 會根據 Pod 的需求，自動擴縮節點數。\n• 這正是 GKE 官方建議的組合。\n\nB. HPA + Instance Group Autoscaler (gcloud)\n• ❌ 錯誤\n• GKE 使用的是 Cluster Autoscaler，不是直接調整底層 MIG。\n• 若直接對 MIG 啟用 autoscaling，會和 GKE 控制器衝突。\n\nC. Deployment + maxUnavailable/maxSurge + Cluster Autoscaler\n• ❌ 錯誤\n• maxUnavailable 和 maxSurge 是滾動更新策略，和 autoscaling 無關。\n\nD. Deployment + maxUnavailable/maxSurge + MIG autoscaling (Console)\n• ❌ 錯誤\n• 同 C，一樣錯誤，還會和 GKE 控制器衝突。"
+  },
+  {
+    "id": 80,
+    "question": "You need to develop procedures to verify resilience of disaster recovery for remote recovery using GCP. Your production environment is hosted on-premises. You need to establish a secure, redundant connection between your on-premises network and the GCP network. What should you do?",
+    "choices": [
+      "A. Verify that Dedicated Interconnect can replicate files to GCP. Verify that direct peering can establish a secure connection between your networks if Dedicated Interconnect fails.",
+      "B. Verify that Dedicated Interconnect can replicate files to GCP. Verify that Cloud VPN can establish a secure connection between your networks if Dedicated Interconnect fails.",
+      "C. Verify that the Transfer Appliance can replicate files to GCP. Verify that direct peering can establish a secure connection between your networks if the Transfer Appliance fails.",
+      "D. Verify that the Transfer Appliance can replicate files to GCP. Verify that Cloud VPN can establish a secure connection between your networks if the Transfer Appliance fails."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "選項分析\n\nA. Dedicated Interconnect + direct peering ❌\n• Dedicated Interconnect → 高速、低延遲的專線\n• Direct peering → 是 Google 與你的網路提供商建立的互聯，不是用於災難備援連線，Direct Peering 是非加密的公網層級連線（不經 Cloud VPN），不符合「secure connection」的要求\n• ❌ 不適合做備援\n\nB. Dedicated Interconnect + Cloud VPN ✅\n• 主要通道：Dedicated Interconnect\n• 備援通道：Cloud VPN（透過公網加密隧道）\n• 官方建議做法：高速專線 + VPN 做 failover\n• ✅ 適合災難復原測試\n\nC. Transfer Appliance + direct peering ❌\n• Transfer Appliance → 一次性大規模資料遷移\n• 不能作為持續、冗餘的網路連線\n• ❌ 不適合 DR\n\nD. Transfer Appliance + Cloud VPN ❌\n• 同上，Transfer Appliance 只適合初次資料遷移，不是長期連線\n• ❌ 不適合 DR"
+  }
+]

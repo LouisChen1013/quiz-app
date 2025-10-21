@@ -1,0 +1,486 @@
+[
+  {
+    "id": 161,
+    "question": "A recent audit revealed that a new network was created in your GCP project. In this network, a GCE instance has an SSH port open to the world. You want to discover this network's origin. What should you do?",
+    "choices": [
+      "A. Search for Create VM entry in the Stackdriver alerting console(Cloud Monitoring alerting console).",
+      "B. Navigate to the Activity page in the Home section. Set category to Data Access and search for Create VM entry.",
+      "C. In the Logging(Cloud Logging) section of the console, specify GCE Network as the logging section. Search for the Create Insert entry.",
+      "D. Connect to the GCE instance using project SSH keys. Identify previous logins in system logs, and match these with the project owners list."
+    ],
+    "answer": "C",
+    "description": "題目重點：\n• 情境：稽核發現有人建立了一個新的 VPC network\n• 該 network 裡的 GCE VM → SSH port 對全世界開放\n• 需求：追查 network 的來源（誰建立的、何時建立）\n\n選項分析：\n\nA. Search for Create VM entry in the Stackdriver alerting console\n• ❌ Alerting 不是查來源的正確方式，alert 只能監控特定條件，無法完整記錄資源建立事件\n\nB. Navigate to the Activity page in the Home section. Set category to Data Access and search for Create VM entry\n• ⚠️ Activity page 可以查誰做了哪些操作，但 Data Access 類別是查資料讀寫\n• VM 建立屬於 Admin Activity，不是 Data Access → 不完全正確\n\nC. In the Logging section of the console, specify GCE Network as the logging section. Search for the Create Insert entry\n• ✅ 正解\n• Cloud Logging (Stackdriver Logging) 可查 Admin Activity logs\n• GCE Network 操作（建立 VPC、開防火牆）會記錄為 compute.networks.insert 或 compute.firewalls.insert\n• 能找到誰建立了 network\n\nD. Connect to the GCE instance using project SSH keys. Identify previous logins in system logs, and match these with the project owners list\n• ❌ 查登入紀錄只能看到誰登入 VM，不會告訴你誰建立 network"
+  },
+  {
+    "id": 162,
+    "question": "You want to make a copy of a production Linux virtual machine in the US-Central region. You want to manage and replace the copy easily if there are changes on the production virtual machine. You will deploy the copy as a new instance in a different project in the US-East region. What steps must you take?",
+    "choices": [
+      "A. Use the Linux dd and netcat commands to copy and stream the root disk contents to a new virtual machine instance in the US-East region.",
+      "B. Create a snapshot of the root disk and select the snapshot as the root disk when you create a new virtual machine instance in the US-East region.",
+      "C. Create an image file from the root disk with Linux dd command, create a new virtual machine instance in the US-East region",
+      "D. Create a snapshot of the root disk, create an image file in Google Cloud Storage from the snapshot, and create a new virtual machine instance in the US-East region using the image file the root disk."
+    ],
+    "answer": "D",
+    "description": "題目重點：\n• 來源：Production Linux VM in us-central\n• 目的：要複製一份 VM 到不同 project + us-east region\n• 需求：方便管理、替換（隨著 production VM 有變化，能快速重新建立副本）\n\n選項分析：\n\nA. Use Linux dd + netcat\n• ❌ 手動用 dd + netcat 複製磁碟內容 → 不可擴展，也不是 Google Cloud 建議方式\n• 無法簡單管理和重新部署\n\nB. Create a snapshot of the root disk, and use the snapshot to create a VM in us-east\n• ⚠️ Snapshots 是 region-based，屬於單一 project\n• 直接用 snapshot 在另一 project + region 建立 VM → 不行，需要先轉成 image\n\nC. Create an image file from the root disk with Linux dd, create new VM in us-east\n• ❌ 低階操作，不是最佳實踐\n• 無法方便管理和更新\n\nD. Create a snapshot of the root disk → create an image in Cloud Storage → create new VM from that image in us-east\n• ✅ 正確\n• 標準做法：\n  1. 從 root disk 建立 snapshot\n  2. 透過 snapshot 建立 image（image 可以存在 Cloud Storage，支援跨 region / project）\n  3. 在另一 project + us-east region，用 image 建立新 VM\n• 一旦 production VM 有變動，只要再更新 snapshot → 重新建 image → 快速替換副本"
+  },
+  {
+    "id": 163,
+    "question": "Your company runs several databases on a single MySQL instance. They need to take backups of a specific database at regular intervals. The backup activity needs to complete as quickly as possible and cannot be allowed to impact disk performance. How should you configure the storage?",
+    "choices": [
+      "A. Configure a cron job to use the gcloud tool to take regular backups using persistent disk snapshots.",
+      "B. Mount a Local SSD volume as the backup location. After the backup is complete, use gsutil to move the backup to Google Cloud Storage.",
+      "C. Use gcsfuse to mount a Google Cloud Storage bucket as a volume directly on the instance and write backups to the mounted location using mysqldump.",
+      "D. Mount additional persistent disk volumes onto each virtual machine (VM) instance in a RAID10 array and use LVM to create snapshots to send to Cloud Storage"
+    ],
+    "answer": "B",
+    "description": "題目關鍵點：\n• 單一 MySQL instance 上有多個資料庫\n• 需求：只備份特定資料庫（非整顆磁碟）\n• 備份要快\n• 不能影響磁碟效能\n\n選項分析：\n\nA. 用 gcloud + persistent disk snapshots\n• Snapshot 是針對整個磁碟，不是單一 DB → 不符合需求\n• Snapshot 時可能會有 I/O freeze → 影響磁碟效能\n• ❌ 不適合\n\nB. Local SSD 當暫存備份區，之後搬到 Cloud Storage\n• Local SSD → 超高速、低延遲，寫入快，不會拖慢主要 Persistent Disk 的 I/O\n• 流程：mysqldump (或 xtrabackup) → Local SSD → gsutil → Cloud Storage\n• ✅ 符合需求，最佳解\n\nC. gcsfuse 掛載 GCS 當目錄 → 直接寫備份\n• gcsfuse 適合小檔案，不適合高吞吐量、大檔案（尤其 MySQL 備份）\n• 效能差，延遲高，會拖慢備份\n• ❌ 不適合\n\nD. RAID10 + LVM snapshots → 傳到 GCS\n• RAID10 是為了效能與容錯，但仍在同一組磁碟陣列上。LVM snapshot 仍會增加原始磁碟的寫入負擔（Copy-on-Write 機制）。仍會影響主磁碟效能，違反「cannot impact disk performance」"
+  },
+  {
+    "id": 164,
+    "question": "You are helping the QA team to roll out a new load-testing tool to test the scalability of your primary cloud services that run on Google Compute Engine with Cloud Bigtable. Which three requirements should they include?",
+    "choices": [
+      "A. Ensure that the load tests validate the performance of Cloud Bigtable",
+      "B. Create a separate Google Cloud project to use for the load-testing environment",
+      "C. Schedule the load-testing tool to regularly run against the production environment",
+      "D. Ensure all third-party systems your services use is capable of handling high load",
+      "E. Instrument the production services to record every transaction for replay by the load-testing tool",
+      "F. Instrument the load-testing tool and the target services with detailed logging and metrics collection"
+    ],
+    "answer": ["A", "B", "F"],
+    "description": "題目重點：\n• 環境：Google Compute Engine + Cloud Bigtable\n• 任務：QA team rollout load-testing tool\n• 目標：測 scalability、效能，並且符合 Google Cloud 最佳實踐\n\n選項分析：\n\nA. Ensure that the load tests validate the performance of Cloud Bigtable\n• Cloud Bigtable 是核心依賴服務，必須確認能在高負載下維持效能\n• ✅ 必須\n\nB. Create a separate Google Cloud project to use for the load-testing environment\n• Load testing 可能製造大量 request / log，與 production 混在同一個 project 會讓 monitoring / billing 混亂\n• 使用獨立 project → 隔離資源、計費清晰、安全性更好\n• ✅ 必須\n\nC. Schedule the load-testing tool to regularly run against the production environment\n• ❌ 錯。不能直接打 production → 會影響真實用戶\n• 一般會對 staging / dedicated test 環境做壓測，再根據需要少量針對 production 做 controlled test\n\nD. Ensure all third-party systems your services use is capable of handling high load\n• Load testing 主要針對自己管理的 GCE + Bigtable，不會去壓第三方服務\n• ❌ 不適合當 requirement\n\nE. Instrument the production services to record every transaction for replay by the load-testing tool\n• ❌ 不需要記錄每筆交易（overhead 很大）\n• Load test 工具通常模擬 traffic pattern，不需要精確回放所有 production transaction\n\nF. Instrument the load-testing tool and the target services with detailed logging and metrics collection\n• 要有 metrics 和 logging 才能驗證結果（latency, throughput, errors, Bigtable response time）\n• ✅ 必須"
+  },
+  {
+    "id": 165,
+    "question": "Your customer is moving their corporate applications to Google Cloud Platform. The security team wants detailed visibility of all projects in the organization. You provision the Google Cloud Resource Manager and set up yourself as the org admin. What Google Cloud Identity and Access Management (Cloud IAM) roles should you give to the security team?",
+    "choices": [
+      "A. Org viewer, project owner",
+      "B. Org viewer, project viewer",
+      "C. Org admin, project browser",
+      "D. Project owner, network admin"
+    ],
+    "answer": "B",
+    "description": null
+  },
+  {
+    "id": 166,
+    "question": "Your company places a high value on being responsive and meeting customer needs quickly. Their primary business objectives are release speed and agility. You want to reduce the chance of security errors being accidentally introduced. Which two actions can you take?",
+    "choices": [
+      "A. Ensure every code check-in is peer reviewed by a security SME",
+      "B. Use source code security analyzers as part of the CI/CD pipeline",
+      "C. Ensure you have stubs to unit test all interfaces between components",
+      "D. Enable code signing and a trusted binary repository integrated with your CI/CD pipeline",
+      "E. Run a vulnerability security scanner as part of your continuous-integration /continuous-delivery (CI/CD) pipeline"
+    ],
+    "answer": ["B", "E"],
+    "description": "題目重點：\n• 公司目標：release speed + agility（快速交付）\n• 需求：降低 security errors 被引入的風險\n• 方向：DevSecOps → 在 CI/CD pipeline 自動化安全檢測\n\n選項分析：\n\nA. Ensure every code check-in is peer reviewed by a security SME\n• 嚴重拖慢 release speed，違背「敏捷」和「快速交付」\n• ❌ 不合題目重點\n\nB. Use source code security analyzers as part of the CI/CD pipeline\n• ✅ DevSecOps 實踐，能在開發早期即檢查程式碼漏洞\n• ✅ 自動化，符合敏捷和快速交付\n\nC. Ensure you have stubs to unit test all interfaces between components\n• 單元測試對功能正確性有幫助，但與安全性沒有直接關聯\n• ❌ 不是最佳解\n\nD. Enable code signing and a trusted binary repository integrated with your CI/CD pipeline\n• ✅ 確保只使用「經簽署且可信的 binary」，避免惡意或不安全的 artifact 混入\n• ✅ DevSecOps 常見做法\n\nE. Run a vulnerability security scanner as part of your CI/CD pipeline\n• ✅ 自動掃描依賴與環境中的漏洞，降低安全風險\n• ✅ 同樣 DevSecOps 實踐"
+  },
+  {
+    "id": 167,
+    "question": "You want to enable your running Google Kubernetes Engine cluster to scale as demand for your application changes. What should you do?",
+    "choices": [
+      "A. Add additional nodes to your Kubernetes Engine cluster using the following command: gcloud container clusters resize CLUSTER_Name --size 10",
+      "B. Add a tag to the instances in the cluster with the following command: gcloud compute instances add-tags INSTANCE --tags enable-autoscaling max-nodes-10",
+      "C. Update the existing Kubernetes Engine cluster with the following command: gcloud alpha container clusters update mycluster --enable-autoscaling --min-nodes=1 --max-nodes=10",
+      "D. Create a new Kubernetes Engine cluster with the following command: gcloud alpha container clusters create mycluster --enable-autoscaling --min-nodes=1 --max-nodes=10 and redeploy your application"
+    ],
+    "answer": "C",
+    "description": null
+  },
+  {
+    "id": 168,
+    "question": "Your marketing department wants to send out a promotional email campaign. The development team wants to minimize direct operation management. They project a wide range of possible customer responses, from 100 to 500,000 click-through per day. The link leads to a simple website that explains the promotion and collects user information and preferences. Which infrastructure should you recommend?(Choose two.)",
+    "choices": [
+      "A. Use Google App Engine to serve the website and Google Cloud Datastore to store user data.",
+      "B. Use a Google Container Engine cluster to serve the website and store data to persistent disk.",
+      "C. Use a managed instance group to serve the website and Google Cloud Bigtable to store user data.",
+      "D. Use a single Compute Engine virtual machine (VM) to host a web server, backend by Google Cloud SQL."
+    ],
+    "answer": ["A", "C"],
+    "description": null
+  },
+  {
+    "id": 169,
+    "question": "Your company just finished a rapid lift and shift to Google Compute Engine for your compute needs. You have another 9 months to design and deploy a more cloud-native solution. Specifically, you want a system that is no-ops and auto-scaling. Which two compute products should you choose?",
+    "choices": [
+      "A. Compute Engine with containers",
+      "B. Google Kubernetes Engine with containers",
+      "C. Google App Engine Standard Environment",
+      "D. Compute Engine with custom instance types",
+      "E. Compute Engine with managed instance groups"
+    ],
+    "answer": ["B", "C"],
+    "description": "題目重點：\n• 目前情況：剛完成 lift-and-shift 到 GCE\n• 目標：Cloud-native（雲端原生）、No-ops（無需管理基礎設施）、Auto-scaling（自動擴縮容）\n\n選項分析：\n\nA. Compute Engine with containers\n• ❌ 仍需管理 VM 基礎設施 → 不完全 no-ops\n\nB. Google Kubernetes Engine with containers\n• ✅ 可自動擴縮容（HPA/Cluster Autoscaler）\n• ❌ 仍需管理節點（除非用 Autopilot 模式）\n• 部分 no-ops，但非 fully no-ops\n\nC. Google App Engine Standard Environment\n• ✅ 完全 no-ops，自動管理基礎設施\n• ✅ 自動擴縮容\n• ✅ Cloud-native 選擇\n\nD. Compute Engine with custom instance types\n• ❌ 需要管理 VM → 不符合 no-ops\n\nE. Compute Engine with managed instance groups\n• ✅ 支援自動擴縮容\n• ❌ 仍要管理 VM → 不是 fully no-ops"
+  },
+  {
+    "id": 170,
+    "question": "One of your primary business objectives is being able to trust the data stored in your application. You want to log all changes to the application data. How can you design your logging system to verify authenticity of your logs?",
+    "choices": [
+      "A. Write the log concurrently in the cloud and on premises",
+      "B. Use a SQL database and limit who can modify the log table",
+      "C. Digitally sign each timestamp and log entry and store the signature",
+      "D. Create a JSON dump of each log entry and store it in Google Cloud Storage"
+    ],
+    "answer": "C",
+    "description": "題目重點：\n• 目標：信任資料（data integrity）\n• 需求：所有應用資料變更都要紀錄，且能驗證日誌的真實性（authenticity）\n\n選項分析：\n\nA. Write the log concurrently in the cloud and on-premises\n• ❌ 雙重存放增加耐久性，但無法驗證日誌是否被篡改，不能保證 authenticity\n\nB. Use a SQL database and limit who can modify the log table\n• ❌ 只能依靠存取控制，仍可能有人有權限修改日誌，無法提供 cryptographic verification\n\nC. Digitally sign each timestamp and log entry and store the signature\n• ✅ 對每個日誌條目和時間戳記做數位簽章，任何修改都會破壞簽章\n• ✅ 可驗證 authenticity 和完整性\n\nD. Create a JSON dump of each log entry and store it in Google Cloud Storage\n• ❌ 只是存檔格式化日誌，無法驗證是否被修改"
+  },
+  {
+    "id": 171,
+    "question": "Your company has a Google Workspace account and Google Cloud Organization. Some developers in the company have created Google Cloud projects outside of the Google Cloud Organization. You want to create an Organization structure that allows developers to create projects, but prevents them from modifying production projects. You want to manage policies for all projects centrally and be able to set more restrictive policies for production projects. You want to minimize disruption to users and developers when business needs change in the future. You want to follow Google-recommended practices. Now should you design the Organization structure?",
+    "choices": [
+      "A. 1. Create a second Google Workspace account and Organization. 2. Grant all developers the Project Creator IAM role on the new Organization. 3. Move the developer projects into the new Organization. 4. Set the policies for all projects on both Organizations. 5. Additionally, set the production policies on the original Organization.",
+      "B. 1. Create a folder under the Organization resource named 'Production.' 2. Grant all developers the Project Creator IAM role on the new Organization. 3. Move the developer projects into the new Organization. 4. Set the policies for all projects on the Organization. 5. Additionally, set the production policies on the 'Production' folder.",
+      "C. 1. Create folders under the Organization resource named 'Development' and 'Production.' 2. Grant all developers the Project Creator IAM role on the 'Development' folder. 3. Move the developer projects into the 'Development' folder. 4. Set the policies for all projects on the Organization. 5. Additionally, set the production policies on the 'Production' folder.",
+      "D. 1. Designate the Organization for production projects only. 2. Ensure that developers do not have the Project Creator IAM role on the Organization. 3. Create development projects outside of the Organization using the developer Google Workspace accounts. 4. Set the policies for all projects on the Organization. 5. Additionally, set the production policies on the individual production projects."
+    ],
+    "answer": "C",
+    "description": null
+  },
+  {
+    "id": 172,
+    "question": "Your company has an application running on Compute Engine that allows users to play their favorite music. There are a fixed number of instances. Files are stored in Cloud Storage, and data is streamed directly to users. Users are reporting that they sometimes need to attempt to play popular songs multiple times before they are successful. You need to improve the performance of the application. What should you do?",
+    "choices": [
+      "A. Mount the Cloud Storage bucket using gcsfuse on all backend Compute Engine instances. Serve music files directly from the backend Compute Engine instance.",
+      "B. Create a Cloud Filestore NFS volume and attach it to the backend Compute Engine instances. Download popular songs in Cloud Filestore. Serve music files directly from the backend Compute Engine instance.",
+      "C. Copy popular songs into CloudSQL as a blob. Update application code to retrieve data from CloudSQL when Cloud Storage is overloaded.",
+      "D. Create a managed instance group with Compute Engine instances. Create a global load balancer and configure it with two backends: managed instance group and Cloud Storage bucket. Enable Cloud CDN on the bucket backend."
+    ],
+    "answer": "D",
+    "description": "題目重點：\n• 應用跑在 Compute Engine (固定數量的 instance)\n• 音樂檔案存在 Cloud Storage，直接串流給使用者\n• 使用者回報：熱門歌曲有時候要多次嘗試才能播放成功\n• 目標：改善效能、提高可靠度\n\n選項分析：\n\nA. gcsfuse + backend VM 提供服務\n• ❌ 不佳\n• gcsfuse 效能較差，會增加延遲，不適合高流量串流\n\nB. Cloud Filestore (NFS) + backend VM\n• ❌ 不佳\n• Filestore 成本高、需自行維護快取，且不具備全球分發能力\n\nC. CloudSQL 存放 blob\n• ❌ 不佳\n• SQL DB 不適合存放大型媒體檔，效能與可擴展性都差\n\nD. MIG + Global Load Balancer (兩個 backend：MIG + Cloud Storage bucket)，並啟用 Cloud CDN\n• ✅ 正確答案\n• Cloud CDN 將熱門歌曲快取到全球邊緣節點，降低延遲並提升成功率\n• MIG 可處理需要應用邏輯的流量，符合最佳實務"
+  },
+  {
+    "id": 173,
+    "question": "The operations team in your company wants to save Cloud VPN log events for one year. You need to configure the cloud infrastructure to save the logs. What should you do?",
+    "choices": [
+      "A. Set up a filter in Cloud Logging and a Cloud Storage bucket as an export target for the logs you want to save.",
+      "B. Enable the Compute Engine API, and then enable logging on the firewall rules that match the traffic you want to save.",
+      "C. Set up a Cloud Logging Dashboard titled Cloud VPN Logs, and then add a chart that queries for the VPN metrics over a one-year time period.",
+      "D. Set up a filter in Cloud Logging and a topic in Pub/Sub to publish the logs."
+    ],
+    "answer": "A",
+    "description": null
+  },
+  {
+    "id": 174,
+    "question": "You are working with a data warehousing team that performs data analysis. The team needs to process data from external partners, but the data contains personally identifiable information (PII). You need to process and store the data without storing any of the PII data. What should you do?",
+    "choices": [
+      "A. Create a Dataflow pipeline to retrieve the data from the external sources. As part of the pipeline, use the Cloud Data Loss Prevention (Cloud DLP) API to remove any PII data. Store the result in BigQuery.",
+      "B. Create a Dataflow pipeline to retrieve the data from the external sources. As part of the pipeline, store all non-PII data in BigQuery and store all PII data in a Cloud Storage bucket that has a retention policy set.",
+      "C. Ask the external partners to upload all data on Cloud Storage. Configure Bucket Lock for the bucket. Create a Dataflow pipeline to read the data from the bucket. As part of the pipeline, use the Cloud DLP API to remove any PII data. Store the result in BigQuery.",
+      "D. Ask the external partners to import all data in your BigQuery dataset. Create a Dataflow pipeline to copy the data into a new table. As part of the Dataflow pipeline, skip all data in columns that have PII data."
+    ],
+    "answer": "A",
+    "description": null
+  },
+  {
+    "id": 175,
+    "question": "You want to allow your operations team to store logs from all the production projects in your Organization, without including logs from other projects. All of the production projects are contained in a folder. You want to ensure that all logs for existing and new production projects are captured automatically. What should you do?",
+    "choices": [
+      "A. Create an aggregated export on the Production folder. Set the log sink to be a Cloud Storage bucket in an operations project.",
+      "B. Create an aggregated export on the Organization resource. Set the log sink to be a Cloud Storage bucket in an operations project.",
+      "C. Create log exports in the production projects. Set the log sinks to be a Cloud Storage bucket in an operations project.",
+      "D. Create log exports in the production projects. Set the log sinks to be BigQuery datasets in the production projects, and grant IAM access to the operations team to run queries on the datasets."
+    ],
+    "answer": "A",
+    "description": "題目重點：\n• 需求：讓 operations team 儲存所有 production 專案的 logs\n• 條件：\n  - Production projects 都在一個 folder 裡\n  - 不包含其他專案的 logs\n  - 新加進 folder 的 production projects 也要自動被收集\n\n選項分析：\n\nA. Aggregated export on the Production folder → Cloud Storage bucket (operations project)\n• ✅ 正確答案\n• Aggregated export 可以涵蓋 folder 下的所有專案（包含未來新增的）\n• Sink 設定到 operations project 的 Cloud Storage bucket → 集中管理\n\nB. Aggregated export on the Organization → Cloud Storage bucket (operations project)\n• ❌ 不符合需求\n• Org level export 會包含所有專案，不只 production projects\n\nC. 在每個 production project individually 建 log export → Cloud Storage bucket\n• ❌ 不符需求\n• 需要逐一設定，不會自動涵蓋新加入的專案，維護成本高\n\nD. 在 production projects 建 log export → BigQuery dataset，授權 ops team 查詢\n• ❌ 不符合需求\n• 需要逐一設定，維護成本高\n• ops team 不能集中儲存 logs，只能查詢"
+  },
+  {
+    "id": 176,
+    "question": "Your company has an application that is running on multiple instances of Compute Engine. It generates 1 TB per day of logs. For compliance reasons, the logs need to be kept for at least two years. The logs need to be available for active query for 30 days. After that, they just need to be retained for audit purposes. You want to implement a storage solution that is compliant, minimizes costs, and follows Google-recommended practices. What should you do?",
+    "choices": [
+      "A. Install a Cloud Logging agent on all instances. Create a sink to export logs into a regional Cloud Storage bucket. Create an Object Lifecycle rule to move files into a Coldline Cloud Storage bucket after one month. Configure a retention policy at the bucket level using bucket lock.",
+      "B. Write a daily cron job, running on all instances, that uploads logs into a Cloud Storage bucket. Create a sink to export logs into a regional Cloud Storage bucket. Create an Object Lifecycle rule to move files into a Coldline Cloud Storage bucket after one month.",
+      "C. Install a Cloud Logging agent on all instances. Create a sink to export logs into a partitioned BigQuery table. Set a time_partitioning_expiration of 30 days.",
+      "D. Create a daily cron job, running on all instances, that uploads logs into a partitioned BigQuery table. Set a time_partitioning_expiration of 30 days."
+    ],
+    "answer": "A",
+    "description": null
+  },
+  {
+    "id": 177,
+    "question": "Your company has just recently activated Cloud Identity to manage users. The Google Cloud Organization has been configured as well. The security team needs to secure projects that will be part of the Organization. They want to prohibit IAM users outside the domain from gaining permissions from now on. What should they do?",
+    "choices": [
+      "A. Configure an organization policy to restrict identities by domain.",
+      "B. Configure an organization policy to block creation of service accounts.",
+      "C. Configure Cloud Scheduler to trigger a Cloud Function every hour that removes all users that don't belong to the Cloud Identity domain from all projects.",
+      "D. Create a technical user and a script to periodically remove all external users from projects using cron jobs."
+    ],
+    "answer": "A",
+    "description": null
+  },
+  {
+    "id": 178,
+    "question": "Your company has an application running on Google Cloud that is collecting data from thousands of physical devices that are globally distributed. Data is published to Pub/Sub and streamed in real time into an SSD Cloud Bigtable cluster via a Dataflow pipeline. The operations team informs you that your Cloud Bigtable cluster has a hotspot, and queries are taking longer than expected. You need to resolve the problem and prevent it from happening in the future. What should you do?",
+    "choices": [
+      "A. Advise your clients to use HBase APIs instead of NodeJS APIs.",
+      "B. Delete records older than 30 days.",
+      "C. Review your RowKey strategy and ensure that keys are evenly spread across the alphabet.",
+      "D. Double the number of nodes you currently have."
+    ],
+    "answer": "C",
+    "description": "題目重點：\n• 資料來源：全球裝置 → Pub/Sub → Dataflow → Cloud Bigtable (SSD)\n• 問題：\n  - Bigtable 出現 hotspot(資料的讀寫過度集中在單一或少數節點)\n  - 查詢變慢\n• 需求：解決現在的問題，並避免未來再發生\n\n選項分析：\n\nA. 改用 HBase APIs 而不是 NodeJS APIs\n• ❌ 無效\n• API 選擇與 RowKey 分布無關，不會解決 hotspot\n\nB. 刪除舊資料（30天以上）\n• ❌ 不相關\n• 刪除資料只會減少儲存量，無法解決單一 RowKey 區段過度集中寫入問題\n\nC. 檢查 RowKey 設計，確保 key 均勻分布\n• ✅ 正確答案\n• Cloud Bigtable 常見問題是 RowKey 設計不良（如使用時間戳開頭，會導致寫入集中）\n• 重新設計 RowKey 可讓資料在節點間均勻分散，解決 hotspot 根本問題\n\nD. 雙倍增加節點數量\n• ❌ 無效\n• 增加節點提供更大容量與吞吐量，但 hotspot 問題仍存在，因資料分布不均"
+  },
+  {
+    "id": 179,
+    "question": "Your company has a Google Cloud project that uses BigQuery for data warehousing. There are some tables that contain personally identifiable information (PII). Only the compliance team may access the PII. The other information in the tables must be available to the data science team. You want to minimize cost and the time it takes to assign appropriate access to the tables. What should you do?",
+    "choices": [
+      "A. From the dataset where you have the source data, create views of tables that you want to share, excluding PII. Assign an appropriate project-level IAM role to the members of the data science team. Assign access controls to the dataset that contains the view.",
+      "B. From the dataset where you have the source data, create materialized views of tables that you want to share, excluding PII. Assign an appropriate project-level IAM role to the members of the data science team. Assign access controls to the dataset that contains the view.",
+      "C. Create a dataset for the data science team. Create views of tables that you want to share, excluding PII. Assign an appropriate project-level IAM role to the members of the data science team. Assign access controls to the dataset that contains the view. Authorize the view to access the source dataset.",
+      "D. Create a dataset for the data science team. Create materialized views of tables that you want to share, excluding PII. Assign an appropriate project-level IAM role to the members of the data science team. Assign access controls to the dataset that contains the view. Authorize the view to access the source dataset."
+    ],
+    "answer": "C",
+    "description": "題目重點：\n• BigQuery tables 中有 PII（敏感資料）\n• 只有合規團隊 (compliance team) 可以存取 PII\n• 資料科學團隊 (data science team) 只能存取去除 PII 的部分\n• 需求：降低成本、快速分配權限\n\n選項分析：\n\nA. 在原始 dataset 建 views → 給 data science team 權限\n• ❌ 安全性不足\n• view 存在於原始 dataset，data science team 可能仍有潛在訪問原始資料的風險\n\nB. 在原始 dataset 建 materialized views → 給 data science team 權限\n• ❌ 成本高，不必要\n• Materialized views 需要額外儲存費與計算費，用於簡單去除欄位不划算\n\nC. 建一個新的 dataset 給 data science team → 建 views (去掉 PII) → 給 data science team 權限 → 授權 view 存取原始 dataset\n• ✅ 正確答案\n• 最佳實務：用 views 隱藏 PII，並在新 dataset 管理 data science team 的權限\n• 用 authorized view 機制讓 view 可以查詢來源 dataset，但 data science team 無法直接存取來源 dataset\n• 低成本且安全\n\nD. 建一個新的 dataset 給 data science team → 建 materialized views → 給 data science team 權限\n• ❌ 不必要\n• Materialized views 會增加成本，對需求而言多餘"
+  },
+  {
+    "id": 180,
+    "question": "Your operations team currently stores 10 TB of data in an object storage service from a third-party provider. They want to move this data to a Cloud Storage bucket as quickly as possible, following Google-recommended practices. They want to minimize the cost of this data migration. Which approach should they use?",
+    "choices": [
+      "A. Use the gsutil mv command to move the data.",
+      "B. Use the Storage Transfer Service to move the data.",
+      "C. Download the data to a Transfer Appliance, and ship it to Google.",
+      "D. Download the data to the on-premises data center, and upload it to the Cloud Storage bucket."
+    ],
+    "answer": "B",
+    "description": "題目重點：\n• 目前有 10 TB 資料，存放在第三方 object storage。\n• 目標：快速搬到 Cloud Storage。\n• 條件：\n  - Google-recommended practices\n  - 盡量降低遷移成本\n\n選項分析：\n\nA. gsutil mv\n• ❌ 不佳\n• gsutil 適合本地或 GCS 之間移動小量資料。\n• 若來源是第三方 object storage，需先下載再上傳，耗時且成本高。\n\nB. Storage Transfer Service\n• ✅ 正確答案\n• 專門設計用來從其他雲端 object storage（如 AWS S3、Azure Blob 等）直接傳到 Cloud Storage。\n• 支援線上傳輸、排程、自動重試、並行加速。\n• Google 官方推薦的最佳實務。\n\nC. Transfer Appliance\n• ❌ 不適合\n• 適用於數百 TB ~ PB 級別的資料，或網路頻寬不足情境。\n• 只有 10 TB，成本高且過度設計。\n\nD. 下載到 on-prem，再上傳到 GCS\n• ❌ 不符合最佳實務\n• 額外消耗本地頻寬，速度慢且增加成本。"
+  },
+  {
+    "id": 181,
+    "question": "You have a Compute Engine managed instance group that adds and removes Compute Engine instances from the group in response to the load on your application. The instances have a shutdown script that removes REDIS database entries associated with the instance. You see that many database entries have not been removed, and you suspect that the shutdown script is the problem. You need to ensure that the commands in the shutdown script are run reliably every time an instance is shut down. You create a Cloud Function to remove the database entries. What should you do next?",
+    "choices": [
+      "A. Modify the shutdown script to wait for 30 seconds before triggering the Cloud Function.",
+      "B. Do not use the Cloud Function. Modify the shutdown script to restart if it has not completed in 30 seconds.",
+      "C. Set up a Cloud Monitoring sink that triggers the Cloud Function after an instance removal log message arrives in Cloud Logging.",
+      "D. Modify the shutdown script to wait for 30 seconds and then publish a message to a Pub/Sub queue."
+    ],
+    "answer": "C",
+    "description": null
+  },
+  {
+    "id": 182,
+    "question": "You are managing several projects on Google Cloud and need to interact on a daily basis with BigQuery, Bigtable, and Kubernetes Engine using the gcloud CLI tool. You are travelling a lot and work on different workstations during the week. You want to avoid having to manage the gcloud CLI manually. What should you do?",
+    "choices": [
+      "A. Use Google Cloud Shell in the Google Cloud Console to interact with Google Cloud.",
+      "B. Create a Compute Engine instance and install gcloud on the instance. Connect to this instance via SSH to always use the same gcloud installation when interacting with Google Cloud.",
+      "C. Install gcloud on all of your workstations. Run the command gcloud components auto-update on each workstation.",
+      "D. Use a package manager to install gcloud on your workstations instead of installing it manually."
+    ],
+    "answer": "A",
+    "description": null
+  },
+  {
+    "id": 183,
+    "question": "Your company recently acquired a company that has infrastructure in Google Cloud. Each company has its own Google Cloud organization. Each company is using a Shared Virtual Private Cloud (VPC) to provide network connectivity for its applications. Some of the subnets used by both companies overlap. In order for both businesses to integrate, the applications need to have private network connectivity. These applications are not on overlapping subnets. You want to provide connectivity with minimal re-engineering. What should you do?",
+    "choices": [
+      "A. Set up VPC peering and peer each Shared VPC together.",
+      "B. Migrate the projects from the acquired company into your company's Google Cloud organization. Re-launch the instances in your company's Shared VPC.",
+      "C. Set up a Cloud VPN gateway in each Shared VPC and peer Cloud VPNs.",
+      "D. Configure SSH port forwarding on each application to provide connectivity between applications in the different Shared VPCs."
+    ],
+    "answer": "C",
+    "description": "題目重點：\n• 兩家公司都有自己的 Google Cloud Organization，各自使用 Shared VPC\n• 有些 subnet 重疊\n• 需求：兩邊應用要私有網路互通，但應用本身不在重疊的 subnet\n• 目標：最少重新設計 / 最少工程改動\n\n選項分析：\n\nA. VPC Peering\n• ❌ 不可行\n• VPC Peering 不允許 subnet 重疊，題目已說有些 subnet 重疊 → Peering 無法建立\n\nB. 將專案移到同一個 Organization，再放進 Shared VPC\n• ❌ 不符合最少工程改動\n• 雖可解決 subnet 衝突，但需重新部署實例 → 大量 re-engineering\n\nC. Cloud VPN\n• ✅ 正確答案\n• Cloud VPN 可跨 VPC / 跨組織連線，允許 subnet 重疊的 VPC（只要通訊 subnet 不重疊）\n• 不需要重啟 VM 或改 subnet → 最少工程改動\n\nD. SSH port forwarding\n• ❌ 不實用\n• 需要在每個應用端設定 port forwarding，維護成本高且不可擴展"
+  },
+  {
+    "id": 184,
+    "question": "You are managing several internal applications that are deployed on Compute Engine. Business users inform you that an application has become very slow over the past few days. You want to find the underlying cause in order to solve the problem. What should you do first?",
+    "choices": [
+      "A. Inspect the logs and metrics from the instances in Cloud Logging and Cloud Monitoring.",
+      "B. Change the Compute Engine instances behind the application to a machine type with more CPU and memory.",
+      "C. Restore a backup of the application database from a time before the application became slow.",
+      "D. Deploy the applications on a managed instance group with autoscaling enabled. Add a load balancer in front of the managed instance group, and have the users connect to the IP of the load balancer."
+    ],
+    "answer": "A",
+    "description": null
+  },
+  {
+    "id": 185,
+    "question": "Your company has an application running as a Deployment in a Google Kubernetes Engine (GKE) cluster. When releasing new versions of the application via a rolling deployment, the team has been causing outages. The root cause of the outages is misconfigurations with parameters that are only used in production. You want to put preventive measures for this in the platform to prevent outages. What should you do?",
+    "choices": [
+      "A. Configure liveness and readiness probes in the Pod specification.",
+      "B. Configure health checks on the managed instance group.",
+      "C. Create a Scheduled Task to check whether the application is available.",
+      "D. Configure an uptime alert in Cloud Monitoring."
+    ],
+    "answer": "A",
+    "description": "題目重點：\n• 環境：GKE Deployment\n• 問題：rolling deployment 時造成 outage\n• 根因：production 專用參數 misconfiguration → 新版 Pod 啟動後無法正常服務\n• 需求：在平台層面放預防措施，避免 outage\n\n選項分析：\n\nA. 使用 liveness probe + readiness probe\n• ✅ 優點：\n  • liveness probe：確認 Pod 是否存活，失敗則自動重啟\n  • readiness probe：確認 Pod 是否已準備好接流量，失敗則不會加入 Service Endpoints\n  • 可避免 misconfigured Pod 在 rollout 時接流量，避免中斷\n\nB. Managed Instance Group health checks\n• ❌ 問題：\n  • 適用於 GCE VM，不適用於 GKE Pod 層面\n\nC. Scheduled Task 檢查可用性\n• ❌ 問題：\n  • 只能事後檢測，無法在 rollout 過程阻止 misconfigured Pod 接流量\n\nD. Cloud Monitoring uptime alert\n• ❌ 問題：\n  • 偵測型機制，已經 outage 才能觸發，無法預防\n\n關鍵概念：\n• Kubernetes 預防 misconfigured Pod 導致 outage 的最佳實務：liveness probe + readiness probe"
+  },
+  {
+    "id": 186,
+    "question": "Your company uses Google Kubernetes Engine (GKE) as a platform for all workloads. Your company has a single large GKE cluster that contains batch, stateful, and stateless workloads. The GKE cluster is configured with a single node pool with 200 nodes. Your company needs to reduce the cost of this cluster but does not want to compromise availability. What should you do?",
+    "choices": [
+      "A. Create a second GKE cluster for the batch workloads only. Allocate the 200 original nodes across both clusters.",
+      "B. Configure CPU and memory limits on the namespaces in the cluster. Configure all Pods to have CPU and memory limits.",
+      "C. Configure a HorizontalPodAutoscaler for all stateless workloads and for all compatible stateful workloads. Configure the cluster to use node auto scaling.",
+      "D. Change the node pool to use preemptible VMs."
+    ],
+    "answer": "C",
+    "description": "題目重點：\n• 單一大 GKE cluster，200 nodes，包含 batch / stateful / stateless workloads\n• 目標：降低成本，但不影響可用性\n\n選項分析：\n\nA. 建第二個 cluster 專門跑 batch workloads\n• ❌ 不能有效降低成本\n• 雖然可以隔離 batch workloads，但單純分配 200 nodes 並不降低成本\n• 若不搭配 autoscaling / preemptible nodes，仍需維持大量節點\n\nB. 配置 namespace / pod CPU & memory limits\n• ⚠️ 有幫助，但成本影響有限\n• 設定資源限制能改善資源利用率，避免浪費 idle CPU / memory\n\nC. HorizontalPodAutoscaler (HPA) + node autoscaling\n• ✅ 正確答案\n• HPA 根據 workload 負載自動調整 Pod 數量\n• Node autoscaling (Cluster Autoscaler) 自動縮減或擴展節點數，避免 idle nodes\n• 可降低成本，同時維持可用性，官方推薦做法\n\nD. 改用 preemptible VMs\n• ❌ 可能影響可用性\n• Preemptible nodes 成本低，但可靠性較差，不適合 stateful / 長時間任務"
+  },
+  {
+    "id": 187,
+    "question": "Your company has a Google Cloud project that uses BigQuery for data warehousing on a pay-per-use basis. You want to monitor queries in real time to discover the most costly queries and which users spend the most. What should you do?",
+    "choices": [
+      "A. In the BigQuery dataset that contains all the tables to be queried, add a label for each user that can launch a query. Open the Billing page of the project. Select Reports. Select BigQuery as the product and filter by the user you want to check.",
+      "B. Create a Cloud Logging sink to export BigQuery data access logs to BigQuery. Perform a BigQuery query on the generated table to extract the information you need.",
+      "C. Create a Cloud Logging sink to export BigQuery data access logs to Cloud Storage. Develop a Dataflow pipeline to compute the cost of queries split by users.",
+      "D. Activate billing export into BigQuery. Perform a BigQuery query on the billing table to extract the information you need."
+    ],
+    "answer": "B",
+    "description": "題目重點：\n• BigQuery 使用按量付費 (pay-per-use)\n• 目標：即時監控查詢成本，找出最昂貴的查詢與高消耗使用者\n• 重點：real-time + 查詢粒度（哪個使用者、哪個查詢最貴）\n\n選項分析：\n\nA. 對 dataset 加 label，再從 Billing 頁面查報表\n• ❌ 不符合需求\n• Billing 報表延遲（通常一天更新一次），Labels 不是用來追蹤 query cost 的正確工具\n\nB. 建 Cloud Logging sink → 導出 BigQuery data access logs → Query BigQuery table\n• ✅ 正確答案\n• BigQuery data access logs 可即時捕捉查詢事件，包括使用者與查詢\n• 導出到 BigQuery 後可直接分析最昂貴的查詢與用戶，符合 real-time 監控需求\n\nC. 導出 BigQuery data access logs 到 Cloud Storage，再用 Dataflow 計算\n• ❌ 複雜度高，不必要\n• 可行，但 Dataflow 會產生成本與延遲，不如直接導到 BigQuery 快速且簡單\n\nD. 啟用 Billing export → 查詢 Billing table\n• ❌ 無法即時監控\n• Billing export 延遲，通常一天才更新一次"
+  },
+  {
+    "id": 188,
+    "question": "Your company and one of its partners each have a Google Cloud project in separate organizations. Your company's project (prj-a) runs in Virtual Private Cloud (vpc-a). The partner's project (prj-b) runs in vpc-b. There are two instances running on vpc-a and one instance running on vpc-b. Subnets defined in both VPCs are not overlapping. You need to ensure that all instances communicate with each other via internal IPs, minimizing latency and maximizing throughput. What should you do?",
+    "choices": [
+      "A. Set up a network peering between vpc-a and vpc-b.",
+      "B. Set up a VPN between vpc-a and vpc-b using Cloud VPN.",
+      "C. Configure IAP TCP forwarding on the instance in vpc-b, and then launch the following gcloud command from one of the instances in vpc-a gcloud: gcloud compute start-iap-tunnel INSTANCE_NAME_IN_VPC_B 22 --local-host-port=localhost:22",
+      "D. Create an additional instance in vpc-a and an additional instance in vpc-b. Install OpenVPN in newly created instances. Configure a VPN tunnel between vpc-a and vpc-b with OpenVPN."
+    ],
+    "answer": "A",
+    "description": null
+  },
+  {
+    "id": 189,
+    "question": "You want to store critical business information in Cloud Storage buckets. The information is regularly changed, but previous versions need to be referenced on a regular basis. You want to ensure that there is a record of all changes to any information in these buckets. You want to ensure that accidental edits or deletions can be easily rolled back. Which feature should you enable?",
+    "choices": [
+      "A. Bucket Lock",
+      "B. Object Versioning",
+      "C. Object change notification",
+      "D. Object Lifecycle Management"
+    ],
+    "answer": "B",
+    "description": "題目重點：\n• 環境：Cloud Storage\n• 資料性質：關鍵業務資訊，會被定期修改\n• 需求：\n  • 保留所有變更紀錄\n  • 可定期參照舊版本\n  • 可輕鬆回復誤刪或誤編輯\n\n選項分析：\n\nA. Bucket Lock\n• ❌ 問題：\n  • 用於保護 bucket retention policy 不被修改\n  • 主要解決合規需求，非版本回復\n\nB. Object Versioning\n• ✅ 優點：\n  • 保留物件歷史版本\n  • 支援回復誤刪或誤改\n  • 滿足「所有變更有紀錄」與「容易 rollback」需求\n\nC. Object change notification\n• ❌ 問題：\n  • 提供物件變更事件通知（例如發送到 Pub/Sub）\n  • 不保存歷史版本\n\nD. Object Lifecycle Management\n• ❌ 問題：\n  • 自動管理物件的儲存類型或刪除策略\n  • 側重成本優化，非版本保留\n\n關鍵概念：\n• Cloud Storage 保留歷史版本與支援回復的核心功能：Object Versioning"
+  },
+  {
+    "id": 190,
+    "question": "You have a Compute Engine application that you want to autoscale when total memory usage exceeds 80%. You have installed the Cloud Monitoring agent and configured the autoscaling policy as follows: Metric identifier: agent.googleapis.com/memory/percent_used, Filter: metric.label.state = 'used', Target utilization level: 80, Target type: GAUGE. You observe that the application does not scale under high load. You want to resolve this. What should you do?",
+    "choices": [
+      "A. Change the Target type to DELTA_PER_MINUTE.",
+      "B. Change the Metric identifier to agent.googleapis.com/memory/bytes_used.",
+      "C. Change the filter to metric.label.state = 'used' AND metric.label.state = 'buffered' AND metric.label.state = 'cached' AND metric.label.state = 'slab'.",
+      "D. Change the filter to metric.label.state = 'free' and the Target utilization to 20."
+    ],
+    "answer": "C",
+    "description": "題目重點：\n• Compute Engine 應用程式需要自動擴縮，條件是總記憶體使用率 > 80%\n• 已安裝 Cloud Monitoring agent 並設定 autoscaling policy：\n  - Metric identifier: agent.googleapis.com/memory/percent_used\n  - Filter: metric.label.state = 'used'\n  - Target utilization level: 80\n  - Target type: GAUGE\n• 問題：應用在高負載時沒有自動擴縮\n\n選項分析：\n\nA. 將 Target type 改為 DELTA_PER_MINUTE\n• ❌ 不正確\n• DELTA_PER_MINUTE 用於計算速率變化（增量），不適合百分比型記憶體使用率\n\nB. 將 Metric identifier 改為 agent.googleapis.com/memory/bytes_used\n• ❌ 不是最佳方案\n• bytes_used 是絕對值，GAUGE 類型可以使用，但 autoscaler 期望百分比來計算目標利用率\n\nC. 將 Filter 改為 metric.label.state = 'used' AND metric.label.state = 'buffered' AND metric.label.state = 'cached' AND metric.label.state = 'slab'\n• ✅ 正確答案\n• 計算所有記憶體使用部分（used + buffered + cached + slab），符合 Linux 記憶體管理邏輯\n• 原本 filter 只計算 used → autoscaler 低估實際記憶體負載 → 不會觸發擴縮\n• 官方建議做法\n\nD. 將 Filter 改為 metric.label.state = 'free' 並將 Target utilization 改為 20\n• ❌ 不建議\n• 雖然可用 free memory 反推，但設定容易混淆且不直覺"
+  },
+  {
+    "id": 191,
+    "question": "You are deploying an application to Google Cloud. The application is part of a system. The application in Google Cloud must communicate over a private network with applications in a non-Google Cloud environment. The expected average throughput is 200 kbps. The business requires:\n✑ as close to 100% system availability as possible\n✑ cost optimization\nYou need to design the connectivity between the locations to meet the business requirements. What should you provision?",
+    "choices": [
+      "A. An HA Cloud VPN gateway connected with two tunnels to an on-premises VPN gateway",
+      "B. Two Classic Cloud VPN gateways connected to two on-premises VPN gateways. Configure each Classic Cloud VPN gateway to have two tunnels, each connected to different on-premises VPN gateways",
+      "C. Two HA Cloud VPN gateways connected to two on-premises VPN gateways. Configure each HA Cloud VPN gateway to have two tunnels, each connected to different on-premises VPN gateways",
+      "D. A single Cloud VPN gateway connected to an on-premises VPN gateway"
+    ],
+    "answer": "A",
+    "description": "題目重點：\n• 應用部署在 Google Cloud，需要私有網路與非 GCP 環境應用溝通\n• 預期平均流量 200 kbps → 流量小\n• 商業需求：接近 100% 可用性 + 成本優化\n\n選項分析：\n\nA. 一個 HA Cloud VPN，兩條 tunnel 連到 on-premises VPN\n• ✅ 正確答案\n• HA Cloud VPN 有兩個實體 gateway，天然高可用\n• 兩條 tunnel 足以提供冗餘，流量小完全足夠\n• 成本低 → 符合需求（高可用 + 成本優化）\n\nB. 兩個 Classic Cloud VPN，各自兩條 tunnel\n• ❌ 不建議\n• Classic VPN 不支援 HA，若 gateway 故障會中斷\n• 成本更高但可用性不如 A\n\nC. 兩個 HA Cloud VPN，各自兩條 tunnel 連到兩個 on-prem VPN\n• ❌ 過度設計\n• 可用性更高但流量只有 200 kbps\n• 成本更高，不符合成本優化\n\nD. 單一 Cloud VPN gateway 連到 on-prem\n• ❌ 不符合需求\n• 單點故障，無法達到接近 100% 可用性"
+  },
+  {
+    "id": 192,
+    "question": "Your company has an application running on App Engine that allows users to upload music files and share them with other people. You want to allow users to upload files directly into Cloud Storage from their browser session. The payload should not be passed through the backend. What should you do?",
+    "choices": [
+      "A. 1. Set a CORS configuration in the target Cloud Storage bucket where the base URL of the App Engine application is an allowed origin.\n2. Use the Cloud Storage Signed URL feature to generate a POST URL.",
+      "B. 1. Set a CORS configuration in the target Cloud Storage bucket where the base URL of the App Engine application is an allowed origin.\n2. Assign the Cloud Storage WRITER role to users who upload files.",
+      "C. 1. Use the Cloud Storage Signed URL feature to generate a POST URL.\n2. Use App Engine default credentials to sign requests against Cloud Storage.",
+      "D. 1. Assign the Cloud Storage WRITER role to users who upload files.\n2. Use App Engine default credentials to sign requests against Cloud Storage."
+    ],
+    "answer": "A",
+    "description": "題目重點：\n• App Engine 應用允許使用者上傳音樂檔案並分享\n• 要求：使用者從瀏覽器直接上傳到 Cloud Storage，不經過後端\n• 重點：安全、CORS 設定、避免後端負擔\n\n選項分析：\n\nA. 設定 CORS + 使用 Signed URL 生成 POST URL\n• ✅ 正確答案\n• CORS：允許瀏覽器跨來源請求 Cloud Storage\n• Signed URL (POST)：讓使用者直接安全上傳，不需 Cloud Storage 權限\n• 符合需求（安全、直傳、不經後端）\n\nB. 設定 CORS + 給使用者 WRITER 權限\n• ❌ 不建議\n• 直接給 WRITER 權限不安全，需額外 IAM 管理\n\nC. 使用 Signed URL + App Engine default credentials 簽名\n• ❌ 不完整\n• Signed URL 必須由後端生成，不能在 client-side 瀏覽器直接生成\n\nD. 給使用者 WRITER + App Engine default credentials 簽名\n• ❌ 不建議\n• 依然有安全與設計問題，違反需求（避免給使用者直接 WRITER 權限）"
+  },
+  {
+    "id": 193,
+    "question": "You are configuring the cloud network architecture for a newly created project in Google Cloud that will host applications in Compute Engine. Compute Engine virtual machine instances will be created in two different subnets (sub-a and sub-b) within a single region:\n• Instances in sub-a will have public IP addresses.\n• Instances in sub-b will have only private IP addresses.\nTo download updated packages, instances must connect to a public repository outside the boundaries of Google Cloud. You need to allow sub-b to access the external repository. What should you do?",
+    "choices": [
+      "A. Enable Private Google Access on sub-b.",
+      "B. Configure Cloud NAT and select sub-b in the NAT mapping section.",
+      "C. Configure a bastion host instance in sub-a to connect to instances in sub-b.",
+      "D. Enable Identity-Aware Proxy for TCP forwarding for instances in sub-b."
+    ],
+    "answer": "B",
+    "description": null
+  },
+  {
+    "id": 194,
+    "question": "Your company is planning to migrate their Windows Server 2022 from their on-premises data center to Google Cloud. You need to bring the licenses that are currently in use in on-premises virtual machines into the target cloud environment. What should you do?",
+    "choices": [
+      "A. 1. Create an image of the on-premises virtual machines and upload into Cloud Storage.\n2. Import the image as a virtual disk on Compute Engine.",
+      "B. 1. Create standard instances on Compute Engine.\n2. Select as the OS the same Microsoft Windows version that is currently in use in the on-premises environment.",
+      "C. 1. Create an image of the on-premises virtual machine.\n2. Import the image as a virtual disk on Compute Engine.\n3. Create a standard instance on Compute Engine, selecting as the OS the same Microsoft Windows version that is currently in use in the on-premises environment.\n4. Attach a data disk that includes data that matches the created image.",
+      "D. 1. Create an image of the on-premises virtual machines.\n2. Import the image as a virtual disk on Compute Engine using --os=windows-2022-dc-v.\n3. Create a sole-tenancy instance on Compute Engine that uses the imported disk as a boot disk."
+    ],
+    "answer": "D",
+    "description": "題目重點：\n• 公司要將 Windows Server 2022 從 on-prem 遷移到 Google Cloud\n• 要求：保留現有 Windows 授權（BYOL）\n• 重點：授權遵循 + VM 遷移\n\n選項分析：\n\nA. 建立 on-prem VM 映像，上傳到 Cloud Storage，匯入成 Compute Engine 虛擬磁碟\n• ❌ 不完整\n• 可以帶資料，但未指定 BYOL / sole-tenant → 授權可能無法帶入\n\nB. 直接建立標準 Compute Engine instance，選用相同 Windows 版本\n• ❌ 不符合 BYOL\n• 這樣會用 Google 的 Windows 授權，無法帶入自有授權\n\nC. 建立映像、匯入成磁碟、再建立標準 instance，附加資料磁碟\n• ❌ 不完整\n• 沒有使用 sole-tenant node → 可能違反 BYOL 授權規範\n\nD. 建立映像 → 匯入成磁碟，使用 --os=windows-2022-dc-v → 建立 sole-tenancy instance\n• ✅ 正確答案\n• Sole-tenant node 可支援 BYOL\n• 匯入映像作為 boot disk → 保留原有 VM 狀態與授權\n• 官方推薦做法，若題目提到 “bring your licenses” (BYOL) → 一定要用 Sole-Tenancy"
+  },
+  {
+    "id": 195,
+    "question": "You are deploying an application to Google Cloud. The application is part of a system. The application in Google Cloud must communicate over a private network with applications in a non-Google Cloud environment. The expected average throughput is 200 kbps. The business requires:\n\n• 99.99% system availability\n• cost optimization\n\nYou need to design the connectivity between the locations to meet the business requirements. What should you provision?",
+    "choices": [
+      "A. An HA Cloud VPN gateway connected with two tunnels to an on-premises VPN gateway.",
+      "B. A Classic Cloud VPN gateway connected with two tunnels to an on-premises VPN gateway.",
+      "C. Two HA Cloud VPN gateways connected to two on-premises VPN gateways. Configure each HA Cloud VPN gateway to have two tunnels, each connected to different on-premises VPN gateways.",
+      "D. A Classic Cloud VPN gateway connected with one tunnel to an on-premises VPN gateway."
+    ],
+    "answer": "A",
+    "description": "題目重點：\n• 應用部署在 Google Cloud，需要私有網路與非 GCP 環境互通\n• 平均流量 200 kbps → 流量很小\n• 商業需求：\n  - 99.99% 系統可用性\n  - 成本優化\n\n選項分析：\n\nA. HA Cloud VPN + 兩條 tunnel 連到 on-premises VPN\n• ✅ 正確答案\n• HA Cloud VPN 提供高可用（兩個實體 gateway）\n• 兩條 tunnel 提供冗餘\n• 成本低、流量需求小 → 適合成本優化\n\nB. Classic Cloud VPN + 兩條 tunnel\n• ❌ 不符合高可用\n• Classic VPN 不支援 HA，若 gateway 故障會中斷\n\nC. 兩個 HA Cloud VPN，各自兩條 tunnel 連到兩個 on-prem VPN\n• ❌ 不符合成本優化\n• 可用性更高，但流量僅 200 kbps → 過度設計，成本高\n\nD. Classic Cloud VPN + 一條 tunnel\n• ❌ 不符合 99.99% 可用性\n• 單點故障 + 單條 tunnel，可靠性不足"
+  },
+  {
+    "id": 196,
+    "question": "Your company wants to migrate their 10-TB on-premises database export into Cloud Storage. You want to minimize the time it takes to complete this activity and the overall cost. The bandwidth between the on-premises environment and Google Cloud is 1 Gbps. You want to follow Google-recommended practices. What should you do?",
+    "choices": [
+      "A. Develop a Dataflow job to read data directly from the database and write it into Cloud Storage.",
+      "B. Use the Data Transfer appliance to perform an offline migration.",
+      "C. Use a commercial partner ETL solution to extract the data from the on-premises database and upload it into Cloud Storage.",
+      "D. Upload the data with gcloud storage cp."
+    ],
+    "answer": "B",
+    "description": "題目重點：\n• 將 10 TB on-premises database export 移到 Cloud Storage\n• 目標：最小化遷移時間與成本\n• 帶寬：1 Gbps\n• 重點：Google 官方推薦做法\n\n選項分析：\n\nA. Dataflow job 從資料庫直接讀取 → 寫入 Cloud Storage\n• ❌ 不符合需求\n• Dataflow 適合資料流處理或轉換，但搬整個 10 TB 成本高且可能慢\n\nB. Data Transfer Appliance\n• ✅ 正確答案\n• Google 官方建議數 TB ~ PB 級資料搬遷使用 Transfer Appliance\n• 10 TB 可以使用 Transfer Appliance → 高速、可靠、一次性成本合理\n\nC. 商業 ETL 解決方案\n• ❌ 不必要\n• 可行，但額外成本高，非官方推薦\n\nD. gcloud storage cp 上傳\n• ❌ 非最佳方案\n• 10 TB × 1 Gbps 上傳時間長，網路消耗高，可能影響其他業務流量"
+  },
+  {
+    "id": 197,
+    "question": "You are working at a financial institution that stores mortgage loan approval documents on Cloud Storage. Any change to these approval documents must be uploaded as a separate approval file. You need to ensure that these documents cannot be deleted or overwritten for the next 5 years. What should you do?",
+    "choices": [
+      "A. Create a retention policy on the bucket for the duration of 5 years. Create a lock on the retention policy.",
+      "B. Create a retention policy organizational constraint constraints/storage.retentionPolicySeconds at the organization level. Set the duration to 5 years.",
+      "C. Use a customer-managed key for the encryption of the bucket. Rotate the key after 5 years.",
+      "D. Create a retention policy organizational constraint constraints/storage.retentionPolicySeconds at the project level. Set the duration to 5 years."
+    ],
+    "answer": "A",
+    "description": null
+  },
+  {
+    "id": 198,
+    "question": "Your company wants to deploy several microservices to help their system handle elastic loads. Each microservice uses a different version of software libraries. You want to enable their developers to keep their development environment in sync with the various production services. Which technology should you choose?",
+    "choices": [
+      "A. RPM/DEB",
+      "B. Containers",
+      "C. Chef/Puppet",
+      "D. Virtual machines"
+    ],
+    "answer": "B",
+    "description": "題目重點：\n• 公司需求：部署多個微服務\n• 微服務特性：各自使用不同版本的軟體函式庫\n• 目標：\n  • 支援彈性負載\n  • 讓開發環境與生產環境一致\n\n選項分析：\n\nA. RPM/DEB\n• 只是軟體封裝與安裝方式，無法隔離不同服務間依賴\n• ❌\n\nB. Containers\n• 容器將微服務及依賴打包，版本隔離\n• 容器環境可保持開發與生產一致\n• ✅ 最佳選擇\n\nC. Chef/Puppet\n• 自動化配置管理工具\n• 雖可安裝指定版本，但無法完全隔離微服務依賴\n• ❌\n\nD. Virtual Machines\n• VM 可以隔離環境，但較重量級、啟動慢\n• 容器更輕量，適合彈性負載微服務架構\n• ❌\n\n正確答案：B\n\n理由總結：\n• 使用容器可以隔離各微服務的依賴、確保版本一致，並支援彈性負載與快速部署，是 Google 官方與業界推薦做法。"
+  },
+  {
+    "id": 199,
+    "question": "Your company wants to track whether someone is present in a meeting room reserved for a scheduled meeting. There are 1000 meeting rooms across 5 offices on 3 continents. Each room is equipped with a motion sensor that reports its status every second. You want to support the data ingestion needs of this sensor network. The receiving infrastructure needs to account for the possibility that the devices may have inconsistent connectivity. Which solution should you design?",
+    "choices": [
+      "A. Have each device create a persistent connection to a Compute Engine instance and write messages to a custom application.",
+      "B. Have devices poll for connectivity to Cloud SQL and insert the latest messages on a regular interval to a device specific table.",
+      "C. Have devices poll for connectivity to Cloud Pub/Sub and publish the latest messages on a regular interval to a shared topic for all devices.",
+      "D. Have devices create a persistent connection to an App Engine application fronted by Cloud Endpoints, which ingest messages and write them to Cloud Datastore."
+    ],
+    "answer": "C",
+    "description": "題目重點：\n• 公司需求：監控 1000 間會議室是否有人\n• 分布：5 間辦公室，3 大洲\n• 設備特性：每個會議室都有 motion sensor，每秒回報狀態\n• 技術需求：\n  • 支援大量、頻繁資料（每秒 1000 筆以上）\n  • 設備可能連線不穩定，需要彈性與可靠的資料接收\n\n選項分析：\n\nA. 每個裝置建立持久連線到 Compute Engine 寫入自訂應用\n• 持久連線數量龐大，需自行處理斷線、buffering\n• ❌ 不具彈性，管理成本高\n\nB. 裝置輪詢 Cloud SQL 並插入資料到專屬資料表\n• Cloud SQL 高頻寫入不適合（1000 QPS），輪詢模式效率低\n• ❌\n\nC. 裝置輪詢 Cloud Pub/Sub 並發佈到共用 Topic\n• Pub/Sub 支援彈性、可靠、異步傳送\n• 處理設備不穩定連線，自動緩衝訊息\n• 延遲低、易擴充\n• ✅ 最佳選擇\n\nD. 裝置持久連線到 App Engine + Cloud Datastore\n• App Engine 不適合大量持久連線\n• Datastore 資料入口可能成瓶頸\n• ❌\n\n正確答案：C\n\n理由總結：\n• 使用 Cloud Pub/Sub 作為資料 ingestion 層，符合大規模、高頻、彈性可靠的要求，是 GCP 官方推薦做法。"
+  },
+  {
+    "id": 200,
+    "question": "You are designing a future-proof hybrid environment that will require network connectivity between Google Cloud and your on-premises environment. You want to ensure that the Google Cloud environment you are designing is compatible with your on-premises networking environment. What should you do?",
+    "choices": [
+      "A. Use the default VPC in your Google Cloud project. Use a Cloud VPN connection between your on-premises environment and Google Cloud.",
+      "B. Create a custom VPC in Google Cloud in auto mode. Use a Cloud VPN connection between your on-premises environment and Google Cloud.",
+      "C. Create a network plan for your VPC in Google Cloud that uses CIDR ranges that overlap with your on-premises environment. Use a Cloud Interconnect connection between your on-premises environment and Google Cloud.",
+      "D. Create a network plan for your VPC in Google Cloud that uses non-overlapping CIDR ranges with your on-premises environment. Use a Cloud Interconnect connection between your on-premises environment and Google Cloud."
+    ],
+    "answer": "D",
+    "description": "題目重點：\n• 公司：TerramEarth\n• 需求：將內部資料中心與 Google Cloud VPC 連線，需要避免 IP 位址衝突\n\n選項分析：\nA. 不正確 ❌ - Default VPC 自動模式 IP 可能與內部環境重疊\nB. 不正確 ❌ - 自動模式無法保證未來不會衝突\nC. 不正確 ❌ - 即使路由正確，IP 範圍重疊仍會造成問題\nD. 正確 ✅ - 自訂 VPC 範圍可確保與內部網路相容，避免 IP 衝突\n\n結論：\n• 答案：D ✅\n• 理由：使用自訂 VPC 範圍可完整控制 IP 分配，避免衝突。"
+  }
+]
