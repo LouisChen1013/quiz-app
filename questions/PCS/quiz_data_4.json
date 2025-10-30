@@ -1,0 +1,794 @@
+[
+  {
+    "id": 181,
+    "question": "For compliance reporting purposes, the internal audit department needs you to provide the list of virtual machines (VMs) that have critical operating system (OS) security updates available, but not installed. You must provide this list every six months, and you want to perform this task quickly. What should you do?",
+    "choices": [
+      "A. Run a Security Command Center security scan on all VMs to extract a list of VMs with critical OS vulnerabilities every six months.",
+      "B. Run a gcloud CLI command from the Command Line Interface (CLI) to extract the VM's OS version information every six months.",
+      "C. Ensure that the Cloud Logging agent is installed on all VMs, and extract the OS last update log date every six months.",
+      "D. Ensure the OS Config agent is installed on all VMs and extract the patch status dashboard every six months."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 182,
+    "question": "Your company conducts clinical trials and needs to analyze the results of a recent study that are stored in BigQuery. The interval when the medicine was taken contains start and stop dates. The interval data is critical to the analysis, but specific dates may identify a particular batch and introduce bias. You need to obfuscate the start and end dates for each row and preserve the interval data. What should you do?",
+    "choices": [
+      "A. Use date shifting with the context set to the unique ID of the test subject.",
+      "B. Extract the date using TimePartConfig from each date field and append a random month and year.",
+      "C. Use bucketing to shift values to a predetermined date based on the initial value.",
+      "D. Use the FFX mode of format preserving encryption (FPE) and maintain data consistency."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 183,
+    "question": "You have a highly sensitive BigQuery workload that contains personally identifiable information (PII) that you want to ensure is not accessible from the internet. To prevent data exfiltration, only requests from authorized IP addresses are allowed to query your BigQuery tables. What should you do?",
+    "choices": [
+      "A. Use service perimeter and create an access level based on the authorized source IP address as the condition.",
+      "B. Use Google Cloud Armor security policies defining an allowlist of authorized IP addresses at the global HTTPS load balancer.",
+      "C. Use the Restrict Resource Service Usage organization policy constraint along with Cloud Data Loss Prevention (DLP).",
+      "D. Use the Restrict allowed Google Cloud APIs and services organization policy constraint along with Cloud Data Loss Prevention (DLP)."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 184,
+    "question": "Your organization is moving virtual machines (VMs) to Google Cloud. You must ensure that operating system images that are used across your projects are trusted and meet your security requirements. What should you do?",
+    "choices": [
+      "A. Implement an organization policy to enforce that boot disks can only be created from images that come from the trusted image project.",
+      "B. Implement an organization policy constraint that enables the Shielded VM service on all projects to enforce the trusted image repository usage.",
+      "C. Create a Cloud Function that is automatically triggered when a new virtual machine is created from the trusted image repository. Verify that the image is not deprecated.",
+      "D. Automate a security scanner that verifies that no common vulnerabilities and exposures (CVEs) are present in your trusted image repository."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 185,
+    "question": "You have stored company approved compute images in a single Google Cloud project that is used as an image repository. This project is protected with VPC Service Controls and exists in the perimeter along with other projects in your organization. This lets other projects deploy images from the image repository project. A team requires deploying a third-party disk image that is stored in an external Google Cloud organization. You need to grant read access to the disk image so that it can be deployed into the perimeter. What should you do?",
+    "choices": [
+      "A. Allow the external project by using the organizational policy, constraints/compute.trustedImageProjects.",
+      "B. 1. Update the perimeter. 2. Configure the egressTo field to include the external Google Cloud project number as an allowed resource and the serviceName to compute.googleapis.com. 3. Configure the egressFrom field to set identityType to ANY_IDENTITY.",
+      "C. 1. Update the perimeter. 2. Configure the ingressFrom field to set identityType to ANY_IDENTITY. 3. Configure the ingressTo field to include the external Google Cloud project number as an allowed resource and the serviceName to compute.googleapis.com.",
+      "D. 1. Update the perimeter. 2. Configure the egressTo field to set identityType to ANY_IDENTITY. 3. Configure the egressFrom field to include the external Google Cloud project number as an allowed resource and the serviceName to compute.googleapis.com."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 186,
+    "question": "A service account key has been publicly exposed on multiple public code repositories. After reviewing the logs, you notice that the keys were used to generate short-lived credentials. You need to immediately remove access with the service account. What should you do?",
+    "choices": [
+      "A. Delete the compromised service account.",
+      "B. Disable the compromised service account key.",
+      "C. Wait until the service account credentials expire automatically.",
+      "D. Rotate the compromised service account key."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 187,
+    "question": "A company is using Google Kubernetes Engine (GKE) with container images of a mission-critical application. The company wants to scan the images for known security issues and securely share the report with the security team without exposing them outside Google Cloud. What should you do?",
+    "choices": [
+      "A. 1. Enable Container Threat Detection in the Security Command Center Premium tier. 2. Upgrade all clusters that are not on a supported version of GKE to the latest possible GKE version. 3. View and share the results from the Security Command Center.",
+      "B. 1. Use an open source tool in Cloud Build to scan the images. 2. Upload reports to publicly accessible buckets in Cloud Storage by using gsutil. 3. Share the scan report link with your security department.",
+      "C. 1. Enable vulnerability scanning in the Artifact Registry settings. 2. Use Cloud Build to build the images. 3. Push the images to the Artifact Registry for automatic scanning. 4. View the reports in the Artifact Registry.",
+      "D. 1. Get a GitHub subscription. 2. Build the images in Cloud Build and store them in GitHub for automatic scanning. 3. Download the report from GitHub and share with the Security Team."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 188,
+    "question": "Your application is deployed as a highly available, cross-region solution behind a global external HTTP(S) load balancer. You notice significant spikes in traffic from multiple IP addresses, but it is unknown whether the IPs are malicious. You are concerned about your application's availability. You want to limit traffic from these clients over a specified time interval. What should you do?",
+    "choices": [
+      "A. Configure a throttle action by using Google Cloud Armor to limit the number of requests per client over a specified time interval.",
+      "B. Configure a rate_based_ban action by using Google Cloud Armor and set the ban_duration_sec parameter to the specified lime interval.",
+      "C. Configure a firewall rule in your VPC to throttle traffic from the identified IP addresses.",
+      "D. Configure a deny action by using Google Cloud Armor to deny the clients that issued too many requests over the specified time interval."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 189,
+    "question": "Your organization is using Active Directory and wants to configure Security Assertion Markup Language (SAML). You must set up and enforce single sign-on (SSO) for all users. What should you do?",
+    "choices": [
+      "A. 1. Create a new SAML profile. 2. Populate the sign-in and sign-out page URLs. 3. Upload the X.509 certificate. 4. Configure Entity ID and ACS URL in your IdP.",
+      "B. 1. Configure prerequisites for OpenID Connect (OIDC) in your Active Directory (AD) tenant. 2. Verify the AD domain. 3. Decide which users should use SAML. 4. Assign the pre-configured profile to the select organizational units (OUs) and groups.",
+      "C. 1. Create a new SAML profile. 2. Upload the X.509 certificate. 3. Enable the change password URL. 4. Configure Entity ID and ACS URL in your IdP.",
+      "D. 1. Manage SAML profile assignments. 2. Enable OpenID Connect (OIDC) in your Active Directory (AD) tenant. 3. Verify the domain."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 190,
+    "question": "Employees at your company use their personal computers to access your organization's Google Cloud console. You need to ensure that users can only access the Google Cloud console from their corporate-issued devices and verify that they have a valid enterprise certificate. What should you do?",
+    "choices": [
+      "A. Implement an Access Policy in BeyondCorp Enterprise to verify the device certificate. Create an access binding with the access policy just created.",
+      "B. Implement a VPC firewall policy. Activate packet inspection and create an allow rule to validate and verify the device certificate.",
+      "C. Implement an organization policy to verify the certificate from the access context.",
+      "D. Implement an Identity and Access Management (IAM) conditional policy to verify the device certificate."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 191,
+    "question": "IMP Your organization is rolling out a new continuous integration and delivery (CI/CD) process to deploy infrastructure and applications in Google Cloud. Many teams will use their own instances of the CI/CD workflow. It will run on Google Kubernetes Engine (GKE). The CI/CD pipelines must be designed to securely access Google Cloud APIs. What should you do?",
+    "choices": [
+      "A. 1. Create two service accounts, one for the infrastructure and one for the application deployment. 2. Use workload identities to let the pods run the two pipelines and authenticate with the service accounts. 3. Run the infrastructure and application pipelines in separate namespaces.",
+      "B. 1. Create a dedicated service account for the CI/CD pipelines. 2. Run the deployment pipelines in a dedicated nodes pool in the GKE cluster. 3. Use the service account that you created as identity for the nodes in the pool to authenticate to the Google Cloud APIs.",
+      "C. 1. Create individual service accounts for each deployment pipeline. 2. Add an identifier for the pipeline in the service account naming convention. 3. Ensure each pipeline runs on dedicated pods. 4. Use workload identity to map a deployment pipeline pod with a service account.",
+      "D. 1. Create service accounts for each deployment pipeline. 2. Generate private keys for the service accounts. 3. Securely store the private keys as Kubernetes secrets accessible only by the pods that run the specific deploy pipeline."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 192,
+    "question": "Your organization's Customers must scan and upload the contract and their driver license into a web portal in Cloud Storage. You must remove all personally identifiable information (PII) from files that are older than 12 months. Also, you must archive the anonymized files for retention purposes. What should you do?",
+    "choices": [
+      "A. Set a time to live (TTL) of 12 months for the files in the Cloud Storage bucket that removes PII and moves the files to the archive storage class.",
+      "B. Create a Cloud Data loss Prevention (DLP) inspection job that de-identifies PII in files created more than 12 months ago and archives them to another Cloud Storage bucket. Delete the original files.",
+      "C. Configure the Autoclass feature of the Cloud Storage bucket to de-identify PII. Archive the files that are older than 12 months. Delete the original files.",
+      "D. Schedule a Cloud Key Management Service (KMS) rotation period of 12 months for the encryption keys of the Cloud Storage files containing PII to de-identify them. Delete the original keys."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 193,
+    "question": "You plan to synchronize identities to Cloud Identity from a third-party identity provider (IdP). You discovered that some employees used their corporate email address to set up consumer accounts to access Google services. You need to ensure that the organization has control over the configuration, security, and lifecycle of these consumer accounts. What should you do? (Choose two.)",
+    "choices": [
+      "A. Mandate that those corporate employees delete their unmanaged consumer accounts.",
+      "B. Reconcile accounts that exist in Cloud Identity but not in the third-party IdP.",
+      "C. Evict the unmanaged consumer accounts in the third-party IdP before you sync identities.",
+      "D. Use Google Cloud Directory Sync (GCDS) to migrate the unmanaged consumer accounts' emails as user aliases.",
+      "E. Use the transfer tool to invite those corporate employees to transfer their unmanaged consumer accounts to the corporate domain."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 194,
+    "question": "You are auditing all your Google Cloud resources in the production project. You want to identify all principals who can change firewall rules. What should you do?",
+    "choices": [
+      "A. Use Policy Analyzer to query the permissions compute.firewalls.get or compute.firewalls.list.",
+      "B. Use Firewall Insights to understand your firewall rules usage patterns.",
+      "C. Reference the Security Health Analytics – Firewall Vulnerability Findings in the Security Command Center.",
+      "D. Use Policy Analyzer to query the permissions compute.firewalls.create or compute.firewalls.update or compute.firewalls.delete."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 195,
+    "question": "Your organization previously stored files in Cloud Storage by using Google Managed Encryption Keys (GMEK), but has recently updated the internal policy to require Customer Managed Encryption Keys (CMEK). You need to re-encrypt the files quickly and efficiently with minimal cost. What should you do?",
+    "choices": [
+      "A. Reupload the files to the same Cloud Storage bucket specifying a key file by using gsutil.",
+      "B. Encrypt the files locally, and then use gsutil to upload the files to a new bucket.",
+      "C. Copy the files to a new bucket with CMEK enabled in a secondary region.",
+      "D. Change the encryption type on the bucket to CMEK, and rewrite the objects."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 196,
+    "question": "You run applications on Cloud Run. You already enabled container analysis for vulnerability scanning. However, you are concerned about the lack of control on the applications that are deployed. You must ensure that only trusted container images are deployed on Cloud Run. What should you do? (Choose two.)",
+    "choices": [
+      "A. Enable Binary Authorization on the existing Cloud Run service.",
+      "B. Set the organization policy constraint constraints/run.allowedBinaryAuthorizationPolicies to the list or allowed Binary Authorization policy names.",
+      "C. Enable Binary Authorization on the existing Kubernetes cluster.",
+      "D. Use Cloud Run breakglass to deploy an image that meets the Binary Authorization policy by default.",
+      "E. Set the organization policy constraint constraints/compute.trustedImageProjects to the list of projects that contain the trusted container images."
+    ],
+    "answer": ["A", "B"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 197,
+    "question": "Your organization has on-premises hosts that need to access Google Cloud APIs. You must enforce private connectivity between these hosts, minimize costs, and optimize for operational efficiency. What should you do?",
+    "choices": [
+      "A. Set up VPC peering between the hosts on-premises and the VPC through the internet.",
+      "B. Route all on-premises traffic to Google Cloud through an IPsec VPN tunnel to a VPC with Private Google Access enabled.",
+      "C. Enforce a security policy that mandates all applications to encrypt data with a Cloud Key Management Service (KMS) key before you send it over the network.",
+      "D. Route all on-premises traffic to Google Cloud through a dedicated or Partner Interconnect to a VPC with Private Google Access enabled."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 198,
+    "question": "As part of your organization's zero trust strategy, you use Identity-Aware Proxy (IAP) to protect multiple applications. You need to ingest logs into a Security Information and Event Management (SIEM) system so that you are alerted to possible intrusions. Which logs should you analyze?",
+    "choices": [
+      "A. Data Access audit logs",
+      "B. Policy Denied audit logs",
+      "C. Cloud Identity user log events",
+      "D. Admin Activity audit logs"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 199,
+    "question": "Your company must follow industry specific regulations. Therefore, you need to enforce customer- managed encryption keys (CMEK) for all new Cloud Storage resources in the organization called org1. What command should you execute?",
+    "choices": [
+      "A. • organization poli-cy:constraints/gcp.restrictStorageNonCmekServices • binding at: org1 • policy type: allow • policy value: all supported services",
+      "B. • organization policy: con-straints/gcp.restrictNonCmekServices • binding at: org1 • policy type: deny • policy value: storage.googleapis.com",
+      "C. • organization policy: con-straints/gcp.restrictStorageNonCmekServices • binding at: org1 • policy type: deny • policy value: storage.googleapis.com",
+      "D. • organization policy: con-straints/gcp.restrictNonCmekServices • binding at: org1 • policy type: allow • policy value: storage.googleapis.com"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 200,
+    "question": "Your company's Google Cloud organization has about 200 projects and 1,500 virtual machines. There is no uniform strategy for logs and events management, which reduces visibility for your security operations team. You need to design a logs management solution that provides visibility and allows the security team to view the environment's configuration. What should you do?",
+    "choices": [
+      "A. 1. Create a dedicated log sink for each project that is in scope. 2. Use a BigQuery dataset with time partitioning enabled as a destination of the log sinks. 3. Deploy alerts based on log metrics in every project. 4. Grant the role \"Monitoring Viewer\" to the security operations team in each project.",
+      "B. 1. Create one log sink at the organization level that includes all the child resources. 2. Use as destination a Pub/Sub topic to ingest the logs into the security information and event. management (SIEM) on-premises, and ensure that the right team can access the SIEM. 3. Grant the Viewer role at organization level to the security operations team.",
+      "C. 1. Enable network logs and data access logs for all resources in the \"Production\" folder. 2. Do not create log sinks to avoid unnecessary costs and latency. 3. Grant the roles \"Logs Viewer\" and \"Browser\" at project level to the security operations team.",
+      "D. 1. Create one sink for the \"Production\" folder that includes child resources and one sink for the logs ingested at the organization level that excludes child resources. 2. As destination, use a log bucket with a minimum retention period of 90 days in a project that can be accessed by the security team. 3. Grant the security operations team the role of Security Reviewer at organization level."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 201,
+    "question": "Your Google Cloud organization allows for administrative capabilities to be distributed to each team through provision of a Google Cloud project with Owner role (roles/owner). The organization contains thousands of Google Cloud projects. Security Command Center Premium has surfaced multiple OPEN_MYSQL_PORT findings. You are enforcing the guardrails and need to prevent these types of common misconfigurations. What should you do?",
+    "choices": [
+      "A. Create a hierarchical firewall policy configured at the organization to deny all connections from 0.0.0.0/0.",
+      "B. Create a hierarchical firewall policy configured at the organization to allow connections only from internal IP ranges.",
+      "C. Create a Google Cloud Armor security policy to deny traffic from 0.0.0.0/0.",
+      "D. Create a firewall rule for each virtual private cloud (VPC) to deny traffic from 0.0.0.0/0 with priority 0."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 202,
+    "question": "Your organization must comply with the regulation to keep instance logging data within Europe. Your workloads will be hosted in the Netherlands in region europe-west4 in a new project. You must configure Cloud Logging to keep your data in the country. What should you do?",
+    "choices": [
+      "A. Configure the organization policy constraint gcp.resourceLocations to europe-west4.",
+      "B. Configure log sink to export all logs into a Cloud Storage bucket in europe-west4.",
+      "C. Create a new log bucket in europe-west4, and redirect the _Default bucket to the new bucket.",
+      "D. Set the logging storage region to europe-west4 by using the gcloud CLI logging settings update."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 203,
+    "question": "You are using Security Command Center (SCC) to protect your workloads and receive alerts for suspected security breaches at your company. You need to detect cryptocurrency mining software. Which SCC service should you use?",
+    "choices": [
+      "A. Virtual Machine Threat Detection",
+      "B. Container Threat Detection",
+      "C. Rapid Vulnerability Detection",
+      "D. Web Security Scanner"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 204,
+    "question": "You are running applications outside Google Cloud that need access to Google Cloud resources. You are using workload identity federation to grant external identities Identity and Access Management (IAM) roles to eliminate the maintenance and security burden associated with service account keys. You must protect against attempts to spoof another user's identity and gain unauthorized access to Google Cloud resources. What should you do? (Choose two.)",
+    "choices": [
+      "A. Enable data access logs for IAM APIs.",
+      "B. Limit the number of external identities that can impersonate a service account.",
+      "C. Use a dedicated project to manage workload identity pools and providers.",
+      "D. Use immutable attributes in attribute mappings.",
+      "E. Limit the resources that a service account can access."
+    ],
+    "answer": ["C", "D"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 205,
+    "question": "You manage a BigQuery analytical data warehouse in your organization. You want to keep data for all your customers in a common table while you also restrict query access based on rows and columns permissions. Non-query operations should not be supported. What should you do? (Choose two.)",
+    "choices": [
+      "A. Create row-level access policies to restrict the result data when you run queries with the filter expression set to TRUE.",
+      "B. Configure column-level encryption by using Authenticated Encryption with Associated Data (AEAD) functions with Cloud Key Management Service (KMS) to control access to columns at query runtime.",
+      "C. Create row-level access policies to restrict the result data when you run queries with the filter expression set to FALSE.",
+      "D. Configure dynamic data masking rules to control access to columns at query runtime.",
+      "E. Create column-level policy tags to control access to columns at query runtime."
+    ],
+    "answer": ["C", "E"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 206,
+    "question": "Your DevOps team uses Packer to build Compute Engine images by using this process: 1. Create an ephemeral Compute Engine VM. 2. Copy a binary from a Cloud Storage bucket to the VM's file system. 3. Update the VM's package manager. 4. Install external packages from the internet onto the VM. Your security team just enabled the organizational policy, constraints/ compute.vmExternalIpAccess, to restrict the usage of public IP Addresses on VMs. In response, your DevOps team updated their scripts to remove public IP addresses on the Compute Engine VMs; however, the build pipeline is failing due to connectivity issues. What should you do? (Choose two.)",
+    "choices": [
+      "A. Provision an HTTP load balancer with the VM in an unmanaged instance group to allow inbound connections from the internet to your VM.",
+      "B. Provision a Cloud NAT instance in the same VPC and region as the Compute Engine VM.",
+      "C. Enable Private Google Access on the subnet that the Compute Engine VM is deployed within.",
+      "D. Update the VPC routes to allow traffic to and from the internet.",
+      "E. Provision a Cloud VPN tunnel in the same VPC and region as the Compute Engine VM."
+    ],
+    "answer": ["B", "C"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 207,
+    "question": "Your organization recently activated the Security Command Center (SCC) standard tier. There are a few Cloud Storage buckets that were accidentally made accessible to the public. You need to investigate the impact of the incident and remediate it. What should you do?",
+    "choices": [
+      "A. 1. Remove the Identity and Access Management (IAM) granting access to all Users from the buckets. 2. Apply the organization policy storage.uniformBucketLevelAccess to prevent regressions. 3. Query the data access logs to report on unauthorized access.",
+      "B. 1. Change permissions to limit access for authorized users. 2. Enforce a VPC Service Controls perimeter around all the production projects to immediately stop any unauthorized access. 3. Review the administrator activity audit logs to report on any unauthorized access.",
+      "C. 1. Change the bucket permissions to limit access. 2. Query the bucket's usage logs to report on unauthorized access to the data. 3. Enforce the organization policy storage.publicAccessPrevention to avoid regressions.",
+      "D. 1. Change bucket permissions to limit access. 2. Query the data access audit logs for any unauthorized access to the buckets. 3. After the misconfiguration is corrected, mute the finding in the Security Command Center."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 208,
+    "question": "Your organization is transitioning to Google Cloud. You want to ensure that only trusted container images are deployed on Google Kubernetes Engine (GKE) clusters in a project. The containers must be deployed from a centrally managed Container Registry and signed by a trusted authority. What should you do? (Choose two.)",
+    "choices": [
+      "A. Enable Container Threat Detection in the Security Command Center (SCC) for the project.",
+      "B. Configure the trusted image organization policy constraint for the project.",
+      "C. Create a custom organization policy constraint to enforce Binary Authorization for Google Kubernetes Engine (GKE).",
+      "D. Enable PodSecurity standards, and set them to Restricted.",
+      "E. Configure the Binary Authorization policy with respective attestations for the project."
+    ],
+    "answer": ["B", "E"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 209,
+    "question": "Your company uses Google Cloud and has publicly exposed network assets. You want to discover the assets and perform a security audit on these assets by using a software tool in the least amount of time. What should you do?",
+    "choices": [
+      "A. Run a platform security scanner on all instances in the organization.",
+      "B. Identify all external assets by using Cloud Asset Inventory, and then run a network security scanner against them.",
+      "C. Contact a Google approved security vendor to perform the audit.",
+      "D. Notify Google about the pending audit, and wait for confirmation before performing the scan."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 210,
+    "question": "Your organization wants to be compliant with the General Data Protection Regulation (GDPR) on Google Cloud. You must implement data residency and operational sovereignty in the EU. What should you do? (Choose two.)",
+    "choices": [
+      "A. Limit the physical location of a new resource with the Organization Policy Service \"resource locations constraint.\"",
+      "B. Use Cloud IDS to get east-west and north-south traffic visibility in the EU to monitor intra-VPC and inter-VPC communication.",
+      "C. Limit Google personnel access based on predefined attributes such as their citizenship or geographic location by using Key Access Justifications.",
+      "D. Use identity federation to limit access to Google Cloud resources from non-EU entities.",
+      "E. Use VPC Flow Logs to monitor intra-VPC and inter-VPC traffic in the EU."
+    ],
+    "answer": ["A", "C"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 211,
+    "question": "Your company is moving to Google Cloud. You plan to sync your users first by using Google Cloud Directory Sync (GCDS). Some employees have already created Google Cloud accounts by using their company email addresses that were created outside of GCDS. You must create your users on Cloud Identity. What should you do?",
+    "choices": [
+      "A. Configure GCDS and use GCDS search rules to sync these users.",
+      "B. Use the transfer tool to migrate unmanaged users.",
+      "C. Write a custom script to identify existing Google Cloud users and call the Admin SDK: Directory API to transfer their account.",
+      "D. Configure GCDS and use GCDS exclusion rules to ensure users are not suspended."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 212,
+    "question": "Your organization is using GitHub Actions as a continuous integration and delivery (CI/CD) platform. You must enable access to Google Cloud resources from the CI/CD pipelines in the most secure way. What should you do?",
+    "choices": [
+      "A. Create a service account key, and add it to the GitHub pipeline configuration file.",
+      "B. Create a service account key, and add it to the GitHub repository content.",
+      "C. Configure a Google Kubernetes Engine cluster that uses Workload Identity to supply credentials to GitHub.",
+      "D. Configure workload identity federation to use GitHub as an identity pool provider."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 213,
+    "question": "Your organization processes sensitive health information. You want to ensure that data is encrypted while in use by the virtual machines (VMs). You must create a policy that is enforced across the entire organization. What should you do?",
+    "choices": [
+      "A. Implement an organization policy that ensures that all VM resources created across your organization use customer-managed encryption keys (CMEK) protection.",
+      "B. Implement an organization policy that ensures all VM resources created across your organization are Confidential VM instances.",
+      "C. Implement an organization policy that ensures that all VM resources created across your organization use Cloud External Key Manager (EKM) protection.",
+      "D. No action is necessary because Google encrypts data while it is in use by default."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 214,
+    "question": "You are a Cloud Identity administrator for your organization. In your Google Cloud environment, groups are used to manage user permissions. Each application team has a dedicated group. Your team is responsible for creating these groups and the application teams can manage the team members on their own through the Google Cloud console. You must ensure that the application teams can only add users from within your organization to their groups. What should you do?",
+    "choices": [
+      "A. Change the configuration of the relevant groups in the Google Workspace Admin console to prevent external users from being added to the group.",
+      "B. Set an Identity and Access Management (IAM) policy that includes a condition that restricts group membership to user principals that belong to your organization.",
+      "C. Define an Identity and Access Management (IAM) deny policy that denies the assignment of principals that are outside your organization to the groups in scope.",
+      "D. Export the Cloud Identity logs to BigQuery. Configure an alert for external members added to groups. Have the alert trigger a Cloud Function instance that removes the external members from the group."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 215,
+    "question": "Your organization wants to be continuously evaluated against CIS Google Cloud Computing Foundations Benchmark v1.3.0 (CIS Google Cloud Foundation 1.3). Some of the controls are irrelevant to your organization and must be disregarded in evaluation. You need to create an automated system or process to ensure that only the relevant controls are evaluated. What should you do?",
+    "choices": [
+      "A. Mark all security findings that are irrelevant with a tag and a value that indicates a security exception. Select all marked findings, and mute them on the console every time they appear. Activate Security Command Center (SCC) Premium.",
+      "B. Activate Security Command Center (SCC) Premium. Create a rule to mute the security findings in SCC so they are not evaluated.",
+      "C. Download all findings from Security Command Center (SCC) to a CSV file. Mark the findings that are part of CIS Google Cloud Foundation 1.3 in the file. Ignore the entries that are irrelevant and out of scope for the company.",
+      "D. Ask an external audit company to provide independent reports including needed CIS benchmarks. In the scope of the audit, clarify that some of the controls are not needed and must be disregarded."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 216,
+    "question": "You are routing all your internet facing traffic from Google Cloud through your on-premises internet connection. You want to accomplish this goal securely and with the highest bandwidth possible. What should you do?",
+    "choices": [
+      "A. Create an HA VPN connection to Google Cloud. Replace the default 0.0.0.0/0 route.",
+      "B. Create a routing VM in Compute Engine. Configure the default route with the VM as the next hop.",
+      "C. Configure Cloud Interconnect with HA VPN. Replace the default 0.0.0.0/0 route to an on-premises destination.",
+      "D. Configure Cloud Interconnect and route traffic through an on-premises firewall."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 217,
+    "question": "Your organization uses Google Workspace Enterprise Edition for authentication. You are concerned about employees leaving their laptops unattended for extended periods of time after authenticating into Google Cloud. You must prevent malicious people from using an employee's unattended laptop to modify their environment. What should you do?",
+    "choices": [
+      "A. Create a policy that requires employees to not leave their sessions open for long durations.",
+      "B. Review and disable unnecessary Google Cloud APIs.",
+      "C. Require strong passwords and 2SV through a security token or Google authenticator.",
+      "D. Set the session length timeout for Google Cloud services to a shorter duration."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 218,
+    "question": "You are migrating an on-premises data warehouse to BigQuery, Cloud SQL, and Cloud Storage. You need to configure security services in the data warehouse. Your company compliance policies mandate that the data warehouse must: • Protect data at rest with full lifecycle management on cryptographic keys. • Implement a separate key management provider from data management. • Provide visibility into all encryption key requests. What services should be included in the data warehouse implementation? (Choose two.)",
+    "choices": [
+      "A. Customer-managed encryption keys",
+      "B. Customer-Supplied Encryption Keys",
+      "C. Key Access Justifications",
+      "D. Access Transparency and Approval",
+      "E. Cloud External Key Manager"
+    ],
+    "answer": ["C", "E"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 219,
+    "question": "You manage one of your organization's Google Cloud projects (Project A). A VPC Service Control (SC) perimeter is blocking API access requests to this project, including Pub/Sub. A resource running under a service account in another project (Project B) needs to collect messages from a Pub/Sub topic in your project. Project B is not included in a VPC SC perimeter. You need to provide access from Project B to the Pub/Sub topic in Project A using the principle of least privilege. What should you do?",
+    "choices": [
+      "A. Configure an ingress policy for the perimeter in Project A, and allow access for the service account in Project B to collect messages.",
+      "A. Hide Solution    Discussion   15",
+      "B. Create an access level that allows a developer in Project B to subscribe to the Pub/Sub topic that is located in Project A.",
+      "C. Create a perimeter bridge between Project A and Project B to allow the required communication between both projects.",
+      "D. Remove the Pub/Sub API from the list of restricted services in the perimeter configuration for Project"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 220,
+    "question": "You define central security controls in your Google Cloud environment. For one of the folders in your organization, you set an organizational policy to deny the assignment of external IP addresses to VMs. Two days later, you receive an alert about a new VM with an external IP address under that folder. What could have caused this alert?",
+    "choices": [
+      "A. The VM was created with a static external IP address that was reserved in the project before the organizational policy rule was set.",
+      "B. The organizational policy constraint wasn't properly enforced and is running in \"dry run\" mode.",
+      "C. A project level, the organizational policy control has been overwritten with an \"allow\" value.",
+      "D. The policy constraint on the folder level does not have any effect because of an \"allow\" value for that constraint on the organizational level."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 221,
+    "question": "Your company recently published a security policy to minimize the usage of service account keys. On- premises Windows-based applications are interacting with Google Cloud APIs. You need to implement Workload Identity Federation (WIF) with your identity provider on-premises. What should you do?",
+    "choices": [
+      "A. Set up a workload identity pool with your corporate Active Directory Federation Service (ADFS). Configure a rule to let principals in the pool impersonate the Google Cloud service account.",
+      "B. Set up a workload identity pool with your corporate Active Directory Federation Service (ADFS). Let all principals in the pool impersonate the Google Cloud service account.",
+      "C. Set up a workload identity pool with an OpenID Connect (OIDC) service on the same machine. Configure a rule to let principals in the pool impersonate the Google Cloud service account.",
+      "D. Set up a workload identity pool with an OpenID Connect (OIDC) service on the same machine. Let all principals in the pool impersonate the Google Cloud service account."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 222,
+    "question": "After completing a security vulnerability assessment, you learned that cloud administrators leave Google Cloud CLI sessions open for days. You need to reduce the risk of attackers who might exploit these open sessions by setting these sessions to the minimum duration. What should you do?",
+    "choices": [
+      "A. Set the session duration for the Google session control to one hour.",
+      "B. Set the reauthentication frequency for the Google Cloud Session Control to one hour.",
+      "C. Set the organization policy constraint constraints/iam.allowServiceAccountCredentialLifetimeExtension to one hour.",
+      "D. Set the organization policy constraint constraints/iam.serviceAccountKeyExpiryHours to one hour and inheritFromParent to false."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 223,
+    "question": "You have numerous private virtual machines on Google Cloud. You occasionally need to manage the servers through Secure Socket Shell (SSH) from a remote location. You want to configure remote access to the servers in a manner that optimizes security and cost efficiency. What should you do?",
+    "choices": [
+      "A. Create a site-to-site VPN from your corporate network to Google Cloud.",
+      "B. Configure server instances with public IP addresses. Create a firewall rule to only allow traffic from your corporate IPs.",
+      "C. Create a firewall rule to allow access from the Identity-Aware Proxy (IAP) IP range. Grant the role of an IAP-secured Tunnel User to the administrators.",
+      "D. Create a jump host instance with public IP. Manage the instances by connecting through the jump host."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 224,
+    "question": "Your organization's record data exists in Cloud Storage. You must retain all record data for at least seven years. This policy must be permanent. What should you do?",
+    "choices": [
+      "A. 1. Identify buckets with record data. 2. Apply a retention policy, and set it to retain for seven years. 3. Monitor the bucket by using log-based alerts to ensure that no modifications to the retention policy occurs.",
+      "B. 1. Identify buckets with record data. 2. Apply a retention policy, and set it to retain for seven years. 3. Remove any Identity and Access Management (IAM) roles that contain the storage buckets update permission.",
+      "C. 1. Identify buckets with record data. 2. Enable the bucket policy only to ensure that data is retained. 3. Enable bucket lock.",
+      "D. 1. Identify buckets with record data. 2. Apply a retention policy and set it to retain for seven years. 3. Enable bucket lock."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 225,
+    "question": "Your organization wants to protect all workloads that run on Compute Engine VM to ensure that the instances weren't compromised by boot-level or kernel-level malware. Also, you need to ensure that data in use on the VM cannot be read by the underlying host system by using a hardware-based solution. What should you do?",
+    "choices": [
+      "A. 1. Use Google Shielded VM including secure boot, Virtual Trusted Platform Module (vTPM), and integrity monitoring. 2. Create a Cloud Run function to check for the VM settings, generate metrics, and run the function regularly.",
+      "B. 1. Activate Virtual Machine Threat Detection in Security Command Center (SCC) Premium. 2. Monitor the findings in SCC.",
+      "C. 1. Use Google Shielded VM including secure boot, Virtual Trusted Platform Module (vTPM), and integrity monitoring. 2. Activate Confidential Computing. 3. Enforce these actions by using organization policies.",
+      "D. 1. Use secure hardened images from the Google Cloud Marketplace. 2. When deploying the images, activate the Confidential Computing option. 3. Enforce the use of the correct images and Confidential Computing by using organization policies."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 226,
+    "question": "You are migrating your users to Google Cloud. There are cookie replay attacks with Google web and Google Cloud CLI SDK sessions on endpoint devices. You need to reduce the risk of these threats. What should you do? (Choose two.)",
+    "choices": [
+      "A. Configure Google session control to a shorter duration.",
+      "B. Set an organizational policy for OAuth 2.0 access token with a shorter duration.",
+      "C. Set a reauthentication policy for Google Cloud services to a shorter duration.",
+      "D. Configure a third-party identity provider with session management.",
+      "E. Enforce Security Key Authentication with 2SV."
+    ],
+    "answer": ["A", "E"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 227,
+    "question": "You manage a mission-critical workload for your organization, which is in a highly regulated industry. The workload uses Compute Engine VMs to analyze and process the sensitive data after it is uploaded to Cloud Storage from the endpoint computers. Your compliance team has detected that this workload does not meet the data protection requirements for sensitive data. You need to meet these requirements: • Manage the data encryption key (DEK) outside the Google Cloud boundary. • Maintain full control of encryption keys through a third-party provider. • Encrypt the sensitive data before uploading it to Cloud Storage. • Decrypt the sensitive data during processing in the Compute Engine VMs. • Encrypt the sensitive data in memory while in use in the Compute Engine VMs. What should you do? (Choose two.)",
+    "choices": [
+      "A. Configure Customer Managed Encryption Keys to encrypt the sensitive data before it is uploaded to Cloud Storage, and decrypt the sensitive data after it is downloaded into your VMs.",
+      "B. Configure Cloud External Key Manager to encrypt the sensitive data before it is uploaded to Cloud Storage, and decrypt the sensitive data after it is downloaded into your VMs.",
+      "C. Create Confidential VMs to access the sensitive data.",
+      "D. Migrate the Compute Engine VMs to Confidential VMs to access the sensitive data.",
+      "E. Create a VPC Service Controls service perimeter across your existing Compute Engine VMs and Cloud Storage buckets."
+    ],
+    "answer": ["B", "C"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 228,
+    "question": "Your organization wants to be General Data Protection Regulation (GDPR) compliant. You want to ensure that your DevOps teams can only create Google Cloud resources in the Europe regions. What should you do?",
+    "choices": [
+      "A. Use Identity-Aware Proxy (IAP) with Access Context Manager to restrict the location of Google Cloud resources.",
+      "B. Use the org policy constraint 'Google Cloud Platform – Resource Location Restriction' on your Google Cloud organization node.",
+      "C. Use the org policy constraint 'Restrict Resource Service Usage' on your Google Cloud organization node.",
+      "D. Use Identity and Access Management (IAM) custom roles to ensure that your DevOps team can only create resources in the Europe regions."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 229,
+    "question": "For data residency requirements, you want your secrets in Google Clouds Secret Manager to only have payloads in europe-west1 and europe-west4. Your secrets must be highly available in both regions. What should you do?",
+    "choices": [
+      "A. Create your secret with a user managed replication policy, and choose only compliant locations.",
+      "B. Create your secret with an automatic replication policy, and choose only compliant locations.",
+      "C. Create two secrets by using Terraform, one in europe-west1 and the other in europe-west4.",
+      "D. Create your secret with an automatic replication policy, and create an organizational policy to deny secret creation in non-compliant locations."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 230,
+    "question": "You are migrating an application into the cloud. The application will need to read data from a Cloud Storage bucket. Due to local regulatory requirements, you need to hold the key material used for encryption fully under your control and you require a valid rationale for accessing the key material. What should you do?",
+    "choices": [
+      "A. Encrypt the data in the Cloud Storage bucket by using Customer Managed Encryption Keys. Configure an IAM deny policy for unauthorized groups.",
+      "B. Generate a key in your on-premises environment to encrypt the data before you upload the data to the Cloud Storage bucket. Upload the key to the Cloud Key Management Service (KMS). Activate Key Access Justifications (KAJ) and have the external key system reject unauthorized accesses.",
+      "C. Encrypt the data in the Cloud Storage bucket by using Customer Managed Encryption Keys backed by a Cloud Hardware Security Module (HSM). Enable data access logs.",
+      "D. Generate a key in your on-premises environment and store it in a Hardware Security Module (HSM) that is managed on-premises. Use this key as an external key in the Cloud Key Management Service (KMS). Activate Key Access Justifications (KAJ) and set the external key system to reject unauthorized accesses."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 231,
+    "question": "Your organization uses the top-tier folder to separate application environments (prod and dev). The developers need to see all application development audit logs, but they are not permitted to review production logs. Your security team can review all logs in production and development environments. You must grant Identity and Access Management (IAM) roles at the right resource level for the developers and security team while you ensure least privilege. What should you do?",
+    "choices": [
+      "A. 1. Grant logging.viewer role to the security team at the organization resource level. 2. Grant logging.viewer role to the developer team at the folder resource level that contains all the dev projects.",
+      "B. 1. Grant logging.viewer role to the security team at the organization resource level. 2. Grant logging.admin role to the developer team at the organization resource level.",
+      "C. 1. Grant logging.admin role to the security team at the organization resource level. 2. Grant logging.viewer role to the developer team at the folder resource level that contains all the dev projects.",
+      "D. 1. Grant logging.admin role to the security team at the organization resource level. 2. Grant logging.admin role to the developer team at the organization resource level."
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 232,
+    "question": "You manage a fleet of virtual machines (VMs) in your organization. You have encountered issues with lack of patching in many VMs. You need to automate regular patching in your VMs and view the patch management data across multiple projects. What should you do? (Choose two.)",
+    "choices": [
+      "A. View patch management data in VM Manager by using OS patch management.",
+      "B. View patch management data in Artifact Registry.",
+      "C. View patch management data in a Security Command Center dashboard.",
+      "D. Deploy patches with Security Command Genter by using Rapid Vulnerability Detection.",
+      "E. Deploy patches with VM Manager by using OS patch management."
+    ],
+    "answer": ["C", "E"],
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 233,
+    "question": "Your organization uses BigQuery to process highly sensitive, structured datasets. Following the “need to know” principle, you need to create the Identity and Access Management (IAM) design to meet the needs of these users: • Business user: must access curated reports. • Data engineer: must administrate the data lifecycle in the platform. • Security operator: must review user activity on the data platform. What should you do?",
+    "choices": [
+      "A. Configure data access log for BigQuery services, and grant Project Viewer role to security operator.",
+      "B. Set row-based access control based on the “region” column, and filter the record from the United States for data engineers.",
+      "C. Create curated tables in a separate dataset and assign the role roles/bigquery.dataViewer.",
+      "D. Generate a CSV data file based on the business user's needs, and send the data to their email addresses."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 234,
+    "question": "You are setting up a new Cloud Storage bucket in your environment that is encrypted with a customer managed encryption key (CMEK). The CMEK is stored in Cloud Key Management Service (KMS), in project “prj-a”, and the Cloud Storage bucket will use project “prj-b”. The key is backed by a Cloud Hardware Security Module (HSM) and resides in the region europe-west3. Your storage bucket will be located in the region europe-west1. When you create the bucket, you cannot access the key, and you need to troubleshoot why. What has caused the access issue?",
+    "choices": [
+      "A. A firewall rule prevents the key from being accessible.",
+      "B. Cloud HSM does not support Cloud Storage.",
+      "C. The CMEK is in a different project than the Cloud Storage bucket.",
+      "D. The CMEK is in a different region than the Cloud Storage bucket."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 235,
+    "question": "You are deploying regulated workloads on Google Cloud. The regulation has data residency and data access requirements. It also requires that support is provided from the same geographical location as where the data resides. What should you do?",
+    "choices": [
+      "A. Enable Access Transparency Logging.",
+      "B. Deploy Assured Workloads.",
+      "C. Deploy resources only to regions permitted by data residency requirements.",
+      "D. Use Data Access logging and Access Transparency logging to confirm that no users are accessing data from another region."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 236,
+    "question": "Your organization wants full control of the keys used to encrypt data at rest in their Google Cloud environments. Keys must be generated and stored outside of Google and integrate with many Google Services including BigQuery. What should you do?",
+    "choices": [
+      "A. Use customer-supplied encryption keys (CSEK) with keys generated on trusted external systems. Provide the raw CSEK as part of the API call.",
+      "B. Create a KMS key that is stored on a Google managed FIPS 140-2 level 3 Hardware Security Module (HSM). Manage the Identity and Access Management (IAM) permissions settings, and set up the key rotation period.",
+      "C. Use Cloud External Key Management (EKM) that integrates with an external Hardware Security Module (HSM) system from supported vendors.",
+      "D. Create a Cloud Key Management Service (KMS) key with imported key material. Wrap the key for protection during import. Import the key generated on a trusted system in Cloud KMS."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 237,
+    "question": "Your company is concerned about unauthorized parties gaining access to the Google Cloud environment by using a fake login page. You must implement a solution to protect against person-in- the-middle attacks. Which security measure should you use?",
+    "choices": [
+      "A. Security key",
+      "B. Google prompt",
+      "C. Text message or phone call code",
+      "D. Google Authenticator application"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 238,
+    "question": "You control network traffic for a folder in your Google Cloud environment. Your folder includes multiple projects and Virtual Private Cloud (VPC) networks. You want to enforce on the folder level that egress connections are limited only to IP range 10.58.5.0/24 and only from the VPC network “dev-vpc”. You want to minimize implementation and maintenance effort. What should you do?",
+    "choices": [
+      "A. 1. Leave the network configuration of the VMs in scope unchanged. 2. Create a new project including a new VPC network “new-vpc”. 3. Deploy a network appliance in “new-vpc” to filter access requests and only allow egress connections from “dev-vpc” to 10.58.5.0/24.",
+      "B. 1. Leave the network configuration of the VMs in scope unchanged. 2. Enable Cloud NAT for “dev-vpc” and restrict the target range in Cloud NAT to 10.58.5.0/24.",
+      "C. 1. Attach external IP addresses to the VMs in scope. 2. Define and apply a hierarchical firewall policy on folder level to deny all egress connections and to allow egress to IP range 10.58.5.0/24 from network dev-vpc.",
+      "D. 1. Attach external IP addresses to the VMs in scope. 2. Configure a VPC Firewall rule in “dev-vpc” that allows egress connectivity to IP range 10.58.5.0/24 for all source addresses in this network."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 239,
+    "question": "Your customer has an on-premises Public Key Infrastructure (PKI) with a certificate authority (CA). You need to issue certificates for many HTTP load balancer frontends. The on-premises PKI should be minimally affected due to many manual processes, and the solution needs to scale. What should you do?",
+    "choices": [
+      "A. Use Certificate Manager to issue Google managed public certificates and configure it at HTTP the load balancers in your infrastructure as code (IaC).",
+      "B. Use a subordinate CA in the Google Certificate Authority Service from the on-premises PKI system to issue certificates for the load balancers.",
+      "C. Use Certificate Manager to import certificates issued from on-premises PKI and for the frontends. Leverage the gcloud tool for importing.",
+      "D. Use the web applications with PKCS12 certificates issued from subordinate CA based on OpenSSL on-premises. Use the gcloud tool for importing. Use the External TCP/UDP Network load balancer instead of an external HTTP Load Balancer."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": null
+  },
+  {
+    "id": 240,
+    "question": "You are developing a new application that uses exclusively Compute Engine VMs. Once a day, this application will execute five different batch jobs. Each of the batch jobs requires a dedicated set of permissions on Google Cloud resources outside of your application. You need to design a secure access concept for the batch jobs that adheres to the least-privilege principle. What should you do?",
+    "choices": [
+      "A. 1. Create a general service account “g-sa” to orchestrate the batch jobs. 2. Create one service account per batch job ‘b-sa-[1-5]’. Grant only the permissions required to run the individual batch jobs to the service accounts and generate service account keys for each of these service accounts. 3. Store the service account keys in Secret Manager. Grant g-sa access to Secret Manager and run the batch jobs with the permissions of b-sa-[1-5].",
+      "B. 1. Create a general service account “g-sa” to execute the batch jobs. 2. Grant the permissions required to execute the batch jobs to g-sa. 3. Execute the batch jobs with the permissions granted to g-sa.",
+      "C. 1. Create a workload identity pool and configure workload identity pool providers for each batch job. 2. Assign the workload identity user role to each of the identities configured in the providers. 3. Create one service account per batch job “b-sa-[1-5]”, and grant only the permissions required to run the individual batch jobs to the service accounts. 4. Generate credential configuration files for each of the providers. Use these files to execute the batch jobs with the permissions of b-sa-[1-5].",
+      "D. 1. Create a general service account “g-sa” to orchestrate the batch jobs. 2. Create one service account per batch job “b-sa-[1-5]”, and grant only the permissions required to run the individual batch jobs to the service accounts. 3. Grant the Service Account Token Creator role to g-sa. Use g-sa to obtain short-lived access tokens for b-sa-[1-5] and to execute the batch jobs with the permissions of b-sa-[1-5]."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": null
+  }
+]

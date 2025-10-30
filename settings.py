@@ -1,15 +1,27 @@
+# settings.py
+
 from pathlib import Path
 
 # App
 APP_NAME = "Quiz App"
 
-
 # Paths
 BASE_DIR = Path(__file__).resolve().parent
 QUESTIONS_DIR = BASE_DIR / "questions"
-DEFAULT_JSON = (QUESTIONS_DIR / "quiz_data.json").resolve()
-CONFIG_PATH = BASE_DIR / ".quiz_app_config.json"
 
+# 考試類型資料夾映射
+EXAM_DIRS = {
+    "PCA": QUESTIONS_DIR / "PCA",
+    "PCS": QUESTIONS_DIR / "PCS",
+}
+
+# 預設考試（可改 "PCA" 或 "PCS"）
+DEFAULT_EXAM = "PCA"
+
+# DEFAULT_JSON：指到預設考試底下
+DEFAULT_JSON = (EXAM_DIRS[DEFAULT_EXAM] / "quiz_data.json").resolve()
+
+CONFIG_PATH = BASE_DIR / ".quiz_app_config.json"
 
 # Images & Fonts
 IMG_MAX_W, IMG_MAX_H = 900, 420

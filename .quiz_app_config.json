@@ -1,5 +1,6 @@
 {
-  "last_quiz_file": "/Users/louischen/Documents/GitHub/quiz-app/questions/quiz_data_1.json",
-  "shuffle_questions": true,
-  "shuffle_choices": true
+  "last_quiz_file": "/Users/louischen/Documents/GitHub/quiz-app/questions/PCS/quiz_data_3.json",
+  "shuffle_questions": false,
+  "shuffle_choices": false,
+  "exam_type": "PCS"
 }

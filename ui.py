@@ -72,12 +72,12 @@ class QuizApp:
         self.style = Style(theme="flatly")
         self.center_window()
 
+        # 目前考試類型（先從設定檔帶，等 load_config 之後會覆寫）
+        self.exam_var = tk.StringVar(value=getattr(settings, "DEFAULT_EXAM", "PCA"))
+
         # 掃描題庫檔案
-        assets_base = settings.DEFAULT_JSON.parent
-        quiz_files = sorted(assets_base.glob("quiz_data_*.json")) or [
-            settings.DEFAULT_JSON
-        ]
-        self.quiz_files = quiz_files
+        self.quiz_files = []
+        self.scan_quiz_files(self.exam_var.get())
 
         # Model
         self.model = QuizModel(self.quiz_files)
@@ -242,11 +242,20 @@ class QuizApp:
 
         # 載入設定與題庫
         cfg = self.load_config()
+
+        exam_from_cfg = cfg.get("exam_type") or getattr(settings, "DEFAULT_EXAM", "PCA")
+        if exam_from_cfg not in settings.EXAM_DIRS:
+            exam_from_cfg = settings.DEFAULT_EXAM
+        self.exam_var.set(exam_from_cfg)
+        self.scan_quiz_files(self.exam_var.get())
+
         last_file = cfg.get("last_quiz_file")
         try:
             if last_file and Path(last_file).exists():
+                self.model.file_paths = self.quiz_files
                 self.model.load(Path(last_file))
             else:
+                self.model.file_paths = self.quiz_files
                 self.model.load(self.quiz_files[0])
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load quiz file:\n{e}")
@@ -274,12 +283,25 @@ class QuizApp:
             "last_quiz_file": str(self._cfg_cache.get("last_quiz_file")),
             "shuffle_questions": self.model.shuffle_questions,
             "shuffle_choices": self.model.shuffle_choices,
+            "exam_type": self.exam_var.get(),
         }
         save_json(settings.CONFIG_PATH, data)
 
     # ---------- 選單 ----------
     def populate_options_menu(self):
         self.options_menu.delete(0, "end")
+
+        exam_menu = Menu(self.options_menu, tearoff=0)
+        for label in settings.EXAM_DIRS.keys():
+            exam_menu.add_radiobutton(
+                label=label,
+                value=label,
+                variable=self.exam_var,
+                command=self.on_change_exam,
+            )
+        self.options_menu.add_cascade(label="Exam", menu=exam_menu)
+        self.options_menu.add_separator()
+
         current = getattr(self, "_cfg_cache", {}).get("last_quiz_file")
         for qf in self.quiz_files:
             name = qf.stem
@@ -328,6 +350,7 @@ class QuizApp:
 
     def load_quiz_file(self, file_path: Path):
         try:
+            self.model.file_paths = self.quiz_files
             self.model.load(file_path)
             self._cfg_cache["last_quiz_file"] = str(file_path)
             self.populate_options_menu()
@@ -723,3 +746,47 @@ class QuizApp:
             )
         except Exception as e:
             messagebox.showerror("Error", str(e))
+
+    # 依考試類型掃描題庫檔
+    def scan_quiz_files(self, exam_type: str):
+        base = (
+            settings.EXAM_DIRS.get(exam_type)
+            or settings.EXAM_DIRS[settings.DEFAULT_EXAM]
+        )
+        # 先找 quiz_data_*.json
+        files = sorted(base.glob("quiz_data_*.json"))
+        # 若沒有，退回 quiz_data.json（如果存在）
+        if not files:
+            fallback = base / "quiz_data.json"
+            if fallback.exists():
+                files = [fallback.resolve()]
+        # 若再沒有，就退回 DEFAULT_JSON，避免空清單
+        if not files:
+            files = [settings.DEFAULT_JSON]
+
+        self.quiz_files = files
+
+    # 切換考試類型
+    def on_change_exam(self):
+        exam = self.exam_var.get()
+        # 重新掃描題庫
+        self.scan_quiz_files(exam)
+
+        # 重建 model 的檔案清單並載入第一本
+        try:
+            self.model = QuizModel(self.quiz_files)
+            self.model.load(self.quiz_files[0])
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load quiz file:\n{e}")
+            return
+
+        # 更新 UI 與選單、並記錄設定
+        if not hasattr(self, "_cfg_cache"):
+            self._cfg_cache = {}
+        self._cfg_cache["exam_type"] = exam
+        self._cfg_cache["last_quiz_file"] = str(self.quiz_files[0])
+
+        self.populate_options_menu()
+        self.refresh_progress_ui()
+        self.show_question()
+        self.save_config()

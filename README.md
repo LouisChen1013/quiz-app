@@ -1,6 +1,6 @@
 # quiz-app
 
-> A desktop quiz application designed for **Google Cloud Professional Cloud Architect (PCA)** exam preparation.  
+> A desktop quiz application designed for **Google Cloud Professional Cloud Architect (PCA)** and **Google Cloud Professional Cloud Security Engineer (PCS)** exam preparation.  
 > Built with **Python + Tkinter + ttkbootstrap**, supporting image questions, multiple-choice answers, auto-grading, and random test generation.
 
 ---
