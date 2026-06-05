@@ -209,3 +209,11 @@ __marimo__/
 # docs
 *.pdf
 *.docx
+
+# Quiz app local state
+.quiz_app_config.json
+
+# OS and editor files
+.DS_Store
+.idea/
+.vscode/

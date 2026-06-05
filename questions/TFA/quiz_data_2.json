@@ -1,0 +1,763 @@
+[
+  {
+    "id": 64,
+    "question": "Which of the following is not a valid Terraform collection type?",
+    "choices": [
+      "A. list",
+      "B. map",
+      "C. tree",
+      "D. set"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "Terraform 的標準集合類型包括 list、map 和 set。tree（樹狀結構）並非 Terraform 內建的變數集合類型。"
+  },
+  {
+    "id": 65,
+    "question": "When running the command terraform taint against a managed resource, Terraform will immediately destroy and recreate the resource.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "terraform taint 指令只是在狀態文件中將資源標記為『tainted』，實際的銷毀與重新創建動作要等到下一次執行 terraform apply 時才會發生。"
+  },
+  {
+    "id": 66,
+    "question": "All standard backend types support state storage, locking, and remote operations like plan, apply and destroy.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "並非所有後端都支援狀態鎖定或遠端操作。例如，S3 支援存儲和鎖定（需配合 DynamoDB），但本身不支援遠端執行 plan/apply。只有『增強型』（Enhanced）後端（如 Terraform Cloud）才支援遠端操作。"
+  },
+  {
+    "id": 67,
+    "question": "How can terraform plan aid in the development process?",
+    "choices": [
+      "A. Validates your expectations against the execution plan without permanently modifying state",
+      "B. Initializes your working directory",
+      "C. Formats your Terraform configuration files",
+      "D. Reconciles Terraform's state and permanently modifies state"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "terraform plan 讓開發者在不實際更改基礎設施或永久修改狀態的情況下，預覽並驗證 Terraform 預計執行的變更是否符合預期。"
+  },
+  {
+    "id": 68,
+    "question": "You would like to reuse the same Terraform configuration for your development and production environments with a different state file for each. Which command would you use?",
+    "choices": [
+      "A. terraform import",
+      "B. terraform workspace",
+      "C. terraform state",
+      "D. terraform init"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "Workspaces（工作區）允許用戶在同一個配置目錄下管理多個獨立的狀態文件，非常適合區分不同的環境（如 dev 和 prod）。"
+  },
+  {
+    "id": 69,
+    "question": "What is the name assigned by Terraform to reference this resource? (google_compute_instance \"main\")",
+    "choices": [
+      "A. compute_instance",
+      "B. main",
+      "C. google",
+      "D. test"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "在資源定義 `resource \"google_compute_instance\" \"main\"` 中，\"main\" 是開發者分配給該資源的本地名稱，用於在代碼中引用。"
+  },
+  {
+    "id": 70,
+    "question": "You're building a CI/CD pipeline and need to inject sensitive variables into your Terraform run. How can you do this safely?",
+    "choices": [
+      "A. Pass variables to Terraform with a -var flag",
+      "B. Copy the sensitive variables into your Terraform code",
+      "C. Store the sensitive variables in a secure_vars.tf file",
+      "D. Store the sensitive variables as plain text in a source code repository"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "在流水線中，透過命令行參數 `-var` 或環境變數注入敏感數值是較安全的做法，能避免將秘密硬編碼在代碼或存儲在版本控制中。"
+  },
+  {
+    "id": 71,
+    "question": "How can you protect sensitive data stored in Terraform state files?",
+    "choices": [
+      "A. Delete the state file every time you run Terraform",
+      "B. Store the state in an encrypted backend",
+      "C. Edit your state file to scrub out the sensitive data",
+      "D. Always store your secrets in a secrets.tfvars file"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "由於 Terraform 會在狀態文件中以明文紀錄敏感值，因此必須將狀態文件儲存在支援靜態加密（Encryption at rest）的後端中。"
+  },
+  {
+    "id": 72,
+    "question": "In contrast to Terraform Open Source, when working with Terraform Enterprise and Cloud Workspaces, conceptually you could think about them as completely separate working directories.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "在 Terraform Cloud/Enterprise 中，工作區（Workspace）包含管理特定基礎設施集合所需的所有內容，其運作方式類似於完全獨立的工作目錄。"
+  },
+  {
+    "id": 73,
+    "question": "You want to know from which paths Terraform is loading providers referenced in your Terraform configuration. You need to enable debug messages to find this out. Which of the following would achieve this?",
+    "choices": [
+      "A. Set the environment variable TF_LOG=TRACE",
+      "B. Set verbose logging for each provider in your Terraform configuration",
+      "C. Set the environment variable TF_VAR_log=TRACE",
+      "D. Set the environment variable TF_LOG_PATH"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "TRACE 是最詳細的日誌級別，會顯示 Terraform 載入 Provider 的路徑等細節。"
+  },
+  {
+    "id": 74,
+    "question": "How is terraform import run?",
+    "choices": [
+      "A. As a part of terraform init",
+      "B. As a part of terraform plan",
+      "C. As a part of terraform refresh",
+      "D. By an explicit call",
+      "E. All of the above"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "terraform import 必須透過明確的指令呼叫來執行，用於將現有基礎設施導入狀態。"
+  },
+  {
+    "id": 75,
+    "question": "You have a simple Terraform configuration containing one virtual machine (VM). What will happen if you delete the VM using the cloud provider console, and run terraform apply again without changing any Terraform code?",
+    "choices": [
+      "A. Terraform will remove the VM from state file",
+      "B. Terraform will report an error",
+      "C. Terraform will not make any changes",
+      "D. Terraform will recreate the VM"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "Terraform 會檢測到現實環境中的資源缺失，為了符合代碼中定義的『期望狀態』，它會計畫重新創建該 VM。"
+  },
+  {
+    "id": 76,
+    "question": "Which of these options is the most secure place to store secrets for connecting to a Terraform remote backend?",
+    "choices": [
+      "A. Defined in Environment variables",
+      "B. Inside the backend block within the Terraform configuration",
+      "C. Defined in a connection configuration outside of Terraform",
+      "D. None of above"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "官方建議使用環境變數（如 AWS_ACCESS_KEY_ID）來提供憑證，以避免將敏感數據硬編碼在配置文件中而被洩露。"
+  },
+  {
+    "id": 77,
+    "question": "Your DevOps team would like to move to a remote backend to begin storing the state file in a central location. Which of the following backends would not work?",
+    "choices": [
+      "A. Amazon S3",
+      "B. Artifactory",
+      "C. Git",
+      "D. Terraform Cloud"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "Git 並非受支援的遠端狀態後端類型。此外，Artifactory 後端在 v1.3 版本後已被移除。"
+  },
+  {
+    "id": 78,
+    "question": "Which backend does the Terraform CLI use by default?",
+    "choices": [
+      "A. Terraform Cloud",
+      "B. Consul",
+      "C. Remote",
+      "D. Local"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "預設情況下，Terraform 會隱式使用名為 local 的後端，將狀態儲存在本地磁碟。"
+  },
+  {
+    "id": 79,
+    "question": "When you initialize Terraform, where does it cache modules from the public Terraform Module Registry?",
+    "choices": [
+      "A. On disk in the /tmp directory",
+      "B. In memory",
+      "C. On disk in the .terraform sub-directory",
+      "D. They are not cached"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "Terraform 會在初始化期間於隱藏的 .terraform 目錄中管理快取的插件與模組。"
+  },
+  {
+    "id": 80,
+    "question": "You write a new Terraform configuration and immediately run terraform apply in the CLI using the local backend. Why will the apply fail?",
+    "choices": [
+      "A. Terraform needs you to format your code according to best practices first",
+      "B. Terraform needs to install the necessary plugins first",
+      "C. The Terraform CLI needs you to log into Terraform cloud first",
+      "D. Terraform requires you to manually run terraform plan first"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "在執行 apply 之前必須先運行 terraform init，以安裝配置文件中所需的 Provider 插件。"
+  },
+  {
+    "id": 81,
+    "question": "What feature stops multiple admins from changing the Terraform state at the same time?",
+    "choices": [
+      "A. Version control",
+      "B. Backend types",
+      "C. Provider constraints",
+      "D. State locking"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "狀態鎖定（State locking）功能可防止多個用戶同時執行寫入操作，從而避免狀態文件損壞。"
+  },
+  {
+    "id": 82,
+    "question": "What command should be used to tell Terraform to no longer manage a specific resource (e.g., aws_instance.ubuntu[1]) without destroying it?",
+    "choices": [
+      "A. terraform apply rm aws_instance.ubuntu[1]",
+      "B. terraform state rm aws_instance.ubuntu[1]",
+      "C. terraform plan rm aws_instance.ubuntu[1]",
+      "D. terraform delete aws_instance.ubuntu[1]"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "使用 terraform state rm 可以移除狀態文件中的資源綁定，使 Terraform 『忘記』該對象，但該對象在遠端系統中依然存在。"
+  },
+  {
+    "id": 83,
+    "question": "Terraform can only manage resource dependencies if you set them explicitly with the depends_on argument.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "Terraform 主要透過分析資源屬性來自動推斷隱式依賴關係，只有在無法自動識別時才需要 depends_on。"
+  },
+  {
+    "id": 84,
+    "question": "A terraform apply can not _________ infrastructure.",
+    "choices": [
+      "A. change",
+      "B. destroy",
+      "C. provision",
+      "D. import"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "在較舊版本中，導入資源需使用專用的 terraform import 指令，而非 apply（註：v1.5+ 已支援 import 區塊，但此考題仍以此邏輯為主）。"
+  },
+  {
+    "id": 85,
+    "question": "You need to constrain the GitHub provider to version 2.1 or greater. Which is the correct syntax for the provider block?",
+    "choices": [
+      "A. version >= 2.1",
+      "B. version ~> 2.1",
+      "C. version = \"<= 2.1\"",
+      "D. version = \">= 2.1\""
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "正確的語法需包含等號並將運算符與版本號放在雙引號字串中。"
+  },
+  {
+    "id": 86,
+    "question": "You corrected a count variable value in your configuration. What do you do next to make your infrastructure match your configuration?",
+    "choices": [
+      "A. Run an apply and confirm the planned changes",
+      "B. Inspect your Terraform state",
+      "C. Reinitialize because configuration changed",
+      "D. Inspect all Terraform outputs"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "執行 terraform apply 是應用配置變更到實際基礎設施的唯一方式。"
+  },
+  {
+    "id": 87,
+    "question": "Terraform provisioners that require authentication can use the ______ block.",
+    "choices": [
+      "A. connection",
+      "B. credentials",
+      "C. secrets",
+      "D. ssh"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "connection 區塊用於配置 provisioner 的身份驗證設定，如用戶名、密碼或私鑰。"
+  },
+  {
+    "id": 88,
+    "question": "Terraform validate reports syntax check errors from which of the following scenarios?",
+    "choices": [
+      "A. Code contains tabs indentation instead of spaces",
+      "B. There is missing value for a variable",
+      "C. The state file does not match current infrastructure",
+      "D. None of the above"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "validate 主要檢查 HCL 語法與內部一致性。在新版本中，缺失變數值通常不會被 validate 攔截，而是發生在計畫階段。"
+  },
+  {
+    "id": 89,
+    "question": "Which of the following is allowed as a Terraform variable name?",
+    "choices": [
+      "A. count",
+      "B. name",
+      "C. source",
+      "D. version"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "source, version, count, depends_on 等是保留字，不能用作變數名稱。"
+  },
+  {
+    "id": 90,
+    "question": "What type of block is used to construct a collection of nested configuration blocks?",
+    "choices": [
+      "A. for_each",
+      "B. repeated",
+      "C. nesting",
+      "D. dynamic"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "dynamic 區塊用於根據列表或映射等複雜數值動態生成資源內部的嵌套區塊。"
+  },
+  {
+    "id": 91,
+    "question": "Module variable assignments are inherited from the parent module and do not need to be explicitly set.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "模組是獨立的單元，不會自動繼承父模組的變數，必須在調用模組時明確傳遞。"
+  },
+  {
+    "id": 92,
+    "question": "If writing Terraform code that adheres to style conventions, how would you properly indent each nesting level?",
+    "choices": [
+      "A. With four spaces",
+      "B. With a tab",
+      "C. With three spaces",
+      "D. With two spaces"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "官方習慣風格建議每一級嵌套使用兩個空格進行縮排。"
+  },
+  {
+    "id": 93,
+    "question": "Which of the following is not an action performed by terraform init?",
+    "choices": [
+      "A. Create a sample main.tf file",
+      "B. Initialize a configured backend",
+      "C. Retrieve the source code for modules",
+      "D. Load required provider plugins"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "init 負責準備工作環境，但不會主動幫用戶創建配置檔案內容。"
+  },
+  {
+    "id": 96,
+    "question": "Terraform and Terraform providers must use the same major version number in a single configuration.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "Terraform 核心版本與 Provider 版本是獨立管理的，不需要一致。"
+  },
+  {
+    "id": 97,
+    "question": "Which statement describes a goal of infrastructure as code?",
+    "choices": [
+      "A. An abstraction from vendor specific APIs",
+      "B. Write once, run anywhere",
+      "C. A pipeline process to deliver software",
+      "D. The programmatic configuration of resources"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "IaC 的核心目標是透過程式化（代碼化）的方式自動化管理與配置資源。"
+  },
+  {
+    "id": 98,
+    "question": "When making changes via the Azure Cloud Console, which are true regarding state files? (Choose two.)",
+    "choices": [
+      "A. Changes recorded in a new state file",
+      "B. Terraform updates the state file during next plan or apply",
+      "C. The current state file will not be updated automatically",
+      "D. Changes are recorded in the current state file immediately"
+    ],
+    "answer": [
+      "B",
+      "C"
+    ],
+    "image": null,
+    "description": "外部變更不會自動同步到狀態，必須透過 plan/apply 觸發 refresh 來更新狀態文件。"
+  },
+  {
+    "id": 99,
+    "question": "To deploy resources to two different regions, what meta-argument is needed in a resource block to select the non-default provider?",
+    "choices": [
+      "A. alias = west",
+      "B. provider = west",
+      "C. provider = aws.west",
+      "D. alias = aws.west"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "使用 provider 元參數並指定 <PROVIDER>.<ALIAS> 來選擇特定的提供者配置。"
+  },
+  {
+    "id": 100,
+    "question": "What must you do to pass an input variable value to a child module?",
+    "choices": [
+      "A. Add node_count = var.node_count in the module block",
+      "B. Declare the variable in terraform.tfvars",
+      "C. Declare a node_count input variable for child module",
+      "D. Nothing, child modules inherit variables"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "子模組必須先定義該變數，父模組才能在調用時進行賦值。"
+  },
+  {
+    "id": 101,
+    "question": "If a module declares a variable with a default, that variable must also be defined within the module.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "若模組變數已有默認值，在調用該模組時就不強制要求進行賦值。"
+  },
+  {
+    "id": 102,
+    "question": "Which option cannot be used to keep secrets out of Terraform configuration files?",
+    "choices": [
+      "A. Environment Variables",
+      "B. Mark the variable as sensitive",
+      "C. A Terraform provider",
+      "D. A -var flag"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "標記為 sensitive 只是防止其顯示在 CLI 輸出中，代碼檔案若仍寫死該值，則不具備隱藏效果。"
+  },
+  {
+    "id": 103,
+    "question": "Which of the following arguments are required when declaring a Terraform output?",
+    "choices": [
+      "A. sensitive",
+      "B. description",
+      "C. default",
+      "D. value"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "宣告 output 時，value 參數是唯一必須提供的，以定義要導出的數據。"
+  },
+  {
+    "id": 104,
+    "question": "How can Terraform Enterprise automatically and proactively enforce S3 security controls?",
+    "choices": [
+      "A. With a Sentinel policy, which runs before every apply",
+      "B. By adding variables to each workspace",
+      "C. With an S3 module with proper settings",
+      "D. Auditing cloud storage buckets"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "Sentinel 作為策略即代碼（PaC），可以在 apply 執行前自動檢查並攔截不合規的資源創建。"
+  },
+  {
+    "id": 106,
+    "question": "terraform validate validates that your infrastructure matches the Terraform state file.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "validate 只檢查語法，不會連接到狀態文件或遠端 API。"
+  },
+  {
+    "id": 107,
+    "question": "What does terraform import allow you to do?",
+    "choices": [
+      "A. Import a new Terraform module",
+      "B. Use a state file to import infrastructure to the cloud",
+      "C. Import provisioned infrastructure to your state file",
+      "D. Import an existing state file to a new workspace"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "import 指令用於將已存在的雲端資源對映並紀錄到 Terraform 的狀態文件中。"
+  },
+  {
+    "id": 108,
+    "question": "In the configuration (module \"vpc\"), how would you reference the module output vpc_id?",
+    "choices": [],
+    "answer": "module.vpc.vpc_id",
+    "image": null,
+    "description": "引用模組輸出的標準語法是 module.<MODULE_NAME>.<OUTPUT_NAME>。"
+  },
+  {
+    "id": 109,
+    "question": "How would you reference all Volume IDs in ebs_block_device blocks for an instance?",
+    "choices": [
+      "A. aws_instance.example.ebs_block_device.[*].volume_id",
+      "B. aws_instance.example.ebs_block_device.volume_id",
+      "C. aws_instance.example.ebs_block_device[sda2].volume_id",
+      "D. aws_instance.example.ebs_block_device.*.volume_id"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "使用 splat 運算符 (*) 可以提取列表中所有對象的特定屬性值。"
+  },
+  {
+    "id": 110,
+    "question": "What does state locking accomplish?",
+    "choices": [
+      "A. Copies the state file from memory to disk",
+      "B. Encrypts credentials within the state",
+      "C. Blocks Terraform commands from modifying state",
+      "D. Prevents accidental deletion of state"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "狀態鎖定確保同一時間只有一個指令可以執行寫入，避免多位管理員併發操作導致損壞。"
+  },
+  {
+    "id": 112,
+    "question": "A module can always refer to all variables declared in its parent module.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "模組具有作用域限制，無法自動存取父模組的變數，必須明確傳入。"
+  },
+  {
+    "id": 113,
+    "question": "When you use a remote backend that needs authentication, HashiCorp recommends that you:",
+    "choices": [
+      "A. Use partial configuration to load the authentication credentials outside of the Terraform code",
+      "B. Push your Terraform configuration to an encrypted git repository",
+      "C. Write the authentication credentials in the Terraform configuration files",
+      "D. Keep the Terraform configuration files in a secret store"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "HashiCorp 建議不要將憑證寫在代碼中。應使用「部分配置」（Partial Configuration），透過環境變數或命令行在執行時提供敏感數據。"
+  },
+  {
+    "id": 114,
+    "question": "You have a simple Terraform configuration containing one virtual machine (VM). What will happen if you terraform apply again immediately afterwards without changing any Terraform code?",
+    "choices": [
+      "A. Terraform will terminate and recreate the VM",
+      "B. Terraform will create another duplicate VM",
+      "C. Terraform will apply the VM to the state file",
+      "D. Nothing"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "Terraform 是冪等（Idempotent）的。如果配置與當前狀態完全一致，再次執行 apply 將不會對基礎設施做任何更改。"
+  },
+  {
+    "id": 115,
+    "question": "A junior admin accidentally deleted some of your cloud instances. What does Terraform do when you run terraform apply?",
+    "choices": [
+      "A. Build a completely brand new set of infrastructure",
+      "B. Tear down the entire workspace infrastructure and rebuild it",
+      "C. Rebuild only the instances that were deleted",
+      "D. Stop and generate an error message about the missing instances"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "Terraform 會在執行 apply 前先進行刷新，發現實例缺失後，會根據配置定義重新創建那些被刪除的實例以符合期望狀態。"
+  },
+  {
+    "id": 116,
+    "question": "You ran terraform apply and all resources were created successfully. Now you realize that you do not actually need the load balancer so you run terraform destroy without any flags. What will happen?",
+    "choices": [
+      "A. Terraform will destroy the application server because it is listed first in the code",
+      "B. Terraform will prompt you to confirm that you want to destroy all the infrastructure",
+      "C. Terraform will destroy the main.tf file",
+      "D. Terraform will prompt you to pick which resource you want to destroy",
+      "E. Terraform will immediately destroy all the infrastructure"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "預設情況下，terraform destroy 會計畫銷毀狀態文件中的所有資源，並在真正執行前請求用戶確認。"
+  },
+  {
+    "id": 117,
+    "question": "Which type of block fetches or computes information for use elsewhere in a Terraform configuration?",
+    "choices": [
+      "A. provider",
+      "B. resource",
+      "C. local",
+      "D. data"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "data 區塊（數據源）用於檢索由 Terraform 外部管理或由其他 Terraform 配置定義的數據。"
+  },
+  {
+    "id": 118,
+    "question": "You have just developed a new Terraform configuration for two virtual machines. Which Terraform command should you run first?",
+    "choices": [
+      "A. terraform apply",
+      "B. terraform plan",
+      "C. terraform show",
+      "D. terraform init"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "在新的配置目錄中，必須首先執行 init 來初始化後端並安裝所需的 Provider 插件。"
+  },
+  {
+    "id": 119,
+    "question": "All modules published on the official Terraform Module Registry have been verified by HashiCorp.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "任何人都可以發佈模組。只有帶有「Verified」標記的模組才是由 HashiCorp 合作夥伴維護並經過審核的。"
+  },
+  {
+    "id": 120,
+    "question": "You have to initialize a Terraform backend before it can be configured.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "必須先在代碼中編寫（配置）後端塊，然後才能執行 terraform init 來進行初始化。"
+  },
+  {
+    "id": 121,
+    "question": "Which of the following does terraform apply change after you approve the execution plan? (Choose two.)",
+    "choices": [
+      "A. Cloud infrastructure",
+      "B. The .terraform directory",
+      "C. The execution plan",
+      "D. State file",
+      "E. Terraform code"
+    ],
+    "answer": [
+      "A",
+      "D"
+    ],
+    "image": null,
+    "description": "terraform apply 會修改實際的雲端基礎設施，並在完成後更新本地或遠端的狀態文件。"
+  },
+  {
+    "id": 122,
+    "question": "A Terraform backend determines how Terraform loads state and stores updates when you execute ___________.",
+    "choices": [
+      "A. apply",
+      "B. taint",
+      "C. destroy",
+      "D. All of the above",
+      "E. None of the above"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "後端定義了所有涉及狀態讀取或寫入的操作（如 apply, taint, destroy, plan 等）如何與狀態數據交互。"
+  },
+  {
+    "id": 123,
+    "question": "What does Terraform use .terraform.lock.hcl file for?",
+    "choices": [
+      "A. Tracking provider dependencies",
+      "B. There is no such file",
+      "C. Preventing Terraform runs from occurring",
+      "D. Storing references to workspaces which are locked"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "該文件用於鎖定配置中使用的 Provider 版本，確保團隊成員在不同機器上執行時使用相同版本的插件。"
+  },
+  {
+    "id": 124,
+    "question": "You want to replace a virtual machine instance with an identical one without affecting the database. What is the best way to achieve this?",
+    "choices": [
+      "A. Use the terraform state rm command",
+      "B. Use the terraform taint command targeting the VMs then run plan and apply",
+      "C. Use the terraform apply command targeting the VM resources only",
+      "D. Delete the Terraform VM resources from your code then run plan and apply"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "使用 taint 標記特定資源為受損，可強制在下次 apply 時僅針對該資源進行替換。"
+  },
+  {
+    "id": 125,
+    "question": "How do you specify a module's version when publishing it to the public Terraform Module Registry?",
+    "choices": [
+      "A. The module's configuration page on the Registry",
+      "B. Terraform Module Registry does not support versioning",
+      "C. The release tags in the associated repo",
+      "D. The module's Terraform code"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "註冊表透過解析 Git 倉庫中的語義化版本（Semantic Versioning）標籤（如 v1.0.0）來識別模組版本。"
+  },
+  {
+    "id": 126,
+    "question": "Terraform plan updates your state file.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "terraform plan 是一個唯讀操作，它計算變更但不持久化這些變更到狀態文件。狀態更新發生在 apply 階段。"
+  },
+  {
+    "id": 127,
+    "question": "To check if all code in a configuration with multiple modules is properly formatted without making changes, what command should be run?",
+    "choices": [
+      "A. terraform fmt -check",
+      "B. terraform fmt -write-false",
+      "C. terraform fmt -list -recursive",
+      "D. terraform fmt -check -recursive"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "-check 會檢查格式但不寫入變更，-recursive 則會遞迴處理所有子目錄中的模組。"
+  }
+]

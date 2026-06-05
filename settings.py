@@ -13,10 +13,11 @@ QUESTIONS_DIR = BASE_DIR / "questions"
 EXAM_DIRS = {
     "PCA": QUESTIONS_DIR / "PCA",
     "PCS": QUESTIONS_DIR / "PCS",
+    "TFA": QUESTIONS_DIR / "TFA",
 }
 
-# 預設考試（可改 "PCA" 或 "PCS"）
-DEFAULT_EXAM = "PCA"
+# 預設考試（可改 "PCA" 或 "PCS" OR TFA）
+DEFAULT_EXAM = "TFA"
 
 # DEFAULT_JSON：指到預設考試底下
 DEFAULT_JSON = (EXAM_DIRS[DEFAULT_EXAM] / "quiz_data.json").resolve()

@@ -1,0 +1,394 @@
+[
+  {
+    "id": 328,
+    "question": "You updated the Terraform code to change a load balancer port from 80 to 443. Another team member manually changes the port to 443 through the console before you run apply. What will happen when you terraform apply?",
+    "choices": [
+      "A. Terraform will fail with an error because the state file is no longer accurate.",
+      "B. Terraform will change the load balancer port to 80, and then change it back to 443.",
+      "C. Terraform will not make any changes to the Load Balancer and will update the state file to reflect any changes made.",
+      "D. Terraform will recreate the load balancer."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "Terraform 會在 apply 時先刷新狀態，發現實際環境已手動更改為目標值 (443)，因此不會對資源進行物理變更，僅更新狀態檔。"
+  },
+  {
+    "id": 329,
+    "question": "Which of the following is not an action performed by terraform init?",
+    "choices": [
+      "A. Create template configuration files",
+      "B. Initialize a configured backend",
+      "C. Retrieve the source code for all referenced modules",
+      "D. Load required provider plugins"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "terraform init 用於初始化後端、下載模組與載入插件，但不會自動建立模板設定檔 (*.tf)。"
+  },
+  {
+    "id": 330,
+    "question": "A child module can always access variables declared in its parent module.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "子模組是隔離的單元，無法自動存取父模組變數，必須由父模組顯式傳遞。"
+  },
+  {
+    "id": 331,
+    "question": "Before you can use a new backend or HCP Terraform/Terraform Cloud integration, you must first execute terraform init.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "更換或初次使用後端時，必須執行 init 來配置與初始化相關設定。"
+  },
+  {
+    "id": 332,
+    "question": "resource \"google_compute_instance\" \"main\" { name = \"test\" }. What is the Terraform resource name of this block?",
+    "choices": [
+      "A. test",
+      "B. main",
+      "C. google",
+      "D. compute_instance"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "Terraform 的資源名稱（Resource Name）是指資源類型後的第二個識別碼，此例中為 'main'。"
+  },
+  {
+    "id": 333,
+    "question": "When referencing a module from the Terraform Registry, how do you specify version 1.0.0?",
+    "choices": [
+      "A. You cannot specify versioning in Registry",
+      "B. Add a version = \"1.0.0\" attribute to the module block",
+      "C. It always defaults to version 1.0.0",
+      "D. Append ?ref=v1.0.0 to the source path"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "對於 Registry 來源的模組，應在 module 區塊內使用 version 屬性。"
+  },
+  {
+    "id": 334,
+    "question": "Infrastructure as Code (IaC) allows you to automate infrastructure provisioning.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "自動化基礎設施佈署是 IaC 的核心價值之一。"
+  },
+  {
+    "id": 335,
+    "question": "Terraform encrypts sensitive values stored in your state file.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "Terraform 的狀態檔（.tfstate）內容預設是以純文字儲存，包含 sensitive 的值，需依賴後端加密功能來保護。"
+  },
+  {
+    "id": 336,
+    "question": "When should you run terraform init?",
+    "choices": [
+      "A. Every time you run terraform apply",
+      "B. After plan but before apply",
+      "C. After you start coding a new project and before you run plan for the first time",
+      "D. Before you start coding"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "init 是在編寫完代碼後、進行任何 plan 或 apply 之前的首要步驟。"
+  },
+  {
+    "id": 337,
+    "question": "When is the best time to run terraform validate?",
+    "choices": [
+      "A. After plan",
+      "B. Before plan to validate code syntax",
+      "C. Before apply to validate infrastructure",
+      "D. After apply to validate credentials"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "在執行 plan 之前使用 validate 可先行檢查語法錯誤，節省除錯時間。"
+  },
+  {
+    "id": 338,
+    "question": "Which of these commands makes your code more human readable?",
+    "choices": [
+      "A. terraform validate",
+      "B. terraform output",
+      "C. terraform show",
+      "D. terraform fmt"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "terraform fmt 指令專門用於調整代碼格式，提升其可讀性。"
+  },
+  {
+    "id": 339,
+    "question": "Terraform configuration can only import from the public registry.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "Terraform 支援從私有註冊表、Git、本地路徑等多種來源導入。"
+  },
+  {
+    "id": 340,
+    "question": "What is the Terraform resource name of the following resource block? (Refer to similar image in 332)",
+    "choices": [
+      "A. test",
+      "B. google",
+      "C. main",
+      "D. compute_instance"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "根據 HCL 定義，資源塊標籤的第二個字串即為資源名稱。"
+  },
+  {
+    "id": 341,
+    "question": "terraform init retrieves and caches the configuration for all remote modules.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "init 會掃描配置，將所有引用的遠端模組原始碼下載並緩存在本地 .terraform 目錄。"
+  },
+  {
+    "id": 342,
+    "question": "Terraform configuration can only call modules from the public registry.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "Terraform 亦可呼叫私有或本地模組。"
+  },
+  {
+    "id": 343,
+    "question": "resource \"kubernetes_namespace\" \"example\" { name = \"test\" }. How would you reference the attribute name of this resource in HCL?",
+    "choices": [
+      "A. data.kubernetes_namespace.name",
+      "B. resource.kubernetes_namespace.example.name",
+      "C. kubernetes_namespace.test.name",
+      "D. kubernetes_namespace.example.name"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "引用資源屬性的正確格式為 <TYPE>.<NAME>.<ATTR>，不包含 'resource' 前綴。"
+  },
+  {
+    "id": 344,
+    "question": "Terraform variables and outputs can store a 'description' argument in the state file.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "描述欄位僅供代碼說明使用，不會被記錄到狀態檔中。"
+  },
+  {
+    "id": 345,
+    "question": "What happens when you execute terraform plan?",
+    "choices": [
+      "A. Imports all existing resources",
+      "B. Installs referenced providers",
+      "C. Compares code and local state to determine changes",
+      "D. Refreshes state, then compares to configuration to create an execution plan"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "plan 會先執行刷新，接著對比實際狀態與期望配置，生成執行計畫。"
+  },
+  {
+    "id": 346,
+    "question": "What does terraform destroy do?",
+    "choices": [
+      "A. Destroys state file, leaves infrastructure",
+      "B. Destroys code files, leaves state",
+      "C. Destroy all infrastructure in the Terraform state file",
+      "D. Destroys all infrastructure in the configured Provider"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "destroy 會銷毀狀態檔中所追蹤管理的所有基礎設施資源。"
+  },
+  {
+    "id": 347,
+    "question": "When you reference a module from the Registry, the 'version' attribute is required.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "version 是選用屬性，若未指定則預設使用最新版本。"
+  },
+  {
+    "id": 348,
+    "question": "Your root module contains a variable named num_servers. Which is the correct way to pass its value to a child module with an input named servers?",
+    "choices": [
+      "A. ${var.num_servers}",
+      "B. servers = num_servers",
+      "C. servers = var(num_servers)",
+      "D. servers = var.num_servers"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "在父模組呼叫子模組時，應使用 'var.變數名' 的語法將值賦予子模組的輸入引數。"
+  },
+  {
+    "id": 349,
+    "question": "What does the default local Terraform backend store?",
+    "choices": [
+      "A. Provider plugins",
+      "B. Terraform binary",
+      "C. tfplan files",
+      "D. State file"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "預設的本地後端主要用於儲存追蹤基礎設施狀態的 State file。"
+  },
+  {
+    "id": 350,
+    "question": "You are making changes to existing Terraform code to add some new infrastructure. When is the best time to run terraform validate?",
+    "choices": [
+      "A. Before you run terraform apply, so you can validate your provider credentials.",
+      "B. Before you run terraform plan, so you can validate your code syntax.",
+      "C. After you run terraform apply, so you can validate your infrastructure.",
+      "D. After you run terraform plan, so you can validate that your state file is consistent with your infrastructure."
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "terraform validate 用於檢查代碼語法與內部一致性，最佳時機是在執行 plan 之前。"
+  },
+  {
+    "id": 351,
+    "question": "Which method for sharing Terraform modules fulfills the following criteria: 1. Keeps the module configurations confidential. 2. Supports semantic version constraints. 3. Provides a browsable directory?",
+    "choices": [
+      "A. Public Terraform module registry.",
+      "B. A subfolder within your workspace.",
+      "C. HCP Terraform/Terraform Cloud private registry.",
+      "D. A Git repository containing your modules."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "只有私有註冊表（Private Registry）能同時滿足保密性、版本控制與目錄瀏覽這三項需求。"
+  },
+  {
+    "id": 352,
+    "question": "When developing a Terraform module, how would you specify the version when publishing it to the official Terraform Registry?",
+    "choices": [
+      "A. Terraform Registry does not support versioning modules.",
+      "B. Mention it on the module’s configuration page on the Terraform Registry",
+      "C. Tag a release in your module’s source control repository.",
+      "D. Configure it in the module’s Terraform code."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "發布模組至註冊表時，版本是透過在原始碼倉庫（如 GitHub）中標記 Release Tag 來確定的。"
+  },
+  {
+    "id": 353,
+    "question": "What functionality do providers offer in Terraform? (Choose three.)",
+    "choices": [
+      "A. Interact with cloud provider APIs.",
+      "B. Provision resources for on-premises infrastructure services.",
+      "C. Provision resources for public cloud infrastructure services.",
+      "D. Group a collection of Terraform configuration files that map to a single state file.",
+      "E. Enforce security and compliance policies."
+    ],
+    "answer": [
+      "A",
+      "B",
+      "C"
+    ],
+    "image": null,
+    "description": "Provider 負責與 API 互動，並佈署公有雲或地端基礎設施資源。"
+  },
+  {
+    "id": 354,
+    "question": "Which command(s) adds existing resources in a public cloud into Terraform state?",
+    "choices": [
+      "A. terraform init",
+      "B. terraform plan",
+      "C. terraform refresh",
+      "D. terraform import",
+      "E. All of these"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "terraform import 是將已存在的雲端資源納入 Terraform 狀態管理的專用指令。"
+  },
+  {
+    "id": 355,
+    "question": "It is _________ to change the Terraform backend from the default “local” backend to a different one after performing your first terraform apply.",
+    "choices": [
+      "A. mandatory",
+      "B. optional",
+      "C. impossible",
+      "D. discouraged"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "在 apply 之後更改後端是可行的（選用），Terraform 會引導您進行狀態遷移。"
+  },
+  {
+    "id": 356,
+    "question": "A child module can always access variables declared in its parent module.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "子模組預設無法存取父模組變數，必須由父模組顯式傳入。"
+  },
+  {
+    "id": 357,
+    "question": "What is modified when executing Terraform in refresh-only mode?",
+    "choices": [
+      "A. Your Terraform configuration.",
+      "B. Your Terraform plan.",
+      "C. Your state file.",
+      "D. Your cloud infrastructure."
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "refresh-only 模式只會更新狀態檔以反映真實環境，不會變動基礎設施或設定檔。"
+  },
+  {
+    "id": 358,
+    "question": "Which of the following locations can Terraform use as a private source for modules? (Choose two.)",
+    "choices": [
+      "A. Public repository on GitHub.",
+      "B. Public Terraform Registry.",
+      "C. Internally hosted VCS (Version Control System) platform.",
+      "D. Private repository on GitHub."
+    ],
+    "answer": [
+      "C",
+      "D"
+    ],
+    "image": null,
+    "description": "私有模組來源通常包括內部託管的 VCS 平台或 GitHub 上的私有倉庫。"
+  }
+]

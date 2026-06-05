@@ -11,7 +11,7 @@
     ],
     "answer": ["A", "C"],
     "image": null,
-    "description": null
+    "description": "題目重點：\n• 環境：Compute Engine 實例需完全隔絕網路\n• 需求：實例不能訪問互聯網或任何 Google APIs/服務\n\n選項分析：\n\nA. Public IP\n• ✅ 原因：有 Public IP 的實例可以直接訪問互聯網\n• 保持禁用可防止互聯網訪問\n\nB. IP Forwarding\n• ❌ 原因：僅允許實例作為 NAT/路由器轉發流量\n• 與訪問互聯網或 Google API 無直接關係\n\nC. Private Google Access\n• ✅ 原因：即使只有私有 IP，也能透過 Private Google Access 訪問 Google APIs\n• 禁用可防止實例訪問 Google APIs\n\nD. Static routes\n• ❌ 原因：僅決定流量路由，不直接提供互聯網或 API 訪問\n\nE. IAM Network User Role\n• ❌ 原因：僅控制用戶操作網路資源的權限\n• 與實例能否訪問互聯網或 API 無直接關係\n\n關鍵概念：\n• 要完全隔絕網路，禁用 Public IP 與 Private Google Access\n• 其他設定（IP Forwarding、Static routes、IAM Role）與網路隔離無直接影響"
   },
   {
     "id": 2,
@@ -51,7 +51,7 @@
     ],
     "answer": "A",
     "image": null,
-    "description": null
+    "description": "題目重點：\n• 環境：團隊希望從本地 Active Directory 集中管理 GCP IAM 權限\n• 需求：透過 AD 群組成員資格管理 IAM 權限\n\n選項分析：\n\nA. Set up Cloud Directory Sync to sync groups, and set IAM permissions on the groups\n• ✅ 優點：Cloud Directory Sync 可將 AD 群組同步到 Google Cloud Identity\n• ✅ 安全與便利：同步後可直接將 IAM 權限授予群組，實現集中管理\n\nB. Set up SAML 2.0 Single Sign-On (SSO), and assign IAM permissions to the groups\n• ❌ 問題：SAML SSO 只提供單點登入，無法自動同步群組或管理 IAM 權限\n\nC. Use the Cloud Identity and Access Management API to create groups and IAM permissions from Active Directory\n• ❌ 問題：IAM API 無法自動同步 AD 群組，需要額外開發或手動管理\n\nD. Use the Admin SDK to create groups and assign IAM permissions from Active Directory\n• ❌ 問題：Admin SDK 可管理 Google Workspace 群組，但無法直接同步現有 AD 群組\n\n關鍵概念：\n• 集中管理 GCP IAM 權限的最佳方式：使用 Cloud Directory Sync 同步 AD 群組，並授予 IAM 權限\n• SAML SSO、IAM API 或 Admin SDK 無法直接滿足從 AD 群組集中管理 IAM 的需求"
   },
   {
     "id": 5,
@@ -65,7 +65,7 @@
     ],
     "answer": ["B", "C"],
     "image": null,
-    "description": null
+    "description": "題目重點：\n• 環境：建立安全的 container image\n• 需求：採用最佳實務以降低攻擊面並保護應用程式\n\n選項分析：\n\nA. Ensure that the app does not run as PID 1\n• ❌ 問題：PID 1 本身不是安全風險的核心，重要的是非 root 運行和正確信號處理\n\nB. Package a single app as a container\n• ✅ 優點：每個容器只運行一個應用程式，簡化維護與安全管理\n• ✅ 安全：降低潛在攻擊面和依賴衝突\n\nC. Remove any unnecessary tools not needed by the app\n• ✅ 優點：移除不必要的套件和工具可減少攻擊面\n• ✅ 安全：最小化 image size 和依賴，符合安全最佳實務\n\nD. Use public container images as a base image for the app\n• ❌ 問題：公共 image 可能包含漏洞，使用前需仔細掃描和評估\n\nE. Use many container image layers to hide sensitive information\n• ❌ 問題：多層不能真正隱藏敏感資訊，敏感資料仍可被檢視\n• ❌ 風險：敏感資訊應透過 secrets 管理，而非放在 image 中\n\n關鍵概念：\n• 安全 container image 最佳做法：單一應用程式容器化 + 移除不必要的套件/工具\n• 避免將敏感資訊放入 image，慎用公共 base image"
   },
   {
     "id": 6,
@@ -78,7 +78,7 @@
     ],
     "answer": "B",
     "image": null,
-    "description": null
+    "description": "題目重點：\n• 環境：部署三層內部 web 應用\n• 需求：只允許來自特定 CIDR 的流量，並使用 GCP 原生 SYN flood 防護\n\n選項分析：\n\nA. Cloud Armor\n• ❌ 問題：主要針對公開 HTTP(S) 應用防護，無法直接控制內部 VPC 流量\n\nB. VPC Firewall Rules\n• ✅ 優點：可直接限制來源 CIDR，適合內部應用\n• ✅ 安全：GCP 內部流量自動享有 SYN flood 原生保護\n\nC. Cloud Identity and Access Management\n• ❌ 問題：僅管理身份與授權，無法控制網路流量或提供 DDoS 防護\n\nD. Cloud CDN\n• ❌ 問題：提供快取與流量緩解，無法控制內部流量或提供 SYN flood 保護\n\n關鍵概念：\n• 內部應用流量控制最佳做法：使用 VPC 防火牆限制來源 CIDR\n• SYN flood 原生防護由 GCP 虛擬網路提供，不需額外配置"
   },
   {
     "id": 7,
@@ -105,20 +105,20 @@
     ],
     "answer": "A",
     "image": null,
-    "description": null
+    "description": "題目重點：\n• 環境：ERP 系統部署在 Compute Engine，前方使用 Cloud Identity-Aware Proxy (IAP)\n• 需求：ERP 系統必須只接受來自 IAP 的流量\n\n選項分析：\n\nA. Validate JWT assertion\n• ✅ 優點：IAP 會在請求中附加 JWT，ERP 可驗證此 Token 以確認請求來自 IAP\n• ✅ 安全：JWT 含有簽章，可用 Google 公開金鑰驗證來源\n\nB. Validate identity headers\n• ❌ 問題：標頭可被偽造，缺乏簽章驗證\n\nC. Validate x-forwarded-for headers\n• ❌ 問題：僅顯示轉發 IP，無法保證流量來自 IAP\n\nD. Validate user's unique identifier headers\n• ❌ 問題：同樣可被偽造，無法提供來源驗證\n\n關鍵概念：\n• 驗證 IAP 流量的正確方式：在後端驗證 JWT assertion\n• JWT 驗證可確保流量確實經過 Cloud IAP，防止繞過或偽造請求"
   },
   {
     "id": 9,
     "question": "A company has been running their application on Compute Engine. A bug in the application allowed a malicious user to repeatedly execute a script that results in the Compute Engine instance crashing. Although the bug has been fixed, you want to get notified in case this hack re-occurs. What should you do?",
     "choices": [
-      "A. Create an Alerting Policy in Stackdriver using a Process Health condition, checking that the number of executions of the script remains below the desired threshold. Enable notifications.",
-      "B. Create an Alerting Policy in Stackdriver using the CPU usage metric. Set the threshold to 80% to be notified when the CPU usage goes above this 80%.",
-      "C. Log every execution of the script to Stackdriver Logging. Create a User-defined metric in Stackdriver Logging on the logs, and create a Stackdriver Dashboard displaying the metric.",
-      "D. Log every execution of the script to Stackdriver Logging. Configure BigQuery as a log sink, and create a BigQuery scheduled query to count the number of executions in a specific timeframe."
+      "A. Create an Alerting Policy in Stackdriver (Cloud Monitoring) using a Process Health condition, checking that the number of executions of the script remains below the desired threshold. Enable notifications.",
+      "B. Create an Alerting Policy in Stackdriver (Cloud Monitoring) using the CPU usage metric. Set the threshold to 80% to be notified when the CPU usage goes above this 80%.",
+      "C. Log every execution of the script to Stackdriver Logging (Cloud Logging). Create a User-defined metric (custom metric) in Stackdriver Logging (Cloud Monitoring) on the logs, and create a Stackdriver Dashboard (Cloud Monitoring dashboard) displaying the metric.",
+      "D. Log every execution of the script to Stackdriver Logging (Cloud Logging). Configure BigQuery as a log sink, and create a BigQuery scheduled query to count the number of executions in a specific timeframe."
     ],
     "answer": "A",
     "image": null,
-    "description": null
+    "description": "題目重點：\n• 環境：應用程式部署在 Compute Engine\n• 問題：惡意使用者曾反覆執行腳本導致 VM 當機\n• 需求：漏洞已修復，但需監控腳本是否再次被執行過多次並即時通知\n\n選項分析：\n\nA. Process Health condition\n• ✅ 優點：可監控特定腳本或進程的健康狀態與執行次數\n• ✅ 安全：可設定警報條件，當執行次數超出閾值時立即發送通知\n\nB. CPU usage > 80%\n• ❌ 問題：僅反映系統負載，無法確定是否因特定腳本引起\n\nC. Log execution + User-defined metric + Dashboard\n• ❌ 問題：僅能視覺化執行情況，需額外設定警報，不符合題目簡化要求\n\nD. Export logs to BigQuery + Scheduled query\n• ❌ 問題：屬於離線查詢方式，通知延遲，不適合即時監控\n\n關鍵概念：\n• 監控特定腳本行為的最佳做法：使用 Cloud Monitoring 的 Process Health 條件設定警報\n• 可即時偵測腳本異常重現並發送通知"
   },
   {
     "id": 10,
@@ -131,7 +131,7 @@
     ],
     "answer": "A",
     "image": null,
-    "description": null
+    "description": "題目重點：\n• 環境：所有開發專案位於 NONPROD 資料夾下，並共用 ABC-BILLING 帳單帳戶\n• 需求：在 SIEM 系統中統一檢視所有開發專案的日誌\n\n選項分析：\n\nA. Folder-level Pub/Sub sink + includeChildren=True\n• ✅ 優點：可集中匯出 NONPROD 資料夾下所有子專案的日誌\n• ✅ 整合：即時匯出至 Pub/Sub topic，SIEM 可直接訂閱\n• ✅ 簡化：僅需建立一個集中式 sink，降低維護成本\n\nB. Billing account-level Cloud Storage sink\n• ❌ 問題：帳單層級無法覆蓋專案日誌\n• ❌ 限制：includeChildren=False 無法擴展至子專案\n\nC. Project-level Pub/Sub sink\n• ❌ 問題：需為每個開發專案單獨設定 sink，管理成本高\n\nD. Public Cloud Storage sink per project\n• ❌ 問題：公開 bucket 存在安全風險，不適用於 SIEM 整合\n\n關鍵概念：\n• 匯出多專案日誌的最佳做法：在資料夾層級建立 Pub/Sub sink 並啟用 includeChildren\n• Pub/Sub 適合串接即時 SIEM 流程，實現集中式安全監控"
   },
   {
     "id": 11,
@@ -144,7 +144,7 @@
     ],
     "answer": "C",
     "image": null,
-    "description": null
+    "description": "題目重點：防止攻擊者劫持網域或 IP，導致使用者被導向惡意網站（中間人攻擊）。這屬於 DNS 層的安全問題。\n\n選項分析：\nA. VPC Flow Logs：❌ 只能記錄流量，不提供防護。\nB. Cloud Armor：❌ 防禦 DDoS 與應用層攻擊，與 DNS 劫持無關。\nC. DNS Security Extensions (DNSSEC)：✅ 為 DNS 回應簽署數位簽章，驗證資料完整性與來源真實性，防止 DNS spoofing。\nD. Cloud Identity-Aware Proxy：❌ 用於應用程式存取控制，與 DNS 攻擊無關。\n\n關鍵概念：DNSSEC 透過公鑰簽章防止 DNS 偽造與中間人攻擊，是防止網域被劫持的最佳解。"
   },
   {
     "id": 12,
@@ -170,7 +170,7 @@
     ],
     "answer": "D",
     "image": null,
-    "description": null
+    "description": "題目重點：公司已經有 G Suite 使用相同網域，因此無法再建立新的 Cloud Identity。正確做法是與現有管理者協作，整合身份管理與 SAML SSO。\n\n選項分析：\nA. Domain Contestation：❌ 僅用於網域爭議，非本案例。\nB. 新網域註冊：❌ 造成身份分散，不符公司所有權政策。\nC. 要求 Google 指派 Super Admin：❌ 不可能，Google 不會直接修改管理權限。\nD. 與現有 Super Admin 協作：✅ 最少干擾，符合公司政策並維持單一身份架構。\n\n關鍵概念：同一網域在 Google 系統中只能綁定一個主 Identity，最佳解是與現有的 G Suite Super Admin 協同整合。"
   },
   {
     "id": 14,
@@ -183,7 +183,7 @@
     ],
     "answer": "A",
     "image": null,
-    "description": null
+    "description": "題目重點：某事業單位建立 Cloud Identity domain 並管理數百個專案，團隊希望接管權限管理與資源審計。\n\n選項分析：\nA. Organization Administrator：✅ 擁有組織層級最高管理權限，可管理 IAM、專案、資料夾並進行審計，符合題目需求。\nB. Security Reviewer：❌ 僅能檢視安全資訊，無法修改權限或管理資源。\nC. Organization Role Administrator：❌ 只能管理自訂角色，無法管理資源或接管權限。\nD. Organization Policy Administrator：❌ 僅能管理組織政策，無法接管資源或 IAM 權限。\n\n關鍵概念：接管整個組織管理權限與審計，需授予 Organization Administrator 角色。"
   },
   {
     "id": 15,
@@ -196,7 +196,7 @@
     ],
     "answer": "C",
     "image": null,
-    "description": null
+    "description": "題目重點：Compute Engine 上的應用程式需要讀取 Cloud Storage bucket，bucket 不可公開，需遵循最小權限原則。\n\n選項分析：\nA. ACL based on IP address：❌ 不支援基於 VM IP 的授權，且安全性差。\nB. Service account + credentials in config：❌ 將金鑰硬編碼在應用程式中有安全風險。\nC. Service account with read-only access via metadata：✅ 官方推薦做法，VM 綁定 service account，應用程式自動從 metadata server 取得臨時憑證，遵循最小權限。\nD. Encrypt bucket + decrypt via KMS：❌ 仍需存取 bucket，無法單獨解決授權問題。\n\n關鍵概念：使用 VM 綁定的 service account，自動取得臨時憑證，是最安全且符合最小權限原則的方式。"
   },
   {
     "id": 16,
@@ -209,7 +209,7 @@
     ],
     "answer": "B",
     "image": null,
-    "description": null
+    "description": "題目重點：組織希望開發團隊能在不經歷完整網路與安全審查的情況下，自主部署新應用。\n\n選項分析：\nA. Forseti + Firewall filters：❌ 事後監控，無法提前阻止不合規部署。\nB. Infrastructure as Code + Static Analysis in CI/CD：✅ 將資源配置以程式碼管理，CI/CD pipeline 自動檢查安全與網路政策，減少人工審查，允許開發團隊自主部署。\nC. Route VPC traffic via customer-managed routers：❌ 只能偵測流量異常，無法提前審查部署配置。\nD. Production on-premises + free GCP dev/QA：❌ 無法解決安全與合規問題，仍可能違規。\n\n關鍵概念：使用 IaC 與 CI/CD 靜態分析可自動驗證安全與網路政策，達到自助部署又符合政策要求。"
   },
   {
     "id": 17,
@@ -222,7 +222,7 @@
     ],
     "answer": "D",
     "image": null,
-    "description": null
+    "description": "題目重點：分析員工獎金變化找出異常值，同時需保護個人敏感薪資並且可追蹤回原始資料。\n\n選項分析：\nA. Generalization：❌ 將數值分組或模糊化，無法還原原始薪資。\nB. Redaction：❌ 遮蔽或刪除資料，無法分析或還原。\nC. CryptoHashConfig：❌ 不可逆雜湊，可比較但無法還原。\nD. CryptoReplaceFfxFpeConfig：✅ 格式保護加密，可隱藏敏感薪資且可逆，適合分析與追蹤異常。\n\n關鍵概念：使用 FPE 加密可以在保護敏感資料的同時，保留可逆性以便識別和更正異常數據。"
   },
   {
     "id": 18,
@@ -248,15 +248,15 @@
     ],
     "answer": "A",
     "image": null,
-    "description": null
+    "description": "題目重點：考 Envelope Encryption（信封式加密）在應用層加密的 Google 建議做法。需區分 DEK（加密資料）與 KEK（加密 DEK）。\n\n選項分析：\nA. ✅ 在應用層產生 DEK 加密資料，再用 Cloud KMS 的 KEK 加密 DEK，並儲存加密後資料與加密後 DEK，符合官方建議。\nB. ❌ 將 KEK 直接儲存不安全，違反 Cloud KMS 金鑰管理原則。\nC. ❌ 在 Cloud KMS 產生 DEK 並於本地用 KEK 加密，不符 Envelope Encryption 建議。\nD. ❌ 錯在 KEK 應由 Cloud KMS 管理而非本地生成。\n\n關鍵概念：Envelope Encryption 用 Cloud KMS 的 KEK 來加密應用層產生的 DEK，集中金鑰管理並確保安全。"
   },
   {
     "id": 20,
-    "question": "How should a customer reliably deliver Stackdriver logs from GCP to their on-premises SIEM system?",
+    "question": "How should a customer reliably deliver Stackdriver logs (Cloud Logging) from GCP to their on-premises SIEM system?",
     "choices": [
       "A. Send all logs to the SIEM system via an existing protocol such as syslog.",
       "B. Configure every project to export all their logs to a common BigQuery DataSet, which will be queried by the SIEM system.",
-      "C. Configure Organizational Log Sinks to export logs to a Cloud Pub/Sub Topic, which will be sent to the SIEM via Dataflow.",
+      "C. Configure Organizational Log Sinks in Cloud Logging to export logs to a Cloud Pub/Sub Topic, which will be sent to the SIEM via Dataflow.",
       "D. Build a connector for the SIEM to query for all logs in real time from the GCP RESTful JSON APIs."
     ],
     "answer": "C",
@@ -275,7 +275,7 @@
     ],
     "answer": ["C", "D"],
     "image": null,
-    "description": null
+    "description": "題目重點：PCI DSS 要求所有出站流量必須受控且經授權，需選出可原生控制出站流量的服務。\n\n選項分析：\nA. App Engine：❌ 出站流量由 Google 托管，需額外設定 VPC 或 NAT 才能管控。\nB. Cloud Functions：❌ 須透過 Serverless VPC Access 才能控制出站流量。\nC. Compute Engine：✅ 可用防火牆、NAT Gateway 或路由控制出站流量，符合 PCI DSS 要求。\nD. Google Kubernetes Engine：✅ 可透過 NetworkPolicy、私有集群與 NAT 控制授權流量，原生支援出站流量控制。\nE. Cloud Storage：❌ 非運算環境，無出站流量控制概念。\n\n關鍵概念：Compute Engine 與 GKE 具備原生出站流量控制機制，符合 PCI DSS，不需額外補償控制。"
   },
   {
     "id": 22,
@@ -301,7 +301,7 @@
     ],
     "answer": "C",
     "image": null,
-    "description": null
+    "description": "題目重點：客戶在客服聊天中上傳含 PII 的文件圖片，公司需保護個資又要保留分析價值。\n\n選項分析：\nA. Cloud KMS 加密：❌ 加密可防止未授權存取，但資料無法用於分析。\nB. Object Lifecycle Management：❌ 刪除含 PII 的資料會失去分析能力。\nC. DLP API 的影像偵測與遮蔽：✅ 可自動掃描並遮蔽圖片中的 PII（如姓名、地址、身份證號），保護個資又保留資料實用性。\nD. DLP API 的 generalization / bucketing：❌ 僅適用於文字資料，無法處理影像。\n\n關鍵概念：使用 DLP API 的影像遮蔽（redaction）可在保護 PII 的同時，維持客服數據的分析價值。"
   },
   {
     "id": 24,
@@ -314,7 +314,7 @@
     ],
     "answer": "C",
     "image": null,
-    "description": null
+    "description": "題目重點：應用程式使用 user-managed Service Account key，需依 Google 建議進行金鑰輪替以降低風險。\n\n選項分析：\nA. enable-auto-rotate：❌ IAM 不支援自動輪替金鑰。\nB. gcloud iam service-accounts keys rotate：❌ 無此指令，輪替需手動執行。\nC. ✅ 建立新金鑰並更新應用程式使用新金鑰，確認正常後刪除舊金鑰，符合 Google 官方建議。\nD. 保留舊金鑰作備份：❌ 不安全，違反最小化暴露原則。\n\n關鍵概念：Service Account 金鑰須手動輪替，正確流程為新增 → 更新應用程式 → 驗證 → 刪除舊金鑰。"
   },
   {
     "id": 25,
@@ -327,7 +327,7 @@
     ],
     "answer": "A",
     "image": null,
-    "description": null
+    "description": "題目重點：團隊要集中管理網路資源（防火牆、子網、路由），並讓 on-premises 能透過 VPN 私有連線 GCP，網路由網安團隊統一控管。\n\n選項分析：\nA. Shared VPC Network：✅ 可在 Host Project 集中管理網路設定，Service Projects 可共用子網與防火牆，並可整合 Cloud VPN，符合集中治理需求。\nB. 給每個專案 Compute Admin：❌ 分散管理，無法集中控管網路。\nC. VPC Peering：❌ 只能連線，無法集中設定防火牆與路由，維護成本高。\nD. Cloud VPN Gateway for all projects：❌ 每個專案需獨立設定 VPN，管理複雜且無法統一策略。\n\n關鍵概念：使用 Shared VPC 可讓網路團隊集中管理網路資源，同時支援 VPN 與多專案安全連線。"
   },
   {
     "id": 26,
@@ -340,7 +340,7 @@
     ],
     "answer": "C",
     "image": null,
-    "description": null
+    "description": "題目重點：公司從 on-premises 遷移至 G Suite（SaaS），需確保法規要求的網路安全控制仍生效。考點在於共享責任模型。\n\n選項分析：\nA. 設防火牆規則：❌ G Suite 為 SaaS，使用者無法設定網路層防火牆。\nB. Cloud Armor：❌ 僅適用於 Compute Engine 或 GKE 等 IaaS/PaaS 層。\nC. ✅ SaaS（G Suite）網路安全由 Google 負責，屬共享責任模型中的 Google 範疇，已內建防護。\nD. 建立多個 VPC：❌ 與 G Suite 無關，VPC 屬 IaaS 層控制。\n\n關鍵概念：在 SaaS 模型中，Google 負責基礎架構與網路安全控制；客戶僅需管理帳號與存取權限。"
   },
   {
     "id": 27,
@@ -379,20 +379,20 @@
     ],
     "answer": "B",
     "image": null,
-    "description": null
+    "description": "題目重點：在 Shared VPC 架構中，Engineering Group A 需僅能將 VM 接到 host project 的特定子網 10.1.1.0/24。考點為 Shared VPC 權限控制。\n\n選項分析：\nA. host project 層給 networkUser：❌ 權限太廣，能用所有子網。\nB. ✅ subnet 層給 networkUser：可精確限制僅能使用該子網，符合需求。\nC. host project 給 Shared VPC Admin：❌ 權限過大，僅限管理 Shared VPC。\nD. service project 給 Shared VPC Admin：❌ 不影響 host project 子網使用。\n\n關鍵概念：Shared VPC 子網屬於 host project，service project 的使用者需在該 subnet 層被授予 Compute Network User 權限。"
   },
   {
     "id": 30,
-    "question": "A company migrated their entire data/center to Google Cloud Platform. It is running thousands of instances across multiple projects managed by different departments. You want to have a historical record of what was running in Google Cloud Platform at any point in time. What should you do?",
+    "question": "A company migrated their entire data center to Google Cloud Platform. It is running thousands of instances across multiple projects managed by different departments. You want to have a historical record of what was running in Google Cloud Platform at any point in time. What should you do?",
     "choices": [
-      "A. Use Resource Manager on the organization level.",
-      "B. Use Forseti Security to automate inventory snapshots.",
-      "C. Use Stackdriver to create a dashboard across all projects.",
+      "A. Use Resource Manager (Cloud Resource Manager) at the organization level.",
+      "B. Use Forseti Security (now replaced by Config Validator and Cloud Asset Inventory) to automate inventory snapshots.",
+      "C. Use Stackdriver (Cloud Monitoring) to create a dashboard across all projects.",
       "D. Use Security Command Center to view all assets across the organization."
     ],
     "answer": "D",
     "image": null,
-    "description": null
+    "description": "題目重點：公司要能在任意時間點查看 GCP 當時的資源狀態，建立歷史資產紀錄。\n\n選項分析：\nA. Resource Manager：❌ 僅管理專案層級，無歷史紀錄功能。\nB. Forseti Security：❌ 工具已停止維護，非官方建議方案。\nC. Stackdriver：❌ 僅監控即時狀態，不保留資產歷史。\nD. ✅ Security Command Center：具 Asset Inventory，可集中查看組織所有資源並保存歷史版本，滿足歷史資產追蹤需求。\n\n關鍵概念：Security Command Center 提供資產可視化與時間序列紀錄，是建立 GCP 歷史資產紀錄的推薦解決方案。"
   },
   {
     "id": 31,

@@ -1,39 +1,91 @@
-# quiz-app
+# Quiz App
 
-> A desktop quiz application designed for **Google Cloud Professional Cloud Architect (PCA)** and **Google Cloud Professional Cloud Security Engineer (PCS)** exam preparation.  
-> Built with **Python + Tkinter + ttkbootstrap**, supporting image questions, multiple-choice answers, auto-grading, and random test generation.
+A desktop quiz application for preparing for:
 
----
+- Google Cloud Professional Cloud Architect (`PCA`)
+- Google Cloud Professional Cloud Security Engineer (`PCS`)
+- HashiCorp Terraform Associate (`TFA`)
 
-## ✨ Features
+Built with Python, Tkinter, Pillow, and `ttkbootstrap`.
 
-| Feature                     | Description                                                     |
-| --------------------------- | --------------------------------------------------------------- |
-| ✅ Single / Multiple Choice | Automatically detects question type and checks correctness      |
-| 🖼️ Image Questions          | Click to enlarge images for visual-based questions              |
-| 🔀 Shuffle Options          | Randomize question order and/or answer order                    |
-| 📊 Score Tracking           | Displays accuracy and highlights incorrect answers              |
-| 🧾 Test Mode                | Generates 50 random questions (includes at least 12 from quiz4) |
-| 💾 Auto Save                | Saves the last used quiz and settings automatically             |
+## Features
 
----
+- Single-choice and multiple-choice questions with automatic grading
+- Separate selectable question banks for each exam
+- Optional question and answer shuffling
+- Image-based questions with click-to-enlarge support
+- Explanations, score tracking, and incorrect-answer review
+- Sample Test mode with 50 randomly selected questions
+- Automatic saving of the selected exam, question bank, and shuffle settings
 
-## ⚙️ Installation
+## Requirements
 
-### System Requirements
+- Python 3.10 or newer
+- Tkinter support
 
-- Python 3.9 or newer
-- macOS, Windows, or Linux with Tkinter enabled
-
-### Install Dependencies
+Tkinter is normally included with Python on Windows and macOS. On Debian or
+Ubuntu, install it with:
 
 ```bash
-pip3 install -r requirements.txt
+sudo apt install python3-tk
 ```
 
-### Running the App
+## Installation
 
 ```bash
-cd quiz_app
+git clone <repository-url>
+cd quiz-app
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install -r requirements.txt
+```
+
+On Windows, activate the environment with:
+
+```powershell
+.venv\Scripts\activate
+```
+
+## Running the App
+
+```bash
 python3 main.py
+```
+
+Use **Options** to select an exam, load a question bank, enable shuffling, or
+start Sample Test mode.
+
+### Keyboard Shortcuts
+
+| Key | Action |
+| --- | --- |
+| `A`-`Z` | Select the matching answer option |
+| `Enter` | Submit the current answer |
+| `Ctrl+D` | Show the question description |
+| `Ctrl+G` | Go to a question |
+| `Ctrl+S` | Show results |
+
+## Question Banks
+
+Question files are stored as `questions/<EXAM>/quiz_data_<number>.json`. Each
+question uses this structure:
+
+```json
+{
+  "id": 1,
+  "question": "Question text",
+  "choices": ["A. First option", "B. Second option"],
+  "answer": "A",
+  "image": null,
+  "description": "Optional explanation"
+}
+```
+
+For multiple-choice questions, use an answer list such as `["A", "C"]`.
+Relative image paths are resolved from the question bank's directory.
+
+Validate edited JSON before launching the app:
+
+```bash
+python3 -m json.tool questions/PCA/quiz_data_1.json >/dev/null
 ```

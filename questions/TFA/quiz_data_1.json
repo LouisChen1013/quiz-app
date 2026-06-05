@@ -1,0 +1,760 @@
+[
+  {
+    "id": 1,
+    "question": "The terraform.tfstate file always matches your currently built infrastructure.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "狀態文件不一定始終與實際基礎設施匹配。如果有人在 Terraform 之外手動更改資源，即會發生所謂的『漂移』（drift），Terraform 無法自動追蹤這些變化。"
+  },
+  {
+    "id": 2,
+    "question": "One remote backend configuration always maps to a single remote workspace.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "單個遠端後端配置可以透過使用 workspaces.prefix 設置來支持多個工作區。"
+  },
+  {
+    "id": 3,
+    "question": "How is the Terraform remote backend different than other state backends such as S3, Consul, etc.?",
+    "choices": [
+      "A. It can execute Terraform runs on dedicated infrastructure on premises or in Terraform Cloud",
+      "B. It doesn't show the output of a terraform apply locally",
+      "C. It is only available to paying customers",
+      "D. All of the above"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "遠端後端與 S3 等後端的不同之處在於，它可以執行遠端操作（如 plan 和 apply）於專用基礎設施上。"
+  },
+  {
+    "id": 4,
+    "question": "What is the workflow for deploying new infrastructure with Terraform?",
+    "choices": [
+      "A. terraform plan to import the current infrastructure to the state file, make code changes, and terraform apply to update the infrastructure.",
+      "B. Write a Terraform configuration, run terraform show to view proposed changes, and terraform apply to create new infrastructure.",
+      "C. terraform import to import the current infrastructure to the state file, make code changes, and terraform apply to update the infrastructure.",
+      "D. Write a Terraform configuration, run terraform init, run terraform plan to view planned infrastructure changes, and terraform apply to create new infrastructure."
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "標準部署流程為：編寫代碼 -> init（初始化） -> plan（查看計畫） -> apply（執行應用）。"
+  },
+  {
+    "id": 5,
+    "question": "A provider configuration block is required in every Terraform configuration.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "如果 provider 區塊為空，則可以省略，Terraform 會假設使用空的預設配置。"
+  },
+  {
+    "id": 6,
+    "question": "You run a local-exec provisioner in a null resource called null_resource.run_script and realize that you need to rerun the script. Which of the following commands would you use first?",
+    "choices": [
+      "A. terraform taint null_resource.run_script",
+      "B. terraform apply-target=null_resource.run_script",
+      "C. terraform validate null_resource.run_script",
+      "D. terraform plan -target=null_resource.run_script"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "由於資源已存在於狀態文件中且無變更，需使用 taint 標記該資源為損壞，以便在下次 apply 時重新創建並觸發腳本。"
+  },
+  {
+    "id": 7,
+    "question": "Which provisioner invokes a process on the resource created by Terraform?",
+    "choices": [
+      "A. remote-exec",
+      "B. null-exec",
+      "C. local-exec",
+      "D. file"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "remote-exec provisioner 會在創建的遠端資源上（如 VM）執行腳本或指令。"
+  },
+  {
+    "id": 8,
+    "question": "Which of the following is not true of Terraform providers?",
+    "choices": [
+      "A. Providers can be written by individuals",
+      "B. Providers can be maintained by a community of users",
+      "C. Some providers are maintained by HashiCorp",
+      "D. Major cloud vendors and non-cloud vendors can write, maintain, or collaborate on Terraform providers",
+      "E. None of the above"
+    ],
+    "answer": "E",
+    "image": null,
+    "description": "以上關於 Provider 的來源與維護描述均為正確。"
+  },
+  {
+    "id": 9,
+    "question": "What command does Terraform require the first time you run it within a configuration directory?",
+    "choices": [
+      "A. terraform import",
+      "B. terraform init",
+      "C. terraform plan",
+      "D. terraform workspace"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "在配置目錄中第一次運行時，必須使用 terraform init 來初始化後端並下載必要的插件。"
+  },
+  {
+    "id": 11,
+    "question": "Which of the following is not a key principle of infrastructure as code?",
+    "choices": [
+      "A. Versioned infrastructure",
+      "B. Golden images",
+      "C. Idempotence",
+      "D. Self-describing infrastructure"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "『黃金鏡像』（Golden images）通常與傳統的不可變伺服器管理相關，並非 IaC 的核心原則。"
+  },
+  {
+    "id": 12,
+    "question": "Terraform variables and outputs that set the \"description\" argument will store that description in the state file.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "變數與輸出的 description 僅用於提供人類可讀的說明，不會存儲在狀態文件中。"
+  },
+  {
+    "id": 13,
+    "question": "What is the provider for this fictitious resource? resource \"aws_vpc\" \"main\" { name \"test\" }",
+    "choices": [
+      "A. vpc",
+      "B. main",
+      "C. aws",
+      "D. test"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "根據命名慣例，資源類型的第一個段落（本例為 aws_vpc）代表其使用的 Provider 名稱。"
+  },
+  {
+    "id": 14,
+    "question": "If you manually destroy infrastructure, what is the best practice reflecting this change in Terraform?",
+    "choices": [
+      "A. Run terraform refresh",
+      "B. It will happen automatically",
+      "C. Manually update the state fire",
+      "D. Run terraform import"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "手動銷毀資源後，應運行 terraform refresh 來更新狀態文件以反映真實環境情況。"
+  },
+  {
+    "id": 15,
+    "question": "What is not processed when running a terraform refresh?",
+    "choices": [
+      "A. State file",
+      "B. Configuration file",
+      "C. Credentials",
+      "D. Cloud provider"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "terraform refresh 僅檢查遠端對象並更新狀態文件，不會處理或應用配置代碼（.tf 文件）中的變更。"
+  },
+  {
+    "id": 16,
+    "question": "What information does the public Terraform Module Registry automatically expose about published modules?",
+    "choices": [
+      "A. Required input variables",
+      "B. Optional inputs variables and default values",
+      "C. Outputs",
+      "D. All of the above",
+      "E. None of the above"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "註冊表會自動解析模組代碼並公開顯示其輸入、輸出、依賴關係及文檔。"
+  },
+  {
+    "id": 17,
+    "question": "If a module uses a local values, you can expose that value with a terraform output.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "模組內的 Local 值可以透過定義 output 區塊將其導出，供外部配置使用。"
+  },
+  {
+    "id": 18,
+    "question": "You should store secret data in the same version control repository as your Terraform configuration.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "將祕密數據儲存在版本控制中是不安全的做法，應使用專門的保管庫（如 Vault）或環境變數。"
+  },
+  {
+    "id": 19,
+    "question": "Which of the following is not a valid string function in Terraform?",
+    "choices": [
+      "A. split",
+      "B. join",
+      "C. slice",
+      "D. chomp"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "slice 屬於集合函數（collection function），用於列表而非字串。"
+  },
+  {
+    "id": 20,
+    "question": "You have provisioned some virtual machines (VMs) on Google Cloud Platform (GCP) using the gcloud command line tool. However, you are standardizing with Terraform and want to manage these VMs using Terraform instead. What are the two things you must do to achieve this? (Choose two.)",
+    "choices": [
+      "A. Provision new VMs using Terraform with the same VM names",
+      "B. Use the terraform import command for the existing VMs",
+      "C. Write Terraform configuration for the existing VMs",
+      "D. Run the terraform import-gcp command"
+    ],
+    "answer": [
+      "B",
+      "C"
+    ],
+    "image": null,
+    "description": "管理現有資源需要先在代碼中定義該資源，然後執行 import 指令將其導入狀態文件中。"
+  },
+  {
+    "id": 21,
+    "question": "A retail engineer tasks to evaluate multiple peak holiday outages. They found inconsistent compute instance configurations. How would you solve this using IaC?",
+    "choices": [
+      "A. Implement a ticketing workflow",
+      "B. Implement a checklist for engineers",
+      "C. Replace the compute instance type with a larger version",
+      "D. Implement a provisioning pipeline that deploys infrastructure configurations committed to your version control system following code reviews"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "使用 IaC 並配合自動化流水線與代碼審查，可以確保配置的一致性並減少人為錯誤。"
+  },
+  {
+    "id": 22,
+    "question": "terraform init initializes a sample main.tf file in the current directory.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "terraform init 用於初始化工作目錄（下載 Provider、設定後端等），但它不會自動生成一個範例 main.tf 檔案。使用者必須自己建立配置檔案。"
+  },
+  {
+    "id": 23,
+    "question": "Which two steps are required to provision new infrastructure in the Terraform workflow? (Choose two.)",
+    "choices": [
+      "A. Destroy",
+      "B. Apply",
+      "C. Import",
+      "D. Init",
+      "E. Validate"
+    ],
+    "answer": [
+      "B",
+      "D"
+    ],
+    "image": null,
+    "description": "在 Terraform 標準工作流中，Init（初始化）和 Apply（應用變更）是部署新基礎設施的必要步驟。Plan 雖然推薦但非技術上的強制要求。"
+  },
+  {
+    "id": 24,
+    "question": "Why would you use the terraform taint command?",
+    "choices": [
+      "A. When you want to force Terraform to destroy a resource on the next apply",
+      "B. When you want to force Terraform to destroy and recreate a resource on the next apply",
+      "C. When you want Terraform to ignore a resource on the next apply",
+      "D. When you want Terraform to destroy all the infrastructure in your workspace"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "taint 指令會手動將一個資源標記為損壞或過時，強制 Terraform 在下一次執行 apply 時將其銷毀並重新建立。"
+  },
+  {
+    "id": 25,
+    "question": "Terraform requires the Go runtime as a prerequisite for installation.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "雖然 Terraform 是用 Go 語言編寫的，但它是編譯好的二進位檔案，安裝時不需要額外安裝 Go 執行環境（Runtime）。"
+  },
+  {
+    "id": 26,
+    "question": "When should you use the force-unlock command?",
+    "choices": [
+      "A. You see a status message that you cannot acquire the lock",
+      "B. You have a high priority change",
+      "C. Automatic unlocking failed",
+      "D. You apply failed due to a state lock"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "force-unlock 僅應在自動解鎖機制失敗（例如指令異常中斷導致鎖未釋放）時謹慎使用。"
+  },
+  {
+    "id": 27,
+    "question": "Terraform can import modules from a number of sources; which of the following is not a valid source?",
+    "choices": [
+      "A. FTP server",
+      "B. GitHub repository",
+      "C. Local path",
+      "D. Terraform Module Registry"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "Terraform 支援 Git、本地路徑、HTTP、S3、以及模組註冊表等來源，但 FTP 伺服器並非官方支援的模組來源。"
+  },
+  {
+    "id": 28,
+    "question": "Which of the following is available only in Terraform Enterprise or Cloud workspaces and not in Terraform CLI?",
+    "choices": [
+      "A. Secure variable storage",
+      "B. Support for multiple cloud providers",
+      "C. Dry runs with terraform plan",
+      "D. Using the workspace as a data source"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "安全變數存儲（Secure variable storage）是 Terraform Cloud/Enterprise 的功能，允許加密存放敏感數據。CLI 版本主要依賴環境變數或本地檔案。"
+  },
+  {
+    "id": 30,
+    "question": "Which command should you use to show all of the resources that will be deleted? (Choose two.)",
+    "choices": [
+      "A. Run terraform plan -destroy.",
+      "B. This is not possible. You can only show resources that will be created.",
+      "C. Run terraform state rm *.",
+      "D. Run terraform destroy and it will first output all the resources that will be deleted before prompting for approval."
+    ],
+    "answer": [
+      "A",
+      "D"
+    ],
+    "image": null,
+    "description": "使用 terraform plan -destroy 可以預覽銷毀計畫；而執行 terraform destroy 在正式確認前也會列出所有將被刪除的資源。"
+  },
+  {
+    "id": 31,
+    "question": "Which of the following is the correct way to pass the value in the variable num_servers into a module with the input servers?",
+    "choices": [
+      "A. servers num_servers",
+      "B. servers = variable.num_servers",
+      "C. servers var(num_servers)",
+      "D. servers = var.num_servers"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "在 Terraform 中引用變數的標準語法是 var.<變數名稱>。"
+  },
+  {
+    "id": 32,
+    "question": "A Terraform provisioner must be nested inside a resource configuration block.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "Provisioner（提供者）不能獨立存在，必須定義在資源區塊（resource block）內部，因為它們是依附於資源的生命週期運作的。"
+  },
+  {
+    "id": 33,
+    "question": "Terraform can run on Windows or Linux, but it requires a Server version of the Windows operating system.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "Terraform 是平台無關的，可以在標準的 Windows（如 Windows 10）或 Linux 上運行，不需要伺服器版本作業系統。"
+  },
+  {
+    "id": 34,
+    "question": "What does the default \"local\" Terraform backend store?",
+    "choices": [
+      "A. tfplan files",
+      "B. Terraform binary",
+      "C. Provider plugins",
+      "D. State file"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "預設的 local 後端會將狀態檔案（terraform.tfstate）儲存在本地磁碟中。"
+  },
+  {
+    "id": 35,
+    "question": "How can you format Terraform HCL code according to standard Terraform style convention?",
+    "choices": [
+      "A. Run the terraform fmt command during the code linting phase of your CI/CD process",
+      "B. Designate one person in each team to review and format everyone's code",
+      "C. Manually apply two spaces indentation and align equal sign \"=\" characters in every Terraform file (*.tf)",
+      "D. Write a shell script to transform Terraform files using tools such as AWK, Python, and sed"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "terraform fmt 是官方提供的標準格式化工具，可用於 CI/CD 流程中自動確保代碼符合風格慣例。"
+  },
+  {
+    "id": 36,
+    "question": "What value does the Terraform Cloud/Terraform Enterprise private module registry provide over the public Terraform Module Registry?",
+    "choices": [
+      "A. The ability to share modules with public Terraform users and members of Terraform Enterprise Organizations",
+      "B. The ability to tag modules by version or release",
+      "C. The ability to restrict modules to members of Terraform Cloud or Enterprise organizations",
+      "D. The ability to share modules publicly with any user of Terraform"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "私有模組註冊表的主要優勢在於可以限制存取權限，僅限組織內的成員使用。"
+  },
+  {
+    "id": 37,
+    "question": "Which task does terraform init not perform?",
+    "choices": [
+      "A. Sources all providers present in the configuration and ensures they are downloaded and available locally",
+      "B. Connects to the backend",
+      "C. Sources any modules and copies the configuration locally",
+      "D. Validates all required variables are present"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "terraform init 負責下載插件、模組與連接後端，但變數是否全部存在的驗證是在 plan 或 apply 階段進行。"
+  },
+  {
+    "id": 38,
+    "question": "You have declared a variable called var.list which is a list of objects that all have an attribute id. Which options will produce a list of the IDs? (Choose two.)",
+    "choices": [
+      "A. { for o in var.list : o => o.id }",
+      "B. var.list[*].id",
+      "C. [ var.list[*].id ]",
+      "D. [ for o in var.list : o.id ]"
+    ],
+    "answer": [
+      "B",
+      "D"
+    ],
+    "image": null,
+    "description": "使用 Splat 運算式 (var.list[*].id) 或 for 迴圈 ([for o in var.list : o.id]) 均可產生 ID 列表。"
+  },
+  {
+    "id": 39,
+    "question": "Which argument(s) is (are) required when declaring a Terraform variable?",
+    "choices": [
+      "A. type",
+      "B. default",
+      "C. description",
+      "D. All of the above",
+      "E. None of the above"
+    ],
+    "answer": "E",
+    "image": null,
+    "description": "變數宣告中的所有引數（type, default, description 等）都是選填的，可以宣告一個空的變數區塊。"
+  },
+  {
+    "id": 40,
+    "question": "When using a module block to reference a module stored on the public Terraform Module Registry, how do you specify version 1.0.0?",
+    "choices": [
+      "A. Modules stored on the public Terraform Module Registry do not support versioning",
+      "B. Append ?ref=v1.0.0 argument to the source path",
+      "C. Add version = \"1.0.0\" attribute to module block",
+      "D. Nothing – modules stored on the public Terraform Module Registry always default to version 1.0.0"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "在 module 區塊中使用 version 引數來指定來自註冊表的特定版本。"
+  },
+  {
+    "id": 41,
+    "question": "What features does the hosted service Terraform Cloud provide? (Choose two.)",
+    "choices": [
+      "A. Automated infrastructure deployment visualization",
+      "B. Automatic backups",
+      "C. Remote state storage",
+      "D. A web-based user interface (UI)"
+    ],
+    "answer": [
+      "C",
+      "D"
+    ],
+    "image": null,
+    "description": "Terraform Cloud 提供遠端狀態儲存以及用於管理的 Web UI。"
+  },
+  {
+    "id": 42,
+    "question": "Where does the Terraform local backend store its state?",
+    "choices": [
+      "A. In the /tmp directory",
+      "B. In the terraform file",
+      "C. In the terraform.tfstate file",
+      "D. In the user's terraform.state file"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "本地後端預設將狀態儲存在專案根目錄下的 terraform.tfstate 檔案中。"
+  },
+  {
+    "id": 43,
+    "question": "Which option can not be used to keep secrets out of Terraform configuration files?",
+    "choices": [
+      "A. A Terraform provider",
+      "B. Environment variables",
+      "C. A -var flag",
+      "D. secure string"
+    ],
+    "answer": "D",
+    "image": null,
+    "description": "Terraform 不包含名為「secure string」的原生功能，環境變數、-var 旗標或 Vault 等 Provider 才是常見方案。"
+  },
+  {
+    "id": 44,
+    "question": "What is one disadvantage of using dynamic blocks in Terraform?",
+    "choices": [
+      "A. They cannot be used to loop through a list of values",
+      "B. Dynamic blocks can construct repeatable nested blocks",
+      "C. They make configuration harder to read and understand",
+      "D. Terraform will run more slowly"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "過度使用動態區塊會使設定變得複雜，導致代碼難以閱讀與維護。"
+  },
+  {
+    "id": 45,
+    "question": "Only the user that generated a plan may apply it.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "Plan 檔案可以儲存並傳遞給其他具有權限的使用者或 CI/CD 系統執行 apply。"
+  },
+  {
+    "id": 46,
+    "question": "Examine the configuration for an AWS AMI data source. What value should you enter for the ami argument in the AWS instance resource?",
+    "choices": [
+      "A. aws_ami.ubuntu",
+      "B. data.aws_ami.ubuntu",
+      "C. data.aws_ami.ubuntu.id",
+      "D. aws_ami.ubuntu.id"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "引用資料來源屬性的正確語法為 data.<TYPE>.<NAME>.<ATTRIBUTE>。"
+  },
+  {
+    "id": 47,
+    "question": "FILL BLANK - What resource meta-parameter can you use to make sure Terraform respects a manual dependency?",
+    "choices": [],
+    "answer": "depends_on",
+    "image": null,
+    "description": "depends_on 用於在 Terraform 無法自動推斷相依關係時，手動指定資源的先後順序。"
+  },
+  {
+    "id": 48,
+    "question": "You successfully created one VM using Terraform in an account with 15 other manual VMs. What will terraform destroy do?",
+    "choices": [
+      "A. Destroy all 16 VMs",
+      "B. The Terraform state file only contains the one new VM. Execute terraform destroy.",
+      "C. Delete the state file first",
+      "D. Delete VM using console then apply"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "Terraform 只會管理與銷毀記錄在狀態檔案中的資源，不會影響手動建立的資源。"
+  },
+  {
+    "id": 49,
+    "question": "What is the name assigned by Terraform to reference this resource: resource \"azurerm_resource_group\" \"dev\"?",
+    "choices": [
+      "A. dev",
+      "B. azurerm_resource_group",
+      "C. azurerm",
+      "D. test"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "在 HCL 中，資源的邏輯名稱（Identifier）是資源塊標籤中的第二部分，此例為 dev。"
+  },
+  {
+    "id": 50,
+    "question": "Setting the TF_LOG environment variable to DEBUG causes debug messages to be logged into syslog.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "設定 TF_LOG 會將日誌輸出到 stderr（標準錯誤輸出），而非自動寫入系統日誌 (syslog)。"
+  },
+  {
+    "id": 51,
+    "question": "Where in your Terraform configuration do you specify a state backend?",
+    "choices": [
+      "A. The terraform block",
+      "B. The resource block",
+      "C. The provider block",
+      "D. The datasource block"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "後端配置必須放置在頂層的 terraform 區塊內。例如：terraform { backend \"remote\" { ... } }。"
+  },
+  {
+    "id": 52,
+    "question": "In Terraform 0.13 and above, outside of the required_providers block, Terraform configurations always refer to providers by their local names.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "本地名稱（Local names）是在要求 Provider 時分配的，且在每個模組內必須是唯一的。在 required_providers 區塊之外，配置一律使用這些本地名稱來引用 Provider。"
+  },
+  {
+    "id": 53,
+    "question": "What command should you run to display all workspaces for the current configuration?",
+    "choices": [
+      "A. terraform workspace",
+      "B. terraform workspace show",
+      "C. terraform workspace list",
+      "D. terraform show workspace"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "terraform workspace list 指令用於列出所有現有的工作區。"
+  },
+  {
+    "id": 54,
+    "question": "Terraform providers are always installed from the Internet.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "Provider 不一定非要從網路下載。在離線（Air-gapped）環境中，可以從本地鏡像、快取目錄或手動放置的外掛目錄載入。"
+  },
+  {
+    "id": 55,
+    "question": "Which of these is the best practice to protect sensitive values in state files?",
+    "choices": [
+      "A. Blockchain",
+      "B. Secure Sockets Layer (SSL)",
+      "C. Enhanced remote backends",
+      "D. Signed Terraform providers"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "最佳實踐是使用支援加密（靜態與傳輸加密）的增強型遠端後端，例如 S3 或 HashiCorp Consul，以保護狀態檔案中的敏感數值。"
+  },
+  {
+    "id": 56,
+    "question": "When does terraform apply reflect changes in the cloud environment?",
+    "choices": [
+      "A. Immediately",
+      "B. However long it takes the resource provider to fulfill the request",
+      "C. After updating the state file",
+      "D. Based on the value provided to the -refresh command line argument"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "變更反映在雲端環境的時間取決於資源提供者處理請求所需的時間。變更通常是在更新狀態檔案之前執行的。"
+  },
+  {
+    "id": 57,
+    "question": "How would you reference the \"name\" value of the second instance of this fictitious resource (aws_instance.web with count = 2)?",
+    "choices": [
+      "A. element(aws_instance.web, 2)",
+      "B. aws_instance.web[1].name",
+      "C. aws_instance.web[1]",
+      "D. aws_instance.web[2].name",
+      "E. aws_instance.web.*.name"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "Terraform 的索引從 0 開始，因此第二個實例的索引為 1。正確引用語法為 aws_instance.web[1].name。"
+  },
+  {
+    "id": 58,
+    "question": "A Terraform provider is not responsible for:",
+    "choices": [
+      "A. Understanding API interactions with some service",
+      "B. Provisioning infrastructure in multiple clouds",
+      "C. Exposing resources and data sources based on an API",
+      "D. Managing actions to take based on resource differences"
+    ],
+    "answer": "B",
+    "image": null,
+    "description": "單個 Provider 設計為針對特定平台（例如 aws 針對 AWS）。若要管理多雲基礎設施，必須在同一個配置中使用多個不同的 Provider。"
+  },
+  {
+    "id": 59,
+    "question": "Terraform provisioners can be added to any resource block.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "Provisioner 可以定義在任何資源區塊內，用於在資源創建或銷毀時執行特定操作。"
+  },
+  {
+    "id": 60,
+    "question": "What is terraform refresh intended to detect?",
+    "choices": [
+      "A. Terraform configuration code changes",
+      "B. Empty state files",
+      "C. State file drift",
+      "D. Corrupt state files"
+    ],
+    "answer": "C",
+    "image": null,
+    "description": "terraform refresh 用於將 Terraform 存儲在狀態檔案中的狀態與現實世界的基礎設施進行對帳，以檢測任何狀態漂移（Drift）。"
+  },
+  {
+    "id": 61,
+    "question": "Which flag would you add to terraform plan to save the execution plan to a file?",
+    "choices": [],
+    "answer": "-out",
+    "image": null,
+    "description": "使用 -out=FILE 選項可以將生成的計畫儲存到磁碟檔案中，之後可以透過 terraform apply 讀取該檔案來執行變更。"
+  },
+  {
+    "id": 63,
+    "question": "A Terraform local value can reference other Terraform local values.",
+    "choices": [
+      "A. True",
+      "B. False"
+    ],
+    "answer": "A",
+    "image": null,
+    "description": "Local 數值中的表達式不限於字面常數，它們可以引用模組內的其他值，包括變數、資源屬性或其他 Local 值。"
+  }
+]
